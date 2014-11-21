@@ -23,5 +23,12 @@ module Notifications
     broadcast text
   end
 
+  def on_player_bed_leave(evt)
+    player = evt.player
+    text = "#{player.name}さんがベッドから身体を起こした模様"
+    Lingr.post text
+    broadcast text
+  end
+
 
 end
