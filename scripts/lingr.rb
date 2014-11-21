@@ -1,8 +1,6 @@
-require 'digest/sha1'
-require 'erb'
-require 'open-uri'
 
 import 'org.bukkit.ChatColor'
+# require 'sinatra/base'
 
 module Lingr
   extend self
@@ -37,3 +35,23 @@ module Lingr
     }
   end
 end
+
+# class LingrServer < Sinatra::Base
+#
+#   get '/test' do
+#     'hi there'
+#   end
+#
+# end
+#
+# Thread.start do
+#   Rack::Handler::WEBrick.run(
+#     LingrServer,
+#     Port: 8216,
+#     AccessLog: [],
+#     Logger: WEBrick::Log.new('/dev/null')
+#   )
+# end
+
+p :hi
+
