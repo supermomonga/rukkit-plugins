@@ -77,6 +77,8 @@ module ChatRelay
   CONVERSION_TABLE = { # {{{
     /べんり/ => '便利',
     /ふべん/ => '不便',
+    /^ゐ$/ => 'wi',
+    /^ゑ$/ => 'we',
     /^ひ$/ => 'hi',
     /^い$/ => 'I',
     /^あ$/ => 'a',
@@ -132,7 +134,7 @@ module ChatRelay
       # Covert to HIRAGANA
       message_text.tap{|text|
         converted_text = ROMAJI_CONVERSION_TABLE.each_with_object(text.dup) {|(k, v), acc|
-          acc.gsub! /wa$/, 'ha'
+          # acc.gsub! /wa$/, 'ha'
           acc.gsub! /nn$/, 'n'
           acc.gsub! /m([bmp])/, 'n\1'
           acc.gsub! k.to_s, v
