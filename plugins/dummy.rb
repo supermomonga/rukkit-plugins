@@ -16,17 +16,6 @@ module Dummy
 
     args = args.to_a
     case args.shift
-    when 'update'
-      unless args.empty?
-        log.warning('rukkit update with argument is invalid')
-        return
-      end
-
-      # just for now
-      Dir.chdir('/home/rukkit/rukkit') do
-        puts `git pull --rebase`
-        Bukkit.dispatch_command(sender, 'reload')
-      end
     when 'eval'
       # very dangerous!
       later(0) do
