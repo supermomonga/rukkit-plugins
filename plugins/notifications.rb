@@ -15,4 +15,13 @@ module Notifications
       broadcast text
     end
   end
+
+  def on_player_bed_enter_event(evt)
+    player = evt.player
+    text = "#{player.name}さんがベッドに横たわっておられる"
+    Lingr.post text
+    broadcast text
+  end
+
+
 end
