@@ -4,6 +4,11 @@ import 'org.bukkit.entity.Player'
 import 'org.bukkit.ChatColor'
 
 module ChatRelay
+  # for warning
+  # TODO: Find smarter way
+  remove_const :ROMAJI_CONVERSION_TABLE if const_defined? :ROMAJI_CONVERSION_TABLE
+  remove_const :CONVERSION_TABLE if const_defined? :CONVERSION_TABLE
+  remove_const :RANDOM_CONVERSION_TABLE if const_defined? :RANDOM_CONVERSION_TABLE
   ROMAJI_CONVERSION_TABLE = { # {{{
     # four charcters
     xtsu: 'っ',
@@ -90,6 +95,7 @@ module ChatRelay
     /^よう$/ => 'you',
     /^あれ$/ => 'are',
     /^ちめ$/ => 'time',
+    /^しゃれ$/ => 'share',
     /^ほうせ$/ => 'house',
     /^pl[zs]/ => 'お手数おかけしますが、よろしくお願い致します。',
     /wa-+i/ => 'わーい[^。^]',
