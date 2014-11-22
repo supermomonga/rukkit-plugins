@@ -29,9 +29,7 @@ module Dummy
     when 'what-time'
       broadcast Time.now.to_s
     else
-      p :else, sender, command, args
     end
   end
 
-  Lingr.post('Rukkit updated.')
 end
