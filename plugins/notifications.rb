@@ -20,10 +20,13 @@ module Notifications
     player = evt.player
     text = "[BED] #{player.name}さんがベッドに横たわっておられる"
 
-    awake_players = Bukkit.online_players.to_a.reject(&:isSleeping).map(&:name)
-    unless awake_players.empty?
-      text += " (#{awake_players.join ' '}達は今すぐ寝#{%w[ましょう ろ んかい].sample})"
+    later 0 do
+      awake_players = Bukkit.online_players.to_a.reject(&:isSleeping).map(&:name)
+      unless awake_players.empty?
+        text += " (#{awake_players.join ' '}達は今すぐ寝#{%w[ましょう ろ んかい].sample})"
+      end
     end
+
     Lingr.post text
     broadcast text
   end
