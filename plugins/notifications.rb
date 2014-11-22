@@ -20,7 +20,7 @@ module Notifications
     player = evt.player
     text = "[BED] #{player.name}さんがベッドに横たわっておられる"
 
-    offline_players = Bukkit.online_players.to_a.map(&:name) - evt.player.name
+    offline_players = Bukkit.online_players.to_a.map(&:name) - [evt.player.name]
     unless offline_players.empty?
       text += " (#{offline_players.join ' '}達は今すぐ寝#{%w[ましょう ろ んかい].sample})"
     end
