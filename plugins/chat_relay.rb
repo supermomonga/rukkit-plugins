@@ -77,6 +77,7 @@ module ChatRelay
   CONVERSION_TABLE = { # {{{
     /べんり/ => '便利',
     /ふべん/ => '不便',
+    /ごうたん/ => '豪胆',
     /^のし$/ => '(・ω・)ﾉｼ',
     /^ゐ$/ => 'wi',
     /^ゑ$/ => 'we',
@@ -102,6 +103,8 @@ module ChatRelay
     /^うんこ[.!]$/ => %`unko大量生産!ブリブリo(-"-;)o~#{Rukkit::Util.colorize '⌒ξ~ξ~ξ~ξ~ξ~ξ~ξ~ξ~~', :dark_red}`,
     /\bdks\b/ => '溺((o(´o｀)o))死',
     /\btkm\b/ => Rukkit::Util.colorize('匠', :magic),
+    /(sksn|すけさん)/ => 'スケさん',
+    /^zb$/ => 'ゾンビ',
     /^!\?$/ => '!? な、なんだってーΩ ΩΩ'
   } # }}}
   RANDOM_CONVERSION_TABLE = { # {{{
