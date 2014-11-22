@@ -23,6 +23,7 @@ module Notifications
     later sec(0.5) do
       awake_players = Bukkit.online_players.to_a.tap{|pl|
         p pl
+        p pl.sleeping?
       }.reject(&:sleeping?).map(&:name)
       unless awake_players.empty?
         text += " (#{awake_players.join ' '}達は今すぐ寝#{%w[ましょう ろ んかい].sample})"
