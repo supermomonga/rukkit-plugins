@@ -18,17 +18,20 @@ module Notifications
 
   def on_player_bed_enter(evt)
     player = evt.player
-    text = "#{player.name}さんがベッドに横たわっておられる"
+    text = "[BED] #{player.name}さんがベッドに横たわっておられる"
+
+    offline_players = Bukkit.online_players.to_a.map(&:name) - evt.player.name
+    unless offline_players.empty?
+      text += " (#{offline_players.join ' '}達は今すぐ寝#{%w[ましょう ろ んかい].sample})"
+    end
     Lingr.post text
     broadcast text
   end
 
   def on_player_bed_leave(evt)
     player = evt.player
-    text = "#{player.name}さんがベッドから身体を起こした模様"
+    text = "[BED] #{player.name}さんがベッドから身体を起こした模様"
     Lingr.post text
     broadcast text
   end
-
-
 end
