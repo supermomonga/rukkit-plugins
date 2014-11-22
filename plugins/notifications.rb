@@ -25,7 +25,7 @@ module Notifications
       unless awake_players.empty?
         players = awake_players.join ' '
         players += "達" if awake_players.size > 1
-        text += " (#{players}達は今すぐ寝#{%w[ましょう ろ んかい].sample})"
+        text += " (#{players}は今すぐ寝#{%w[ましょう ろ んかい].sample})"
       end
       Lingr.post text
       broadcast text
