@@ -21,9 +21,6 @@ module SuperJump
       if @crouching_counter[name] == 3
         loc = player.location
         play_sound(add_loc(loc, 0, 5, 0), Sound::BAT_TAKEOFF, 0.9, 0.0)
-        later sec(0.1) do
-          play_sound(log, 0, 5, 0, Sound::BAT_TAKEOFF, 0.3, 0.0)
-        end
 
         # evt.player.send_message "superjump!"
         player.fall_distance = 0.0
