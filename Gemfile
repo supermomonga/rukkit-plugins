@@ -1,3 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'sinatra'
+platforms :jruby do
+  gem 'sinatra'
+end
