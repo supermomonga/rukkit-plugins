@@ -21,19 +21,14 @@ module Notifications
     text = "[BED] #{player.name}さんがベッドに横たわっておられる"
 
     later sec(0.5) do
-      awake_players = Bukkit.online_players.to_a.tap{|pls|
-        pls.each do |pl|
-          p pl
-          p pl.sleeping?
-        end
-      }.reject(&:sleeping?).map(&:name)
+      awake_players = Bukkit.online_players.to_a.reject(&:sleeping?).map(&:name)
       unless awake_players.empty?
         text += " (#{awake_players.join ' '}達は今すぐ寝#{%w[ましょう ろ んかい].sample})"
       end
+      Lingr.post text
+      broadcast text
     end
 
-    Lingr.post text
-    broadcast text
   end
 
   def on_player_bed_leave(evt)
