@@ -23,7 +23,9 @@ module Notifications
     later sec(0.5) do
       awake_players = Bukkit.online_players.to_a.reject(&:sleeping?).map(&:name)
       unless awake_players.empty?
-        text += " (#{awake_players.join ' '}達は今すぐ寝#{%w[ましょう ろ んかい].sample})"
+        players = awake_players.join ' '
+        players += "達" if awake_players.size > 1
+        text += " (#{players}達は今すぐ寝#{%w[ましょう ろ んかい].sample})"
       end
       Lingr.post text
       broadcast text
