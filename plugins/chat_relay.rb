@@ -79,6 +79,9 @@ module ChatRelay
     :'-' => 'ー',
     n: 'ん',
   } # }}}
+  KANA_CONVERSION_TABLE = [
+    '1234567890-=qwertyuiop[]\asdfghjkl:\'zxcvbnm,./',
+    'ぬふあうえおやゆよわほ゜たていすかんなにらせ゛むへちとしはきくまのりれけつさそひこみもねるめ']
   CONVERSION_TABLE = { # {{{
     /べんり/ => '便利',
     /ふべん/ => '不便',
@@ -146,12 +149,16 @@ module ChatRelay
     evt.message = evt.message.split.map{|message_text|
       # Covert to HIRAGANA
       message_text.tap{|text|
-        converted_text = ROMAJI_CONVERSION_TABLE.each_with_object(text.dup) {|(k, v), acc|
-          # acc.gsub! /wa$/, 'ha'
-          acc.gsub! /nn$/, 'n'
-          acc.gsub! /m([bmp])/, 'n\1'
-          acc.gsub! k.to_s, v
-        }
+        if evt.player.name == 'ujm'
+          converted_text = text.tr(*KANA_CONVERSION_TABLE)
+        else
+          converted_text = ROMAJI_CONVERSION_TABLE.each_with_object(text.dup) {|(k, v), acc|
+            # acc.gsub! /wa$/, 'ha'
+            acc.gsub! /nn$/, 'n'
+            acc.gsub! /m([bmp])/, 'n\1'
+            acc.gsub! k.to_s, v
+          }
+        end
         break converted_text unless converted_text =~ /\w/
       }
     }.map{|message_text|
