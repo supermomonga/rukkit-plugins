@@ -162,7 +162,7 @@ module ChatRelay
           converted_text unless /\w/ =~ converted_text
         }
       end
-    evt.message = tmp.map{|message_text|
+    evt.message = tmp.compact.map{|message_text|
       # Convert by dictionary
       message_text = CONVERSION_TABLE.inject(message_text) {|acc, (k, v)| acc.gsub(k, v) }
       RANDOM_CONVERSION_TABLE.inject(message_text) {|acc, (k, vs)| acc.gsub(k, vs.sample) }
