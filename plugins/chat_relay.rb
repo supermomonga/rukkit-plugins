@@ -152,8 +152,7 @@ module ChatRelay
       else
         evt.message.split.map{|message_text|
           # Covert to HIRAGANA
-          text = message_text
-          converted_text = ROMAJI_CONVERSION_TABLE.each_with_object(text.dup) {|(k, v), acc|
+          converted_text = ROMAJI_CONVERSION_TABLE.each_with_object(message_text.dup) {|(k, v), acc|
             # acc.gsub! /wa$/, 'ha'
             acc.gsub! /nn$/, 'n'
             acc.gsub! /m([bmp])/, 'n\1'
