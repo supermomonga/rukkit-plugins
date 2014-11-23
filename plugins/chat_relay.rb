@@ -146,22 +146,22 @@ module ChatRelay
 
   def on_async_player_chat(evt)
     # Convert
-    tmp = evt.message.split.map{|message_text|
-      # Covert to HIRAGANA
+    tmp =
       if evt.player.name == 'ujm'
-        converted_text = text.tr(*KANA_CONVERSION_TABLE)
+        message_text.tr(*KANA_CONVERSION_TABLE).split
       else
-        message_text.tap{|text|
-          converted_text = ROMAJI_CONVERSION_TABLE.each_with_object(text.dup) {|(k, v), acc|
-              # acc.gsub! /wa$/, 'ha'
-              acc.gsub! /nn$/, 'n'
-              acc.gsub! /m([bmp])/, 'n\1'
-              acc.gsub! k.to_s, v
-            }
-          break converted_text unless converted_text =~ /\w/
-        }
+        evt.message.split.map{|message_text|
+          # Covert to HIRAGANA
+          message_text.tap{|text|
+            converted_text = ROMAJI_CONVERSION_TABLE.each_with_object(text.dup) {|(k, v), acc|
+                # acc.gsub! /wa$/, 'ha'
+                acc.gsub! /nn$/, 'n'
+                acc.gsub! /m([bmp])/, 'n\1'
+                acc.gsub! k.to_s, v
+              }
+            break converted_text unless converted_text =~ /\w/
+          }
       end
-    }
     evt.message = tmp.map{|message_text|
       # Convert by dictionary
       message_text = CONVERSION_TABLE.inject(message_text) {|acc, (k, v)| acc.gsub(k, v) }
