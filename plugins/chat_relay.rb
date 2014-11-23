@@ -153,9 +153,10 @@ module ChatRelay
       else
         evt.message.split.map {|message_text|
           converted_text = ROMAJI_CONVERSION_TABLE.each_with_object(message_text.dup) {|(k, v), acc|
-            acc.gsub! /nn$/, 'n'
-            acc.gsub! /m([bmp])/, 'n\1'
-            acc.gsub! k.to_s, v
+            acc.
+              gsub(/nn$/, 'n').
+              gsub(/m([bmp])/, 'n\1').
+              gsub(k.to_s, v)
           }
           converted_text unless converted_text =~ /\w/
         }
