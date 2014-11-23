@@ -85,6 +85,7 @@ module ChatRelay
     /ごうたん/ => '豪胆',
     /^のし$/ => '(・ω・)ﾉｼ',
     /^てすと$/ => 'テスト',
+    /^すんじ$/ => 'sunzi',
     /^ゐ$/ => 'wi',
     /^ゑ$/ => 'we',
     /^ひ$/ => 'hi',
@@ -107,11 +108,12 @@ module ChatRelay
     /\bあんぜん/ => '安全',
     /\bへいは\b/ => '平和',
     /\bwk[wt]k\b/ => '((o(´∀｀)o))ﾜｸﾜｸ',
-    /^うんこ[.!]$/ => %`unko大量生産!ブリブリo(-"-;)o~#{Rukkit::Util.colorize '⌒ξ~ξ~ξ~ξ~ξ~ξ~ξ~ξ~~', :dark_red}`,
+    /^うんこ[.!]?$/ => %`unko大量生産!ブリブリo(-"-;)o~#{Rukkit::Util.colorize '⌒ξ~ξ~ξ~ξ~ξ~ξ~ξ~ξ~~', :dark_red}`,
     /\bdks\b/ => '溺((o(´o｀)o))死',
     /\btkm\b/ => Rukkit::Util.colorize('匠', :magic),
-    /(sksn|すけさん)/ => 'スケさん',
+    /(sksn|すけさん|skesan)/ => 'スケさん',
     /^zb$/ => 'ゾンビ',
+    /^zombies/$/ => 'ゾンビ',
     /^!\?$/ => '!? な、なんだってーΩ ΩΩ'
   } # }}}
   RANDOM_CONVERSION_TABLE = { # {{{
