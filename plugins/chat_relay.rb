@@ -147,13 +147,12 @@ module ChatRelay
   def on_async_player_chat(evt)
     # Convert
     tmp =
+      # Covert to HIRAGANA
       if evt.player.name == 'ujm'
         evt.message.tr(*KANA_CONVERSION_TABLE).split
       else
-        evt.message.split.map{|message_text|
-          # Covert to HIRAGANA
+        evt.message.split.map {|message_text|
           converted_text = ROMAJI_CONVERSION_TABLE.each_with_object(message_text.dup) {|(k, v), acc|
-            # acc.gsub! /wa$/, 'ha'
             acc.gsub! /nn$/, 'n'
             acc.gsub! /m([bmp])/, 'n\1'
             acc.gsub! k.to_s, v
