@@ -41,22 +41,32 @@ end
 
 class LingrServer < Sinatra::Base
 
-  get '/test' do
-    'hi there3'
+  post '/chats/' do
+    JSON.parse(request.body.read)['events'].map{ |e|
+      e['message']
+    }.each do |m|
+      text = m['text']
+      user = Rukkit::Util.colorize(Rukkit::Util.colorize(m['nickname'], :bold), :dark_red)
+      message = "#{user}: #{text}"
+      Rukkit::Util.broadcast message
+    end
   end
 
   def self.run
     begin
       Rack::Handler::WEBrick.shutdown
+    rescue
+    end
+
+    begin
       Rack::Handler::WEBrick.run(
         self,
-        Port: 8216,
+        Port: Rukkit::Util.plugin_config('lingr.server_port'),
         AccessLog: [],
         Logger: WEBrick::Log.new('/dev/null')
       )
     rescue Exception => e
       puts e.message
-      puts e.backtrace.inspect
     end
   end
 end
