@@ -56,7 +56,12 @@ class LingrServer < Sinatra::Base
   end
 
   get '/' do
-    'Hello rukkit'
+    {
+      name: 'rukkit',
+      authors: ['supermomonga', 'ujm'],
+      version: '0.0dev',
+      url: 'https://github.com/supermomonga/akechi.rukkit',
+    }.inspect
   end
 
   def self.run
