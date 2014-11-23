@@ -26,7 +26,7 @@ module Notifications
         players = awake_players.join ' '
         if awake_players.size > 1
           players += "達"
-          Bukkit.online_players.to_s.size.times do
+          Bukkit.online_players.to_a.size.times do
             Bukkit.get_player(players[0]).send_message "[BED] いいから寝#{%w[ましょう ろ んかい].sample}"
           end
         end
