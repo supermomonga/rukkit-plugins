@@ -113,7 +113,7 @@ module ChatRelay
     /\btkm\b/ => Rukkit::Util.colorize('匠', :magic),
     /(sksn|すけさん|skesan)/ => 'スケさん',
     /^zb$/ => 'ゾンビ',
-    /^zombies/$/ => 'ゾンビ',
+    /^zombies$/ => 'ゾンビ',
     /^!\?$/ => '!? な、なんだってーΩ ΩΩ'
   } # }}}
   RANDOM_CONVERSION_TABLE = { # {{{
