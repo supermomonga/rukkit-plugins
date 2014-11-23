@@ -5,6 +5,7 @@ require 'json'
 
 import 'org.bukkit.ChatColor'
 require 'sinatra/base'
+require 'sinatra/reloader'
 
 module Lingr
   extend self
@@ -41,6 +42,7 @@ module Lingr
 end
 
 class LingrServer < Sinatra::Base
+  register Sinatra::Reloader
 
   post '/chats/' do
     JSON.parse(request.body.read)['events'].map{ |e|
