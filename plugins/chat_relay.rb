@@ -153,12 +153,13 @@ module ChatRelay
         evt.message.tr(*KANA_CONVERSION_TABLE).split
       else # default: :japanese_roman
         evt.message.split.map {|message_text|
-          ROMAJI_CONVERSION_TABLE.inject(message_text) {|acc, (k, v)|
+          word = ROMAJI_CONVERSION_TABLE.inject(message_text) {|acc, (k, v)|
             acc.
               gsub(/nn$/, 'n').
               gsub(/m([bmp])/, 'n\1').
               gsub(k.to_s, v)
           }
+          /\p{hiragana}/ =~ word ? word : message_text
         }
       end
     evt.message = tmp.map{|message_text|
