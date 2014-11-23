@@ -38,8 +38,12 @@ module Notifications
 
   def on_player_bed_leave(evt)
     player = evt.player
-    text = "[BED] #{player.name}さんがベッドから身体を起こした模様 at #{player.world.time}"
-    Lingr.post text
-    broadcast text
+    if player.world.time > 0
+      text = "[BED] #{player.name}さんがベッドから身体を起こした模様"
+      Lingr.post text
+      broadcast text
+    else
+      # TODO
+    end
   end
 end
