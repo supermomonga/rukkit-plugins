@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 import 'org.bukkit.entity.Player'
 
 module Notifications
