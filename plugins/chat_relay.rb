@@ -148,7 +148,7 @@ module ChatRelay
     # Convert
     tmp =
       if evt.player.name == 'ujm'
-        message_text.tr(*KANA_CONVERSION_TABLE).split
+        evt.message.tr(*KANA_CONVERSION_TABLE).split
       else
         evt.message.split.map{|message_text|
           # Covert to HIRAGANA
