@@ -152,7 +152,7 @@ module ChatRelay
         evt.message.tr(*KANA_CONVERSION_TABLE).split
       else
         evt.message.split.map {|message_text|
-          converted_text = ROMAJI_CONVERSION_TABLE.inject(message_text) {|(k, v), acc|
+          converted_text = ROMAJI_CONVERSION_TABLE.inject(message_text) {|acc, (k, v)|
             acc.
               gsub(/nn$/, 'n').
               gsub(/m([bmp])/, 'n\1').
