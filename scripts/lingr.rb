@@ -1,6 +1,7 @@
 require 'digest/sha1'
 require 'erb'
 require 'open-uri'
+require 'json'
 
 import 'org.bukkit.ChatColor'
 require 'sinatra/base'
