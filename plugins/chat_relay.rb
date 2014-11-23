@@ -145,12 +145,13 @@ module ChatRelay
   extend Rukkit::Util
 
   def on_async_player_chat(evt)
+    @chat_mode ||= {}
     # Convert
     tmp =
       # Covert to HIRAGANA
-      if evt.player.name == 'ujm'
+      if @chat_mode[evt.player.name] == :japanese_kana
         evt.message.tr(*KANA_CONVERSION_TABLE).split
-      else
+      else # default: :japanese_roman
         evt.message.split.map {|message_text|
           converted_text = ROMAJI_CONVERSION_TABLE.inject(message_text) {|acc, (k, v)|
             acc.
