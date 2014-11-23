@@ -55,6 +55,10 @@ class LingrServer < Sinatra::Base
     end
   end
 
+  get '/' do
+    'Hello rukkit'
+  end
+
   def self.run
     begin
       Rack::Handler::WEBrick.shutdown
