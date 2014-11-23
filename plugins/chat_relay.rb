@@ -152,7 +152,7 @@ module ChatRelay
       if @chat_mode[evt.player.name] == :japanese_kana
         evt.message.tr(*KANA_CONVERSION_TABLE).split
       else # default: :japanese_roman
-        evt.message.split.map {|message_text|
+        evt.message.split(/\b/).map {|message_text|
           word = ROMAJI_CONVERSION_TABLE.inject(message_text) {|acc, (k, v)|
             acc.
               gsub(/nn$/, 'n').
