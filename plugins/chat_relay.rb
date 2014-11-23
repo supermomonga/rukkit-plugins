@@ -166,7 +166,7 @@ module ChatRelay
       # Convert by dictionary
       message_text = CONVERSION_TABLE.inject(message_text) {|acc, (k, v)| acc.gsub(k, v) }
       RANDOM_CONVERSION_TABLE.inject(message_text) {|acc, (k, vs)| acc.gsub(k, vs.sample) }
-    }.join ' '
+    }.join('')
 
     # Post
     message = Message.new evt.player.name, evt.message
