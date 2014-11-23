@@ -161,6 +161,7 @@ module ChatRelay
               }
             break converted_text unless converted_text =~ /\w/
           }
+        }
       end
     evt.message = tmp.map{|message_text|
       # Convert by dictionary
