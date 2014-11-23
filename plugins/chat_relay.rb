@@ -80,7 +80,7 @@ module ChatRelay
     n: 'ん',
   } # }}}
   KANA_CONVERSION_TABLE = [
-    '1234567890\-=qwertyuiop[]\asdfghjkl:\'zxcvbnm,./',
+    '1234567890\-=qwertyuiop[]\\\asdfghjkl:\'zxcvbnm,./',
     'ぬふあうえおやゆよわほ゜たていすかんなにらせ゛むへちとしはきくまのりれけつさそひこみもねるめ']
   CONVERSION_TABLE = { # {{{
     /べんり/ => '便利',
