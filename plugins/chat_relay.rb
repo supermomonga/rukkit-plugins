@@ -158,7 +158,7 @@ module ChatRelay
               gsub(/m([bmp])/, 'n\1').
               gsub(k.to_s, v)
           }
-          converted_text unless converted_text =~ /\w/
+          converted_text unless /\w/ =~ converted_text
         }
       end
     evt.message = tmp.map{|message_text|
