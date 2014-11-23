@@ -43,7 +43,15 @@ module Notifications
       Lingr.post text
       broadcast text
     else
-      # TODO
+      @good_morning ||= true
+      later sec(1) do
+        if @good_morning
+          text = "[BED] あさだーーーーーーー! ょ"
+          Lingr.post text
+          broadcast text
+          @good_morning = false
+        end
+      end
     end
   end
 end
