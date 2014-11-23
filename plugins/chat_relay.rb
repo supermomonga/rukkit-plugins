@@ -159,7 +159,7 @@ module ChatRelay
               gsub(/m([bmp])/, 'n\1').
               gsub(k.to_s, v)
           }
-          /\p{hiragana}/ =~ word ? word : message_text
+          /^\p{hiragana}*$/ =~ word ? word : message_text
         }
       end
     evt.message = tmp.map{|message_text|
