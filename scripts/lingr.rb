@@ -47,8 +47,8 @@ class LingrServer < Sinatra::Base
       e['message']
     }.each do |m|
       text = m['text']
-      user = Rukkit::Util.colorize(Rukkit::Util.colorize(m['nickname'], :bold), :dark_red)
-      message = "#{user}: #{text}"
+      user = Rukkit::Util.colorize(m['nickname'], :gray)
+      message = "<#{user}> #{text}"
       Rukkit::Util.broadcast message
     end
   end
