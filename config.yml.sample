@@ -1,0 +1,18 @@
+rukkit:
+  repository: https://github.com/supermomonga/akechi.rukkit.git
+  plugins:
+    - say_hello_and_goodbye
+    - strong_boots
+    - fast_dash
+    # - chat_relay
+    - super_jump
+    - dummy
+    # - notifications
+  scripts:
+    - lingr
+  plugin_config:
+    lingr:
+      - secret: hi
+      - room: mcujm
+      - bot: rukkit
+      - server_port: 8082
