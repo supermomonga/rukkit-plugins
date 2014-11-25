@@ -3,6 +3,8 @@
 
 This is rukkit plugins repository of akechi.rukkit craftbukkit server.
 
+See [supermomonga/rukkit](https://github.com/supermomonga/rukkit) for more information of rukkit.
+
 ## How to run
 
 ```sh
