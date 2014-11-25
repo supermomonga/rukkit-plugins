@@ -14,6 +14,7 @@ RUN ln -s -f /data/world /craftbukkit/world
 RUN ln -s -f /data/world_nether /craftbukkit/world_nether
 RUN ln -s -f /data/world_the_end /craftbukkit/world_the_end
 RUN ln -s -f /data/world_the_end /craftbukkit/world_the_end
+RUN ln -s -f /data/rukkit/config.yml /craftbukkit/plugins/rukkit/config.yml
 RUN ln -s -f /data/dynmap /craftbukkit/plugins/dynmap
 
 VOLUME ["/craftbukkit/plugins/rukkit/config.yml"]
