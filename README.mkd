@@ -1,0 +1,14 @@
+
+## akechi.rukkit
+
+This is rukkit plugins repository of akechi.rukkit craftbukkit server.
+
+## How to run
+
+```sh
+git clone https://github.com/supermomonga/akechi.rukkit.git
+cd ./akechi.rukkit
+cp config.yml.sample ./data/config.yml
+vi ./data/config.yml
+sh ./run
+```
