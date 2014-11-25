@@ -3,4 +3,6 @@
 vendor
 .ruby-version
 config.yml
-data
+data/*
+!.gitkeep
+
