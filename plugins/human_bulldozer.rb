@@ -10,16 +10,6 @@ module HumanBulldozer
     block = evt.block
     player = evt.player
 
-    if !player
-      log.info("on_block_break #{evt} is missing player")
-      return
-    end
-
-    if !block
-      log.info("on_block_break #{evt} is missing block")
-      return
-    end
-
     @num_blocks ||= {}
     @num_blocks[player.name] ||= {}
     @num_blocks[player.name][block.type] ||= 0
@@ -33,7 +23,10 @@ module HumanBulldozer
       broadcast text
 
       play_sound(player.location, Sound::DONKEY_DEATH , 1.0, 0.0)
-      play_sound(player.location, Sound::LEVEL_UP , 1.0, 1.0)
+      play_sound(player.location, Sound::LEVEL_UP , 0.8, 1.5)
+
+      player.send_message '(HPが全回復します)'
+      player.health = player.max_health
     end
   end
 end
