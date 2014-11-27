@@ -28,4 +28,11 @@ module SuperJump
       end
     end
   end
+
+  def on_player_interact(evt)
+    player = evt.player
+    return if player.item_in_hand
+    return if player.on_ground?
+    player.send_message 'debug ok'
+  end
 end
