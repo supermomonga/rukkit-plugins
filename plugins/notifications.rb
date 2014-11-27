@@ -35,7 +35,7 @@ module Notifications
           players += "達"
         elsif awake_players.size == 1
           Bukkit.online_players.to_a.size.times do
-           awake_players[0].send_message "[BED] #{player.name}: いいから寝#{%w[ましょう ろ んかい].sample}"
+           awake_players[0].send_message "[BED] #{awake_players[0].name}: いいから寝#{%w[ましょう ろ んかい].sample}"
           end
         end
         text += " (#{players}は今すぐ寝#{%w[ましょう ろ んかい ようね♡].sample})"
