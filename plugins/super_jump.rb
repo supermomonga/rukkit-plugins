@@ -1,7 +1,6 @@
 require 'mathn'
 import 'org.bukkit.Sound'
 import 'org.bukkit.Material'
-import 'org.bukkit.util.Vector'
 import 'org.bukkit.event.block.Action'
 
 module SuperJump
@@ -48,7 +47,7 @@ module SuperJump
           Math.cos(phi / 180.0 * Math::PI),
           Math.sin(phi / 180.0 * Math::PI)
 
-        player.velocity = Vector.new(
+        player.velocity = org.bukkit.util.Vector.new(
           x * 10.0, 0.9, z * 10.0)
       end
 
