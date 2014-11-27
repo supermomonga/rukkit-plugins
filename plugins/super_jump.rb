@@ -1,6 +1,7 @@
 import 'org.bukkit.Sound'
 import 'org.bukkit.Material'
 import 'org.bukkit.util.Vector'
+import 'org.bukkit.event.block.Action'
 
 module SuperJump
   extend self
@@ -33,16 +34,19 @@ module SuperJump
 
   def on_player_interact(evt)
     player = evt.player
+    return unless [Action::LEFT_CLICK_AIR, Action::LEFT_CLICK_BLOCK].include?(evt.action)
     return unless player.item_in_hand.type == Material::AIR
     return if player.on_ground?
 
     @vertical_accelerated ||= {}
     unless @vertical_accelerated[player.name]
       play_sound(player.location, Sound::BAT_IDLE, 0.5, 0.5)
-      player.velocity = Vector.new(
-        player.velocity.x * 2.0,
-        player.velocity.y,
-        player.velocity.z * 2.0)
+      later 0 do
+        player.velocity = Vector.new(
+          player.velocity.x * 2.0,
+          player.velocity.y,
+          player.velocity.z * 2.0)
+      end
 
       @vertical_accelerated[player.name] = true
       later sec(1) do
