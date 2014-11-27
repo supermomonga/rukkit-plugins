@@ -1,2 +1,4 @@
 #!/bin/bash
-docker run -i -t -p 25565:25565 -p 8081:8081 -p 8082:8082 -v `pwd`:/craftbukkit/plugins/rukkit/repository -v `pwd`/data:/data momonga/akechi.rukkit
+PWD="$(pwd)"
+[ -f "${PWD}/data/rukkit/config.yml" ] || (mkdir -p ${PWD}/data/rukkit && cp "${PWD}/config.yml.sample" "${PWD}/data/rukkit/config.yml")
+docker run -i -t -p 25565:25565 -p 8081:8081 -p 8082:8082 -v ${PWD}:/craftbukkit/plugins/rukkit/repository -v ${PWD}/data:/data momonga/akechi.rukkit
