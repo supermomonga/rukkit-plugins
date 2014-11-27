@@ -141,21 +141,21 @@ module ChatConvert
       if @chat_mode[player_name] == :japanese_kana
         text.tr(*KANA_CONVERSION_TABLE).split
       else # default: :japanese_roman
-        text.split(/\b/).map {|message_text|
+        text.split(/ /).map {|message_text|
           word = ROMAJI_CONVERSION_TABLE.inject(message_text) {|acc, (k, v)|
             acc.
               gsub(/nn$/, 'n').
               gsub(/m([bmp])/, 'n\1').
               gsub(k.to_s, v)
           }
-          /^\p{hiragana}*$/ =~ word ? word : message_text
+          /^[\p{hiragana}ー.!?]*$/ =~ word ? word : message_text
         }
       end
     tmp.map{|message_text|
       # Convert by dictionary
       message_text = CONVERSION_TABLE.inject(message_text) {|acc, (k, v)| acc.gsub(k, v) }
       RANDOM_CONVERSION_TABLE.inject(message_text) {|acc, (k, vs)| acc.gsub(k, vs.sample) }
-    }.join('')
+    }.join(' ')
   end
 
   def on_async_player_chat(evt)
