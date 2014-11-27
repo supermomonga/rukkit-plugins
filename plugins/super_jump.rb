@@ -35,7 +35,8 @@ module SuperJump
   def on_player_interact(evt)
     player = evt.player
     return unless [Action::LEFT_CLICK_AIR, Action::LEFT_CLICK_BLOCK].include?(evt.action)
-    return unless player.item_in_hand.type == Material::AIR
+    # return unless player.item_in_hand.type == Material::AIR
+    return unless player.item_in_hand.type == Material::FEATHER
     return if player.on_ground?
 
     @vertical_accelerated ||= {}
