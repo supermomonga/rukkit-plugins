@@ -41,6 +41,8 @@ module ChatConvert
     ffa: 'っふぁ', ffi: 'っふぃ', ffe: 'っふぇ', ffo: 'っふぉ',
     dda: 'っだ', ddi: 'っぢ', ddu: 'っづ', dde: 'っで', ddo: 'っど',
     tta: 'った', tti: 'っち', ttu: 'っつ', tte: 'って', tto: 'っと',
+    tha: 'てぁ', thi: 'てぃ', thu: 'てゅ', the: 'てぇ', tho: 'てょ',
+    dha: 'でゃ', dhi: 'でぃ', dhu: 'でゅ', dhe: 'でぇ', dho: 'でょ',
     kya: 'きゃ', kyu: 'きゅ', kyo: 'きょ',
     gya: 'ぎゃ', gyu: 'ぎゅ', gyo: 'ぎょ',
     sya: 'しゃ', syu: 'しゅ', syo: 'しょ',
