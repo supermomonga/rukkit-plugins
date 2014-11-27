@@ -49,7 +49,7 @@ module SuperJump
           Math.sin(phi / 180.0 * Math::PI)
 
         player.velocity = org.bukkit.util.Vector.new(
-          x * 2.0, 0.9, z * 2.0)
+          x * 1.2, 0.8, z * 1.2)
       end
 
       @vertical_accelerated[player.name] = true
