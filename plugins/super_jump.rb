@@ -40,11 +40,11 @@ module SuperJump
 
     @vertical_accelerated ||= {}
     unless @vertical_accelerated[player.name]
-      play_sound(player.location, Sound::BAT_IDLE, 0.5, 0.5)
+      play_sound(player.location, Sound::BAT_IDLE, 0.5, 0.0)
       later 0 do
         player.velocity = Vector.new(
           player.velocity.x * 2.0,
-          player.velocity.y,
+          player.velocity.y + 1.0,
           player.velocity.z * 2.0)
       end
 
