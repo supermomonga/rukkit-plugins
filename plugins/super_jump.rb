@@ -42,14 +42,13 @@ module SuperJump
     unless @vertical_accelerated[player.name]
       play_sound(player.location, Sound::BAT_IDLE, 0.5, 0.0)
       later 0 do
-        player.velocity.y = 0.0 # for normalize
         normal = player.velocity.normalize
         player.velocity = Vector.new(
           normal.x * 10.0, 0.9, normal.z * 10.0)
       end
 
       @vertical_accelerated[player.name] = true
-      later sec(1) do
+      later sec(0.5) do
         @vertical_accelerated[player.name] = false
       end
     end
