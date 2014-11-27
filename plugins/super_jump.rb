@@ -43,9 +43,9 @@ module SuperJump
       play_sound(player.location, Sound::BAT_IDLE, 0.5, 0.0)
       later 0 do
         player.velocity = Vector.new(
-          player.velocity.x * 2.0,
-          player.velocity.y + 1.0,
-          player.velocity.z * 2.0)
+          player.velocity.x * 10.0,
+          1.0,
+          player.velocity.z * 10.0)
       end
 
       @vertical_accelerated[player.name] = true
