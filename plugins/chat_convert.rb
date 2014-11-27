@@ -151,7 +151,7 @@ module ChatConvert
               gsub(/m([bmp])/, 'n\1').
               gsub(k.to_s, v)
           }
-          /^[\p{hiragana}ー.!?]*$/ =~ word ? word : message_text
+          /^[\p{hiragana}ー.!?\d]*$/ =~ word ? word : message_text
         }
       end
     tmp.map{|message_text|
