@@ -33,7 +33,7 @@ module HumanBulldozer
       broadcast text
 
       play_sound(player.location, Sound::DONKEY_DEATH , 1.0, 0.0)
-      play_sound(player.location, Sound::DONKEY_DEATH , 1.0, 1.0)
+      play_sound(player.location, Sound::LEVEL_UP , 1.0, 1.0)
     end
   end
 end
