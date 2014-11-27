@@ -6,9 +6,14 @@ require 'json'
 import 'org.bukkit.ChatColor'
 require 'sinatra/base'
 require 'sinatra/reloader'
+require 'mechanize'
 
 module Lingr
   extend self
+
+  def say(message, user)
+    # TODO: say with users' specific bot
+  end
 
   def post(message)
     room = Rukkit::Util.plugin_config 'lingr.room'
@@ -80,6 +85,25 @@ class LingrServer < Sinatra::Base
     rescue Exception => e
       puts e.message
     end
+  end
+
+  private
+  def agent
+    @@agent ||= Mechanize.new
+  end
+  def login
+    # TODO
+  end
+  def bot_list
+    # TODO
+    res = agent.get 'http://lingr.com/developer'
+    if res.code == '200'
+    else
+      login
+    end
+  end
+  def create_bot(id, name)
+    # TODO
   end
 end
 
