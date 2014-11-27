@@ -1,3 +1,4 @@
+require 'math'
 import 'org.bukkit.Sound'
 import 'org.bukkit.Material'
 import 'org.bukkit.util.Vector'
@@ -42,9 +43,13 @@ module SuperJump
     unless @vertical_accelerated[player.name]
       play_sound(player.location, Sound::BAT_IDLE, 0.5, 0.0)
       later 0 do
-        normal = player.velocity.normalize
+        phi = (player.location.yaw + 90) % 360
+        x, z =
+          Math.cos(phi / 180.0 * Math::PI),
+          Math.sin(phi / 180.0 * Math::PI)
+
         player.velocity = Vector.new(
-          normal.x * 10.0, 0.9, normal.z * 10.0)
+          x * 10.0, 0.9, z * 10.0)
       end
 
       @vertical_accelerated[player.name] = true
