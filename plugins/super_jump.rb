@@ -36,10 +36,17 @@ module SuperJump
     return unless player.item_in_hand.type == Material::AIR
     return if player.on_ground?
 
-    play_sound(player.location, Sound::BAT_TAKEOFF, 0.5, 0.5)
-    player.velocity = Vector(
-      player.velocity.x * 2.0,
-      player.velocity.y,
-      player.velocity.z * 2.0)
+    @vertical_accelerated ||= {}
+    unless @vertical_accelerated[player.name]
+      play_sound(player.location, Sound::BAT_TAKEOFF, 0.5, 0.5)
+      player.velocity = new Vector(
+        player.velocity.x * 2.0,
+        player.velocity.y,
+        player.velocity.z * 2.0)
+      @vertical_accelerated[player.name] = true
+      later sec(1) do
+        @vertical_accelerated[player.name] = false
+      end
+    end
   end
 end
