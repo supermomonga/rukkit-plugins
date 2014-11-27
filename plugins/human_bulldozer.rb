@@ -25,12 +25,15 @@ module HumanBulldozer
     @num_blocks[player.name][block.type] ||= 0
     @num_blocks[player.name][block.type] += 1
 
-    if @num_blocks[player.name][block.type] > 100
+    if @num_blocks[player.name][block.type] > 10
+      @num_blocks[player.name][block.type] = 0
+
       text = "#{player.name} broke 100 #{block.type}s!"
       Lingr.post text
       broadcast text
 
-      @num_blocks[player.name][block.type] = 0
+      play_sound(player.location, Sound::DONKEY_DEATH , 1.0, 0.0)
+      play_sound(player.location, Sound::DONKEY_DEATH , 1.0, 1.0)
     end
   end
 end
