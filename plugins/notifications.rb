@@ -18,6 +18,11 @@ module Notifications
     end
   end
 
+  def on_player_death(evt)
+    player = evt.entity
+    Lingr.post "#{player.name} died: #{evt.death_message.sub(/^#{player.name}/, '')} at (#{player.location.x.to_i}, #{player.location.z.to_i}) in #{player.location.world.name}."
+  end
+
   def on_player_bed_enter(evt)
     player = evt.player
     text = "[BED] #{player.name}さんがベッドに横たわっておられる"
