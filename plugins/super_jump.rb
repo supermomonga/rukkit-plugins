@@ -1,4 +1,4 @@
-require 'math'
+require 'mathn'
 import 'org.bukkit.Sound'
 import 'org.bukkit.Material'
 import 'org.bukkit.util.Vector'
