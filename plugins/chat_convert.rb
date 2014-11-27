@@ -112,6 +112,7 @@ module ChatConvert
     /\bあんぜん/ => '安全',
     /\bへい[はわ]\b/ => '平和',
     /\bwk[wt]k\b/ => '((o(´∀｀)o))ﾜｸﾜｸ',
+    /^fmfm$/ => 'ふむふむ',
     /^うんこ[.!]?$/ => %`unko大量生産!ブリブリo(-"-;)o~#{Rukkit::Util.colorize '⌒ξ~ξ~ξ~ξ~ξ~ξ~ξ~ξ~~', :dark_red}`,
     /\bdks\b/ => '溺((o(´o｀)o))死',
     /\btkm\b/ => Rukkit::Util.colorize('匠', :magic),
