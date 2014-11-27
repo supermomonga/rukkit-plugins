@@ -134,15 +134,14 @@ module ChatConvert
   extend self
   extend Rukkit::Util
 
-  def on_async_player_chat(evt)
+  def convert(text, player_name)
     @chat_mode ||= {}
-    # Convert
     tmp =
       # Covert to HIRAGANA
-      if @chat_mode[evt.player.name] == :japanese_kana
-        evt.message.tr(*KANA_CONVERSION_TABLE).split
+      if @chat_mode[player_name] == :japanese_kana
+        text.tr(*KANA_CONVERSION_TABLE).split
       else # default: :japanese_roman
-        evt.message.split(/\b/).map {|message_text|
+        text.split(/\b/).map {|message_text|
           word = ROMAJI_CONVERSION_TABLE.inject(message_text) {|acc, (k, v)|
             acc.
               gsub(/nn$/, 'n').
@@ -152,11 +151,15 @@ module ChatConvert
           /^\p{hiragana}*$/ =~ word ? word : message_text
         }
       end
-    evt.message = tmp.map{|message_text|
+    tmp.map{|message_text|
       # Convert by dictionary
       message_text = CONVERSION_TABLE.inject(message_text) {|acc, (k, v)| acc.gsub(k, v) }
       RANDOM_CONVERSION_TABLE.inject(message_text) {|acc, (k, vs)| acc.gsub(k, vs.sample) }
     }.join('')
+  end
+
+  def on_async_player_chat(evt)
+    evt.message = convert(evt.message, evt.player.name)
   end
 end
 # vim:foldmethod=marker
