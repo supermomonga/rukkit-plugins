@@ -8,6 +8,7 @@ rukkit:
     - super_jump
     - dummy
     # - notifications
+    - human_bulldozer
   scripts:
     - lingr
   plugin_config:
