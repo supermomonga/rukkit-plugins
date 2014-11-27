@@ -28,9 +28,9 @@ module Notifications
     text = "[BED] #{player.name}さんがベッドに横たわっておられる"
 
     later sec(0.5) do
-      awake_players = Bukkit.online_players.to_a.reject(&:sleeping?).map(&:name)
+      awake_players = Bukkit.online_players.to_a.reject(&:sleeping?)
       unless awake_players.empty?
-        players = awake_players.join "#{%w[くん さん ちゃん 君].sample} "
+        players = awake_players.map(&:name).join "#{%w[くん さん ちゃん 君].sample} "
         if awake_players.size > 1
           players += "達"
         elsif awake_players.size == 1
