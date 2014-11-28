@@ -7,6 +7,8 @@ ADD craftbukkit.sh /usr/local/bin/craftbukkit
 RUN chmod +x /usr/local/bin/craftbukkit
 
 RUN mkdir -p /root/.ssh/
+ADD id_rsa_github /root/.ssh/id_rsa_github
+RUN chmod 600 /root/.ssh/id_rsa_github
 ADD ssh_config /root/.ssh/config
 RUN git clone git@github.com:supermomonga/akechi.rukkit.git /craftbukkit/plugins/rukkit/repository
 RUN cd /craftbukkit/plugins/rukkit/repository && java -jar ~/.m2/repository/org/jruby/jruby-complete/1.7.16.1/jruby-complete-1.7.16.1.jar -S \
