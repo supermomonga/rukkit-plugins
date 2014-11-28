@@ -6,7 +6,9 @@ RUN curl http://dev.bukkit.org/media/files/817/822/dynmap-2.0.0.jar -s -L -o /cr
 ADD craftbukkit.sh /usr/local/bin/craftbukkit
 RUN chmod +x /usr/local/bin/craftbukkit
 
-RUN git clone https://github.com/supermomonga/akechi.rukkit.git /craftbukkit/plugins/rukkit/repository
+RUN mkdir -p /root/.ssh/
+ADD ssh_config /root/.ssh/config
+RUN git clone git@github.com:supermomonga/akechi.rukkit.git /craftbukkit/plugins/rukkit/repository
 RUN cd /craftbukkit/plugins/rukkit/repository && java -jar ~/.m2/repository/org/jruby/jruby-complete/1.7.16.1/jruby-complete-1.7.16.1.jar -S \
  $GEM_HOME/gems/bundler-*/bin/bundle install --path /craftbukkit/plugins/rukkit/bundler
 
