@@ -41,6 +41,8 @@ module ChatConvert
     ffa: 'っふぁ', ffi: 'っふぃ', ffe: 'っふぇ', ffo: 'っふぉ',
     dda: 'っだ', ddi: 'っぢ', ddu: 'っづ', dde: 'っで', ddo: 'っど',
     tta: 'った', tti: 'っち', ttu: 'っつ', tte: 'って', tto: 'っと',
+    tha: 'てぁ', thi: 'てぃ', thu: 'てゅ', the: 'てぇ', tho: 'てょ',
+    dha: 'でゃ', dhi: 'でぃ', dhu: 'でゅ', dhe: 'でぇ', dho: 'でょ',
     kya: 'きゃ', kyu: 'きゅ', kyo: 'きょ',
     gya: 'ぎゃ', gyu: 'ぎゅ', gyo: 'ぎょ',
     sya: 'しゃ', syu: 'しゅ', syo: 'しょ',
@@ -72,7 +74,7 @@ module ChatConvert
     za: 'ざ', zi: 'じ', ji: 'じ', zu: 'ず', ze: 'ぜ', zo: 'ぞ',
     ja: 'じゃ', ju: 'じゅ', jo: 'じょ',
     xa: 'ぁ', xi: 'ぃ', xu: 'ぅ', xe: 'ぇ', xo: 'ぉ',
-    wa: 'わ', wi: 'ゐ', we: 'ゑ', wo: 'を',
+    wa: 'わ', wi: 'うぃ', we: 'うぇ', wo: 'を',
     va: 'ヴぁ', vi: 'ヴぃ', vu: 'ヴ', ve: 'ヴぇ', vo: 'ヴォ',
     # one character
     a: 'あ', i: 'い', u: 'う', e: 'え', o: 'お',
@@ -89,8 +91,7 @@ module ChatConvert
     /^のし$/ => '(・ω・)ﾉｼ',
     /^てすと$/ => 'テスト',
     /^すんじ$/ => 'sunzi',
-    /^ゐ$/ => 'wi',
-    /^ゑ$/ => 'we',
+    /^うぇ$/ => 'we',
     /^ひ$/ => 'hi',
     /^い$/ => 'I',
     /^あ$/ => 'a',
@@ -104,6 +105,7 @@ module ChatConvert
     /^ほうせ$/ => 'house',
     /^pl[zs]/ => 'お手数おかけしますが、よろしくお願い致します。',
     /わーい/ => 'わーい[^。^]',
+    /うぇーい/ => 'ｳｪｰｲ',
     /^かわいそう$/ => 'かわいそう。・°°・(((p(≧□≦)q)))・°°・。ｳﾜｰﾝ!!',
     /dropper/ => '泥(・ω・)ﾉ■ ｯﾊﾟ',
     /hopper/ => '穂(・ω・)ﾉ■ ｯﾊﾟ',
@@ -111,6 +113,7 @@ module ChatConvert
     /\bあんぜん/ => '安全',
     /\bへい[はわ]\b/ => '平和',
     /\bwk[wt]k\b/ => '((o(´∀｀)o))ﾜｸﾜｸ',
+    /^fmfm$/ => 'ふむふむ',
     /^うんこ[.!]?$/ => %`unko大量生産!ブリブリo(-"-;)o~#{Rukkit::Util.colorize '⌒ξ~ξ~ξ~ξ~ξ~ξ~ξ~ξ~~', :dark_red}`,
     /\bdks\b/ => '溺((o(´o｀)o))死',
     /\btkm\b/ => Rukkit::Util.colorize('匠', :magic),
@@ -135,29 +138,32 @@ module ChatConvert
   extend self
   extend Rukkit::Util
 
-  def on_async_player_chat(evt)
+  def convert(text, player_name)
     @chat_mode ||= {}
-    # Convert
     tmp =
       # Covert to HIRAGANA
-      if @chat_mode[evt.player.name] == :japanese_kana
-        evt.message.tr(*KANA_CONVERSION_TABLE).split
+      if @chat_mode[player_name] == :japanese_kana
+        text.tr(*KANA_CONVERSION_TABLE).split
       else # default: :japanese_roman
-        evt.message.split(/\b/).map {|message_text|
+        text.split(/ /).map {|message_text|
           word = ROMAJI_CONVERSION_TABLE.inject(message_text) {|acc, (k, v)|
             acc.
               gsub(/nn$/, 'n').
               gsub(/m([bmp])/, 'n\1').
               gsub(k.to_s, v)
           }
-          /^\p{hiragana}*$/ =~ word ? word : message_text
+          /^[\p{hiragana}ー.!?\d]*$/ =~ word ? word : message_text
         }
       end
-    evt.message = tmp.map{|message_text|
+    tmp.map{|message_text|
       # Convert by dictionary
       message_text = CONVERSION_TABLE.inject(message_text) {|acc, (k, v)| acc.gsub(k, v) }
       RANDOM_CONVERSION_TABLE.inject(message_text) {|acc, (k, vs)| acc.gsub(k, vs.sample) }
-    }.join('')
+    }.join(' ')
+  end
+
+  def on_async_player_chat(evt)
+    evt.message = convert(evt.message, evt.player.name)
   end
 end
 # vim:foldmethod=marker
