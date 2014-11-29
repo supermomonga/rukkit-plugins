@@ -10,6 +10,7 @@ rukkit:
     - dummy
     # - notifications
     - human_bulldozer
+    - shared_chest
   scripts:
     - lingr
   plugin_config:
