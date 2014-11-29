@@ -11,11 +11,16 @@ module FastDash
       if evt.player.location.clone.add(0, -1, 0).block.type == Material::SAND
         evt.cancelled = true
       else
-        evt.player.send_message "satu: #{evt.player.saturation}"
         evt.player.walk_speed = 0.4
       end
     else
       evt.player.walk_speed = 0.2
+    end
+  end
+
+  def on_food_level_change(evt)
+    if evt.entity.level > 2 && evt.entity.walk_speed >= 0.4
+      evt.cancelled = true
     end
   end
 end
