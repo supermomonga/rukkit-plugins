@@ -1,4 +1,5 @@
 # encoding: utf-8
+import 'org.bukkit.Material'
 
 module RareMaterialNotification
   extend self
