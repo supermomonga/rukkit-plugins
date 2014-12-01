@@ -18,9 +18,9 @@ module RareMaterialNotification
       when Material::EMERALD_ORE
         'エメラルド鉱石 ｷﾀﾜｧ*:.｡..｡.:*･ﾟ (n‘∀‘)ηﾟ･*:.｡..｡.:* ﾐ ☆'
       else
-        ''
+        nil
       end
 
-    player.chat msg unless msg.empty?
+    player.chat msg if msg
   end
 end
