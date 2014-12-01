@@ -1,5 +1,4 @@
 import 'org.bukkit.Bukkit'
-import 'org.bukkit.event.block.Action'
 import 'org.bukkit.Material'
 import 'org.bukkit.block.BlockFace'
 import 'org.bukkit.entity.ItemFrame'
