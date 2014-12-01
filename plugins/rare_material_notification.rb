@@ -10,11 +10,11 @@ module RareMaterialNotification
     item = evt.item
 
     msg = case item.item_stack.type
-    when Material::DIAMOND_ORE then
+    when Material::DIAMOND_ORE
       'ダイアモンド鉱石ゲットだぜ！'
-    when Material::LAPIS_ORE then
+    when Material::LAPIS_ORE
       'ラピスラズリ鉱石 ヽ(*´∀｀)ノ ｷｬｯﾎｰｲ!!'
-    when Material::EMERALD_ORE then
+    when Material::EMERALD_ORE
       'エメラルド鉱石 ｷﾀﾜｧ*:.｡..｡.:*･ﾟ (n‘∀‘)ηﾟ･*:.｡..｡.:* ﾐ ☆'
     else
       ''
@@ -22,6 +22,4 @@ module RareMaterialNotification
 
     player.chat msg unless msg.empty?
   end
-
 end
-
