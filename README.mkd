@@ -11,6 +11,6 @@ See [supermomonga/rukkit](https://github.com/supermomonga/rukkit) for more infor
 git clone git@github.com:supermomonga/akechi.rukkit.git
 cd ./akechi.rukkit
 cp config.yml.sample ./data/config.yml
-vi ./data/config.yml
+vim ./data/config.yml
 sh ./run
 ```
