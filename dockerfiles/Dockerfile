@@ -29,4 +29,4 @@ EXPOSE 8081:8081
 EXPOSE 8082:8082
 
 ENTRYPOINT ["/bin/bash", "/usr/local/bin/craftbukkit"]
-CMD ["1024M"]
+CMD ["2048M"]
