@@ -52,7 +52,7 @@ module Build
         [sender.location.x.to_i, sender.location.y.to_i, sender.location.z.to_i],
         10)
       dots.map {|(x, y, z)| sender.world.get_block_at(x, y, z) }.
-        select {|b| b.type != Material::COBBLESTONE }.
+        reject(&:occluding?).
         each do |b|
           b.type = Material::COBBLESTONE
           b.data = 0
