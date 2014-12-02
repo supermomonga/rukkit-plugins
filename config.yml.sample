@@ -1,4 +1,5 @@
 rukkit:
+  event_filename: all-events.txt
   repository: git@github.com:supermomonga/akechi.rukkit.git
   plugins:
     - say_hello_and_goodbye
