@@ -52,12 +52,13 @@ module Build
         [sender.location.x.to_i, sender.location.y.to_i, sender.location.z.to_i],
         10)
       dots.map {|(x, y, z)| sender.world.get_block_at(x, y, z) }.
-        reject(&:occluding?).
+        reject {|b| b.type.occluding? }.
         each do |b|
           b.type = Material::COBBLESTONE
           b.data = 0
         end
-        sender.send_message 'SUCCESS'
+        play_sound(player.location, Sound::EXPLODE, 1.0, 0.0)
+        sender.send_message 'SUCCESS with consuing all your cobblestones.'
 
       true
     end
