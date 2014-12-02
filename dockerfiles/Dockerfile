@@ -25,7 +25,7 @@ VOLUME ["/craftbukkit/plugins/rukkit/config.yml"]
 VOLUME ["/craftbukkit/plugins/rukkit/repository"]
 VOLUME ["/data"]
 
-EXPOSE 8081:8081
+EXPOSE 8123:8123
 EXPOSE 8082:8082
 
 ENTRYPOINT ["/bin/bash", "/usr/local/bin/craftbukkit"]
