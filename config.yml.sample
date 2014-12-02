@@ -16,7 +16,7 @@ rukkit:
     - lingr
   plugin_config:
     lingr:
-      secret: !!fixme!!
+      secret: FIXME
       room: mcujm
       bot: rukkit
       server_port: 8082
