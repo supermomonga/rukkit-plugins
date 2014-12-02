@@ -12,7 +12,7 @@ RUN chmod 600 /root/.ssh/id_rsa_github
 ADD ssh_config /root/.ssh/config
 RUN git clone git@github.com:supermomonga/akechi.rukkit.git /craftbukkit/plugins/rukkit/repository
 RUN cd /craftbukkit/plugins/rukkit/repository && java -jar ~/.m2/repository/org/jruby/jruby-complete/1.7.16.1/jruby-complete-1.7.16.1.jar -S \
- $GEM_HOME/gems/bundler-*/bin/bundle install --path /craftbukkit/plugins/rukkit/bundler
+ $GEM_HOME/gems/bundler-*/bin/bundle install --path /rukkit/vendor/bundler
 
 RUN ln -s -f /data/world /craftbukkit/world
 RUN ln -s -f /data/world_nether /craftbukkit/world_nether
