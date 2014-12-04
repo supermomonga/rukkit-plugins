@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 import 'org.bukkit.entity.Player'
+import 'org.bukkit.Material'
 
 module Notifications
   extend self
@@ -12,7 +13,10 @@ module Notifications
 
     case player
     when Player
-      text = "#{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}"
+      equip_msg = player.item_in_hand.type == Material::AIR ?
+        '' :
+        "with #{player.item_in_hand.type}"
+      text = "#{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}#{equip_msg}."
       Lingr.post text
       broadcast text
     end
