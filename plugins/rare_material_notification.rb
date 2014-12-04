@@ -21,6 +21,6 @@ module RareMaterialNotification
         nil
       end
 
-    player.chat msg if msg
+    player.chat(msg) if msg
   end
 end
