@@ -16,7 +16,7 @@ module Notifications
       equip_msg = player.item_in_hand.type == Material::AIR ?
         '' :
         "with #{player.item_in_hand.type}"
-      text = "#{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}#{equip_msg}."
+      text = "[KILL] #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}#{equip_msg}."
       Lingr.post text
       broadcast text
     end
@@ -60,7 +60,7 @@ module Notifications
       @good_morning ||= true
       later sec(1) do
         if @good_morning
-          text = "[BED] あさだーーーーーーー! ょ"
+          text = "[BED] あさだーーーーーーー! #{%w[ょ ゅ 肉 !].sample}"
           Lingr.post text
           broadcast text
           @good_morning = false
