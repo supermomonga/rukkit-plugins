@@ -15,7 +15,7 @@ module Notifications
     when Player
       equip_msg = player.item_in_hand.type == Material::AIR ?
         '' :
-        "with #{player.item_in_hand.type}"
+        " with #{player.item_in_hand.type}"
       text = "[KILL] #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}#{equip_msg}."
       Lingr.post text
       broadcast text
