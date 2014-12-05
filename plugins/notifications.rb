@@ -34,7 +34,7 @@ module Notifications
     later sec(0.5) do
       awake_players = Bukkit.online_players.to_a.reject(&:sleeping?)
       unless awake_players.empty?
-        players = awake_players.map(&:name).join "#{%w[くん さん ちゃん 君].sample} "
+        players = awake_players.map(&:name).join "#{%w[くん さん ちゃん 君 様 君 子 肉].sample} "
         if awake_players.size > 1
           players += "達"
         elsif awake_players.size == 1
