@@ -32,4 +32,10 @@ module Dummy
     end
   end
 
+  def on_player_move(evt)
+    player = evt.player
+    if evt.to.y > evt.from.y
+      evt.to = evt.to.tap {|l| l.y = evt.from.y }
+    end
+  end
 end
