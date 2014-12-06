@@ -1,6 +1,7 @@
 require 'mathn'
 import 'org.bukkit.Sound'
 import 'org.bukkit.Material'
+import 'org.bukkit.Effect'
 import 'org.bukkit.event.block.Action'
 
 module SuperJump
@@ -24,6 +25,7 @@ module SuperJump
       if @crouching_counter[name] == 3
         loc = player.location
         play_sound(add_loc(loc, 0, 5, 0), Sound::BAT_TAKEOFF, 0.9, 0.0)
+        play_effect(player.location, Effect::SMOKE, 0)
 
         # evt.player.send_message "superjump!"
         player.fall_distance = 0.0
@@ -42,6 +44,7 @@ module SuperJump
     @vertical_accelerated ||= {}
     unless @vertical_accelerated[player.name]
       play_sound(player.location, Sound::BAT_IDLE, 0.5, 0.0)
+      play_effect(player.location, Effect::SMOKE, 0)
       later 0 do
         phi = (player.location.yaw + 90) % 360
         x, z =
