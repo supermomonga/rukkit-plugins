@@ -32,7 +32,7 @@ module Agriculture
         text = "[AGRICULTURE] #{player.name} planted 64 crops. She/he gains bonus."
         broadcast text
         Lingr.post text
-        @num_seeded = 0
+        @num_seeded[player.name] = 0
       end
     end
   end
