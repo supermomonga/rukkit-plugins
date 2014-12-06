@@ -19,6 +19,11 @@ module Notifications
       text = "[KILL] #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}#{equip_msg}."
       Lingr.post text
       broadcast text
+
+      10.times do
+        orb = spawn(loc, EntityType::EXPERIENCE_ORB)
+        orb.experience = 0
+      end
     end
   end
 
