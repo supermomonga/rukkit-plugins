@@ -38,9 +38,9 @@ module Dummy
   end
 
   def on_player_move(evt)
-    player = evt.player
-    Bukkit.online_players.each do |player|
-      player.send_block_change(player.location, Material::CARPET, 0)
-    end
+    # player = evt.player
+    # Bukkit.online_players.each do |player|
+    #   player.send_block_change(player.location, Material::CARPET, 0)
+    # end
   end
 end
