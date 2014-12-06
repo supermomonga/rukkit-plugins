@@ -53,7 +53,7 @@ module SuperJump
     @vertical_accelerated ||= {}
     unless @vertical_accelerated[player.name]
       play_sound(player.location, Sound::BAT_IDLE, 0.5, 0.0)
-      iikanji_effect(loc)
+      iikanji_effect(player.location)
       later 0 do
         phi = (player.location.yaw + 90) % 360
         x, z =
