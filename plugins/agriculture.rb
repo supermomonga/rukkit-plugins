@@ -19,7 +19,7 @@ module Agriculture
       @num_seeded[player.name] ||= 0
       @num_seeded[player.name] += 1
 
-      if @num_seeded > 2
+      if @num_seeded[player.name] > 2
         10.times do |i|
           later sec(i) do
             loc = player.location
