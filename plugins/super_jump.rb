@@ -3,10 +3,19 @@ import 'org.bukkit.Sound'
 import 'org.bukkit.Material'
 import 'org.bukkit.Effect'
 import 'org.bukkit.event.block.Action'
+import 'org.bukkit.entity.EntityType'
 
 module SuperJump
   extend self
   extend Rukkit::Util
+
+  def iikanji_effect(loc)
+    play_effect(loc, Effect::SMOKE, 0)
+    5.times do
+      orb = spawn(loc, EntityType::EXPERIENCE_ORB)
+      orb.experience = 0
+    end
+  end
 
   def on_player_toggle_sneak(evt)
     player = evt.player
@@ -25,7 +34,7 @@ module SuperJump
       if @crouching_counter[name] == 3
         loc = player.location
         play_sound(add_loc(loc, 0, 5, 0), Sound::BAT_TAKEOFF, 0.9, 0.0)
-        play_effect(player.location, Effect::SMOKE, 0)
+        iikanji_effect(loc)
 
         # evt.player.send_message "superjump!"
         player.fall_distance = 0.0
@@ -44,7 +53,7 @@ module SuperJump
     @vertical_accelerated ||= {}
     unless @vertical_accelerated[player.name]
       play_sound(player.location, Sound::BAT_IDLE, 0.5, 0.0)
-      play_effect(player.location, Effect::SMOKE, 0)
+      iikanji_effect(loc)
       later 0 do
         phi = (player.location.yaw + 90) % 360
         x, z =
