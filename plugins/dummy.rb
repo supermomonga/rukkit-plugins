@@ -35,7 +35,9 @@ module Dummy
   def on_player_move(evt)
     player = evt.player
     if evt.to.y > evt.from.y
+      p :beofre, evt.to
       evt.to = evt.to.tap {|l| l.y = evt.from.y }
+      p :after, evt.to
     end
   end
 end
