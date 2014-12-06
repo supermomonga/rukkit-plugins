@@ -41,14 +41,13 @@ module Build
 
     case args.shift
     when 'help'
-      sender.message '/rukkit build draw-circle -- By consumes 64 cobblestones, it draws a circle line with 10 radius'
+      sender.message '/rukkit build draw-circle n -- By consumes 64 blocks, it draws a circle line with n radius'
     when 'draw-circle'
-      if sender.item_in_hand.type != Material::COBBLESTONE || sender.item_in_hand.amount < 64
-        sender.send_message 'ERROR You must have 64 cobblestones.'
+      if !sender.item_in_hand.type.block? || sender.item_in_hand.amount < 64
+        sender.send_message 'ERROR You must have 64 blocks.'
         return false
       end
-
-      sender.item_in_hand = nil
+      btype = sender.item_in_hand.type
 
       dots = circle(
         [sender.location.x.to_i, sender.location.y.to_i - 1, sender.location.z.to_i],
@@ -56,11 +55,12 @@ module Build
       dots.map {|(x, y, z)| sender.world.get_block_at(x, y, z) }.
         reject {|b| b.type.occluding? }.
         each do |b|
-          b.type = Material::COBBLESTONE
+          b.type = btype
           b.data = 0
+          play_sound(sender.location, Sound::EXPLODE, 1.0, 0.0)
         end
-        play_sound(sender.location, Sound::EXPLODE, 1.0, 0.0)
-        sender.send_message 'SUCCESS with consuing all your cobblestones.'
+        sender.send_message "SUCCESS with consuing all your #{btype}s."
+      # sender.item_in_hand = nil
 
       true
     end
