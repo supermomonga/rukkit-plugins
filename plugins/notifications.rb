@@ -20,9 +20,11 @@ module Notifications
 
       case entity
       when Chicken
-        text = "[KILL] Kawaisou! #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}#{equip_msg}."
+        text = "[KILL] かわいそう。・°°・(((p(≧□≦)q)))・°°・。ｳﾜｰﾝ!! #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}#{equip_msg}."
+      when Player
+        text = "[KILL] 殺人事件発生! #{player.name}容疑者が#{entity.name}さんを殺害した疑いで書類送検されました (#{equip_msg})"
       else
-        text = "[KILL] Kawaisou! #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}#{equip_msg}."
+        text = "[KILL] #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}#{equip_msg}."
       end
       Lingr.post text
       broadcast text
