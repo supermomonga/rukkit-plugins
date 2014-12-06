@@ -25,7 +25,7 @@ module Agriculture
             loc = player.location
             later sec(1) do
               play_sound(player.location, Sound::FIRE_IGNITE, 0.5, 1.0)
-              loc.world.drop_item_naturally(loc, ItemStack.new(Material::ARROW, 1))
+              drop_item(loc, ItemStack.new(Material::ARROW, 1))
             end
           end
         end
