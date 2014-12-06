@@ -22,7 +22,10 @@ module FastDash
   end
 
   def on_food_level_change(evt)
-    if evt.entity.level > 2 && evt.entity.walk_speed >= 0.4
+    case
+    when evt.entity.walk_speed >= 1.0
+      evt.cancelled = true
+    when evt.entity.level > 2 && evt.entity.walk_speed >= 0.4
       evt.cancelled = true
     end
   end
