@@ -21,7 +21,7 @@ module Notifications
       broadcast text
 
       10.times do
-        orb = spawn(loc, EntityType::EXPERIENCE_ORB)
+        orb = spawn(entity.location, EntityType::EXPERIENCE_ORB)
         orb.experience = 0
       end
     end
@@ -65,7 +65,7 @@ module Notifications
       @good_morning ||= true
       later sec(1) do
         if @good_morning
-          text = "[BED] あさだーーーーーーー! #{%w[ょ ゅ 肉 !].sample}"
+          text = "[BED] あさだーーーーーーー! #{%w[ょ ゅ ゃ ね vim 肉 !].sample}"
           Lingr.post text
           broadcast text
           @good_morning = false
