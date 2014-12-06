@@ -49,7 +49,7 @@ module SuperJump
           Math.sin(phi / 180.0 * Math::PI)
         x, z = 0, 0 if player.sneaking?
 
-        entity = player.vehicle? ? player.vehicle : player
+        entity = player.vehicle ? player.vehicle : player
         player.velocity = org.bukkit.util.Vector.new(
           x * 1.2, 0.8, z * 1.2)
       end
