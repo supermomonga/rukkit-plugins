@@ -14,7 +14,7 @@ module Agriculture
     block = evt.block
 
     case block.type
-    when Material::SEEDS, Material::PUMPKIN_SEEDS, Material::MELON_SEEDS, Material::CARROT, Material::POTATO
+    when Material::CROPS, Material::PUMPKIN_SEEDS, Material::MELON_SEEDS, Material::CARROT, Material::POTATO
       player.send_message "[DEBUG] seed #{block}"
       @num_seeded[player.name] ||= 0
       @num_seeded[player.name] += 1
