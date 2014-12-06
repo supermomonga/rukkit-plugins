@@ -28,6 +28,10 @@ module Dummy
       end
     when 'what-time'
       broadcast Time.now.to_s
+    when 'virtual-diamond'
+      Bukkit.online_players.each do |player|
+        player.send_block_change(sender.location, Material::DIAMOND_ORE, 0)
+      end
     else
     end
   end
