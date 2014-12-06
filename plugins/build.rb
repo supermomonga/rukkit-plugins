@@ -43,6 +43,11 @@ module Build
     when 'help'
       sender.message '/rukkit build draw-circle n -- By consumes 64 blocks, it draws a circle line with n radius'
     when 'draw-square'
+      if !sender.item_in_hand.type.block? || sender.item_in_hand.amount < 64
+        sender.send_message 'ERROR You must have 64 blocks.'
+        return false
+      end
+
       n = 6
       dots = (-n..n).map {|x|
         [sender.location.x.to_i + x, sender.location.y.to_i, sender.location.z - n]
@@ -62,6 +67,8 @@ module Build
           b.data = 0
           play_sound(sender.location, Sound::EXPLODE, 1.0, 0.0)
         end
+      sender.item_in_hand = nil
+      true
     when 'draw-circle'
       if !sender.item_in_hand.type.block? || sender.item_in_hand.amount < 64
         sender.send_message 'ERROR You must have 64 blocks.'
