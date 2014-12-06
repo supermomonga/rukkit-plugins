@@ -42,16 +42,36 @@ module Build
     case args.shift
     when 'help'
       sender.message '/rukkit build draw-circle n -- By consumes 64 blocks, it draws a circle line with n radius'
+    when 'draw-square'
+      n = 6
+      dots = (-n..n).map {|x|
+        [sender.location.x.to_i + x, sender.location.y.to_i, sender.location.z - n]
+      } + (-n..n).map {|z|
+        [sender.location.x.to_i - n, sender.location.y.to_i, sender.location.z + z]
+      } + (-n..n).map {|x|
+        [sender.location.x.to_i + x, sender.location.y.to_i, sender.location.z + n]
+      } + (-n..n).map {|z|
+        [sender.location.x.to_i + n, sender.location.y.to_i, sender.location.z + z]
+      }
+
+      btype = sender.item_in_hand.type
+      dots.map {|(x, y, z)| sender.world.get_block_at(x, y, z) }.
+        reject {|b| b.type.occluding? }.
+        each do |b|
+          b.type = btype
+          b.data = 0
+          play_sound(sender.location, Sound::EXPLODE, 1.0, 0.0)
+        end
     when 'draw-circle'
       if !sender.item_in_hand.type.block? || sender.item_in_hand.amount < 64
         sender.send_message 'ERROR You must have 64 blocks.'
         return false
       end
-      btype = sender.item_in_hand.type
 
       dots = circle(
         [sender.location.x.to_i, sender.location.y.to_i - 1, sender.location.z.to_i],
         10)
+      btype = sender.item_in_hand.type
       dots.map {|(x, y, z)| sender.world.get_block_at(x, y, z) }.
         reject {|b| b.type.occluding? }.
         each do |b|
