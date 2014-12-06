@@ -11,10 +11,10 @@ module SuperJump
 
   def iikanji_effect(loc)
     play_effect(loc, Effect::SMOKE, 0)
-    5.times do
-      orb = spawn(loc, EntityType::EXPERIENCE_ORB)
-      orb.experience = 0
-    end
+    # 5.times do
+    #   orb = spawn(loc, EntityType::EXPERIENCE_ORB)
+    #   orb.experience = 0
+    # end
   end
 
   def on_player_toggle_sneak(evt)

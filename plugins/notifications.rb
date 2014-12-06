@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 import 'org.bukkit.entity.Player'
+import 'org.bukkit.entity.Entity'
 import 'org.bukkit.Material'
 
 module Notifications
@@ -16,14 +17,20 @@ module Notifications
       equip_msg = player.item_in_hand.type == Material::AIR ?
         '' :
         " with #{player.item_in_hand.type}"
-      text = "[KILL] #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}#{equip_msg}."
+
+      case entity
+      when Chicken
+        text = "[KILL] Kawaisou! #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}#{equip_msg}."
+      else
+        text = "[KILL] Kawaisou! #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}#{equip_msg}."
+      end
       Lingr.post text
       broadcast text
 
-      10.times do
-        orb = spawn(entity.location, EntityType::EXPERIENCE_ORB)
-        orb.experience = 0
-      end
+      # 10.times do
+      #   orb = spawn(entity.location, EntityType::EXPERIENCE_ORB)
+      #   orb.experience = 0
+      # end
     end
   end
 
