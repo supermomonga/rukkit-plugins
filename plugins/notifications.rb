@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 import 'org.bukkit.entity.Player'
-import 'org.bukkit.entity.Entity'
+import 'org.bukkit.entity.Chicken'
 import 'org.bukkit.Material'
 
 module Notifications
