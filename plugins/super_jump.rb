@@ -47,6 +47,7 @@ module SuperJump
         x, z =
           Math.cos(phi / 180.0 * Math::PI),
           Math.sin(phi / 180.0 * Math::PI)
+        x, z = 0, 0 if player.sneaking?
 
         player.velocity = org.bukkit.util.Vector.new(
           x * 1.2, 0.8, z * 1.2)
