@@ -41,7 +41,8 @@ module Build
 
     case args.shift
     when 'help'
-      sender.message '/rukkit build draw-circle n -- By consumes 64 blocks, it draws a circle line with n radius'
+      sender.message '/rukkit build draw-circle -- By consuming 64 blocks you have in hand, it draws a circle line with 10 radius'
+      sender.message '/rukkit build draw-square -- By consuming 64 blocks you have in hand, it draws a square line with 8 radius'
     when 'draw-square'
       if !sender.item_in_hand.type.block? || sender.item_in_hand.amount < 64
         sender.send_message 'ERROR You must have 64 blocks.'
@@ -87,7 +88,7 @@ module Build
           play_sound(sender.location, Sound::EXPLODE, 1.0, 0.0)
         end
         sender.send_message "SUCCESS with consuing all your #{btype}s."
-      # sender.item_in_hand = nil
+      sender.item_in_hand = nil
 
       true
     end
