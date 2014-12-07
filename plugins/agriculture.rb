@@ -20,12 +20,17 @@ module Agriculture
       @num_seeded[player.name] += 1
 
       if @num_seeded[player.name] > 64
-        10.times do |i|
+        20.times do |i|
           later sec(i) do
             loc = player.location
             later sec(1) do
               play_sound(player.location, Sound::FIRE_IGNITE, 0.5, 1.0)
-              drop_item(loc, ItemStack.new(Material::ARROW, 1))
+              itemstack = [
+                -> { ItemStack.new(Material::ARROW, 1) },
+                -> { ItemStack.new(Material::STICK, 1) },
+                -> { ItemStack.new(Material::WOOD, 1) },
+              ].sample.()
+              drop_item(loc, itemstack)
             end
           end
         end
