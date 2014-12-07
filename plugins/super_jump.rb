@@ -59,10 +59,11 @@ module SuperJump
       iikanji_effect(player.location)
       later 0 do
         phi = (player.location.yaw + 90) % 360
-        x, z =
+        x, y, z =
           Math.cos(phi / 180.0 * Math::PI),
+          0.8,
           Math.sin(phi / 180.0 * Math::PI)
-        x, z = 0, 0 if player.sneaking?
+        x, y, z = 0, 20, 0 if player.sneaking?
 
         entity = player.vehicle ? player.vehicle : player
         player.velocity = org.bukkit.util.Vector.new(
@@ -70,7 +71,7 @@ module SuperJump
       end
 
       @vertical_accelerated[player.name] = true
-      later sec(0.5) do
+      later sec(0.6) do
         @vertical_accelerated[player.name] = false
       end
     end
