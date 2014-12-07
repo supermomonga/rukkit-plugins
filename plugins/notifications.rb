@@ -28,9 +28,9 @@ module Notifications
         if entity.baby?
           evt.dropped_exp *= 3
         end
-        text = "[KILL] #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect} (exp #{evt.dropped_exp})."
+        text = "[KILL] #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect} (exp #{evt.dropped_exp}.)"
       else
-        text = "[KILL] #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect} (exp #{evt.dropped_exp})."
+        text = "[KILL] #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect} (exp #{evt.dropped_exp}.)"
       end
       Lingr.post text
       broadcast text
@@ -52,6 +52,7 @@ module Notifications
     text = [
       "[BED] #{player.name}さんがベッドに横たわっておられる",
       "[BED] #{player.name}さんがベッドに横たわっておられる",
+      "[BED] #{player.name} went to bed.",
       "[BED] #{player.name}さんがベッドに縦たわっておられる",
       "[BED] #{player.name}さん爆睡中、寝坊まちがいなし"].sample
 
