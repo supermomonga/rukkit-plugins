@@ -4,13 +4,6 @@ module Dummy
   extend self
   extend Rukkit::Util
 
-  # def on_player_toggle_sneak(evt)
-  #   player = evt.player
-  #   if player.name == 'ujm'
-  #     play_sound(add_loc(player.location, 0, 5, 0), Sound.values.to_a.sample, 1.0, 0.0)
-  #   end
-  # end
-
   def on_command(sender, command, label, args)
     return unless label == 'rukkit'
 
@@ -27,7 +20,9 @@ module Dummy
         end
       end
     when 'what-time'
-      broadcast Time.now.to_s
+      msg = "#{sender.name} (what-time) => #{Time.now.to_s}"
+      broadcast msg
+      Lingr.post msg
     when 'virtual'
       material = Material.const_get(args.shift.upcase) rescue return
       Bukkit.online_players.each do |player|
@@ -35,12 +30,5 @@ module Dummy
       end
     else
     end
-  end
-
-  def on_player_move(evt)
-    # player = evt.player
-    # Bukkit.online_players.each do |player|
-    #   player.send_block_change(player.location, Material::CARPET, 0)
-    # end
   end
 end
