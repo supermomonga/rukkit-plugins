@@ -85,7 +85,7 @@ module Notifications
       later sec(1) do
         play_sound(player.location, Sound::LEVEL_UP, 0.5, 0.5)
         if @good_morning
-          text = "[BED] あさだーーーーーーー! #{%w[ょ ゅ ゃ ね vim 肉 !].sample}"
+          text = "[BED] あさだーーーーーーー! #{%w[ょ ゅ ゃ ね vim 肉 ! 朝です。 浅田].sample}"
           Lingr.post text
           broadcast text
           @good_morning = false
