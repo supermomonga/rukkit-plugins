@@ -95,6 +95,6 @@ module Notifications
   end
 
   def on_player_achievement_awarded(evt)
-    Lingr.post [evt.player.name, evt.achievement].inspect
+    Lingr.post [evt.player.name, evt.achievement.name].inspect
   end
 end
