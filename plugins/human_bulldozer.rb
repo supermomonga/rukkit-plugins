@@ -27,8 +27,14 @@ module HumanBulldozer
       play_sound(player.location, Sound::DONKEY_DEATH , 1.0, 0.0)
       play_sound(player.location, Sound::LEVEL_UP , 0.8, 1.5)
 
-      player.send_message '(HPが全回復します)'
+      player.send_message '(HPが全回復し、expちょっともらえます)'
       player.health = player.max_health
+      10.times do |i|
+        later sec(i) do
+          orb = spawn(player.location, EntityType::EXPERIENCE_ORB)
+          orb.experience = 1
+        end
+      end
     end
   end
 end
