@@ -2,6 +2,7 @@
 
 import 'org.bukkit.entity.Player'
 import 'org.bukkit.entity.Chicken'
+import 'org.bukkit.entity.Zombie'
 import 'org.bukkit.Material'
 
 module Notifications
