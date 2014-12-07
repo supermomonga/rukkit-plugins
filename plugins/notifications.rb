@@ -17,7 +17,7 @@ module Notifications
     when Player
       case entity
       when Chicken
-        text = "[KILL] かわいそう。・°°・(((p(≧□≦)q)))・°°・。ｳﾜｰﾝ!! #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}."
+        text = "[KILL] ・°°・(((p(≧□≦)q)))・°°・。ｳﾜｰﾝ!! #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}."
       when Player
         if player.name == entity.name
           text = "[KILL] #{player.name}さんが#{player.item_in_hand.type}で自害いたしました。というかたぶん事故です。"
@@ -34,11 +34,6 @@ module Notifications
       end
       Lingr.post text
       broadcast text
-
-      # 10.times do
-      #   orb = spawn(entity.location, EntityType::EXPERIENCE_ORB)
-      #   orb.experience = 0
-      # end
     end
   end
 
