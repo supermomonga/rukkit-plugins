@@ -18,11 +18,8 @@ module StrongBoots
       when EntityDamageEvent::DamageCause::FALL
         b = player.inventory.boots or return
 
-        # just for now
-        # player.send_message("[DEBUG] you have #{b}")
         evt.cancelled = true
-        play_sound(
-          add_loc(player.location, 0, 5, 0), Sound::BAT_HURT, 0.5, 0.0)
+        play_sound(player.location, Sound::BAT_HURT, 0.5, 0.0)
 
         if !@deprecated_message[player.name]
           @deprecated_message[player.name] = true
