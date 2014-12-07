@@ -31,8 +31,11 @@ module HumanBulldozer
       player.health = player.max_health
       10.times do |i|
         later sec(i) do
-          orb = spawn(player.location, EntityType::EXPERIENCE_ORB)
-          orb.experience = 1
+          loc = player.location
+          later sec(1) do
+            orb = spawn(loc, EntityType::EXPERIENCE_ORB)
+            orb.experience = 1
+          end
         end
       end
     end
