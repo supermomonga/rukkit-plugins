@@ -14,17 +14,13 @@ module Notifications
 
     case player
     when Player
-      equip_msg = player.item_in_hand.type == Material::AIR ?
-        '' :
-        " with #{player.item_in_hand.type}"
-
       case entity
       when Chicken
-        text = "[KILL] かわいそう。・°°・(((p(≧□≦)q)))・°°・。ｳﾜｰﾝ!! #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}#{equip_msg}."
+        text = "[KILL] かわいそう。・°°・(((p(≧□≦)q)))・°°・。ｳﾜｰﾝ!! #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}."
       when Player
-        text = "[KILL] 殺人事件発生! #{player.name}容疑者が#{entity.name}さんを殺害した疑いで書類送検されました (#{equip_msg})"
+        text = "[KILL] 殺人事件発生! #{player.name}容疑者が#{entity.name}さんを#{player.item_in_hand.type}殺害した疑いで書類送検されました"
       else
-        text = "[KILL] #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}#{equip_msg}."
+        text = "[KILL] #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}."
       end
       Lingr.post text
       broadcast text
