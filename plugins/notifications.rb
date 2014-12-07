@@ -23,8 +23,13 @@ module Notifications
         else
           text = "[KILL] 殺人事件発生! #{player.name}容疑者が#{entity.name}さんを#{player.item_in_hand.type}殺害した疑いで書類送検されました"
         end
+      when Zombie
+        if entity.baby?
+          evt.dropped_exp *= 3
+        end
+        text = "[KILL] #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect} (exp #{evt.dropped_exp})."
       else
-        text = "[KILL] #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}."
+        text = "[KILL] #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect} (exp #{evt.dropped_exp})."
       end
       Lingr.post text
       broadcast text
