@@ -63,7 +63,7 @@ module SuperJump
           Math.cos(phi / 180.0 * Math::PI),
           0.8,
           Math.sin(phi / 180.0 * Math::PI)
-        x, y, z = 0, 20, 0 if player.sneaking?
+        x, y, z = 0, 10, 0 if player.sneaking?
 
         entity = player.vehicle ? player.vehicle : player
         player.velocity = org.bukkit.util.Vector.new(
