@@ -48,7 +48,11 @@ module Notifications
 
   def on_player_bed_enter(evt)
     player = evt.player
-    text = "[BED] #{player.name}さんがベッドに横たわっておられる"
+    text = [
+      "[BED] #{player.name}さんがベッドに横たわっておられる",
+      "[BED] #{player.name}さんがベッドに横たわっておられる",
+      "[BED] #{player.name}さんがベッドに縦たわっておられる",
+      "[BED] #{player.name}さん爆睡中、寝坊まちがいなし"].sample
 
     later sec(0.5) do
       awake_players = Bukkit.online_players.to_a.reject(&:sleeping?)
