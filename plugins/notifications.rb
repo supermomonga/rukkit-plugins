@@ -18,7 +18,11 @@ module Notifications
       when Chicken
         text = "[KILL] かわいそう。・°°・(((p(≧□≦)q)))・°°・。ｳﾜｰﾝ!! #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}."
       when Player
-        text = "[KILL] 殺人事件発生! #{player.name}容疑者が#{entity.name}さんを#{player.item_in_hand.type}殺害した疑いで書類送検されました"
+        if player.name == entity.name
+          text = "[KILL] #{player.name}さんが#{player.item_in_hand.type}で自害いたしました。というかたぶん事故です。"
+        else
+          text = "[KILL] 殺人事件発生! #{player.name}容疑者が#{entity.name}さんを#{player.item_in_hand.type}殺害した疑いで書類送検されました"
+        end
       else
         text = "[KILL] #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}."
       end
