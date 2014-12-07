@@ -10,7 +10,9 @@ module SuperJump
   extend Rukkit::Util
 
   def iikanji_effect(loc)
-    play_effect(loc, Effect::SMOKE, 0)
+    8.times do |i|
+      play_effect(loc, Effect::SMOKE, i)
+    end
     # 5.times do
     #   orb = spawn(loc, EntityType::EXPERIENCE_ORB)
     #   orb.experience = 0
@@ -52,7 +54,8 @@ module SuperJump
 
     @vertical_accelerated ||= {}
     unless @vertical_accelerated[player.name]
-      play_sound(player.location, Sound::BAT_IDLE, 0.5, 0.0)
+      # play_sound(player.location, Sound::BAT_IDLE, 0.5, 0.0)
+      play_sound(player.location, Sound::BURP, 0.5, 0.0)
       iikanji_effect(player.location)
       later 0 do
         phi = (player.location.yaw + 90) % 360
