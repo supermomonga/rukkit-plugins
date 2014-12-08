@@ -120,7 +120,8 @@ module ChatConvert
     /(sksn|すけさん|skesan)/ => 'スケさん',
     /^zb$/ => 'ゾンビ',
     /^zombies?$/ => 'ゾンビ',
-    /^!\?$/ => '!? な、なんだってーΩ ΩΩ'
+    /^!\?$/ => '!? な、なんだってーΩ ΩΩ',
+    /nin'i/ => '任意',
   } # }}}
   RANDOM_CONVERSION_TABLE = { # {{{
     /^thx[.!]*$/ => [
