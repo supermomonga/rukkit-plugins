@@ -6,6 +6,7 @@ import 'org.bukkit.ChatColor'
 module ChatConvert
   # for warning
   # TODO: Find smarter way
+  remove_const :KANA_CONVERSION_TABLE if const_defined? :KANA_CONVERSION_TABLE
   remove_const :ROMAJI_CONVERSION_TABLE if const_defined? :ROMAJI_CONVERSION_TABLE
   remove_const :CONVERSION_TABLE if const_defined? :CONVERSION_TABLE
   remove_const :RANDOM_CONVERSION_TABLE if const_defined? :RANDOM_CONVERSION_TABLE
