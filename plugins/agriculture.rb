@@ -19,7 +19,7 @@ module Agriculture
       @num_seeded[player.name] ||= 0
       @num_seeded[player.name] += 1
 
-      if @num_seeded[player.name] > 64
+      if @num_seeded[player.name] > 100
         20.times do |i|
           later sec(i) do
             loc = player.location
@@ -34,7 +34,8 @@ module Agriculture
             end
           end
         end
-        text = "[AGRICULTURE] #{player.name} planted 64 crops. She/he gains bonus."
+        play_sound(player.location, Sound::LEVEL_UP, 0.5, 1.0)
+        text = "[AGRICULTURE] #{player.name} planted 100 crops. She/he gains bonus."
         broadcast text
         Lingr.post text
         @num_seeded[player.name] = 0
