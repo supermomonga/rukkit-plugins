@@ -61,12 +61,12 @@ module Build
       }
 
       btype = sender.item_in_hand.type
-      dots.map {|(x, y, z)| sender.world.get_block_at(x, y, z) }.
+      dots.each {|(x, y, z)| sender.world.get_block_at(x, y, z) }.
         reject {|b| b.type.occluding? }.
         each do |b|
           b.type = btype
           b.data = 0
-          play_sound(sender.location, Sound::EXPLODE, 1.0, 0.0)
+          play_sound(b.location, Sound::EXPLODE, 1.0, rand(10) * 0.1)
         end
       sender.item_in_hand = nil
       true
@@ -82,16 +82,15 @@ module Build
         [sender.location.x.to_i, sender.location.y.to_i - 1, sender.location.z.to_i],
         n)
       btype = sender.item_in_hand.type
-      dots.map {|(x, y, z)| sender.world.get_block_at(x, y, z) }.
+      dots.each {|(x, y, z)| sender.world.get_block_at(x, y, z) }.
         reject {|b| b.type.occluding? }.
         each do |b|
           b.type = btype
           b.data = 0
-          play_sound(sender.location, Sound::EXPLODE, 1.0, 0.0)
+          play_sound(b.location, Sound::EXPLODE, 1.0, rand(10) * 0.1)
         end
         sender.send_message "SUCCESS with consuing all your #{btype}s."
       sender.item_in_hand = nil
-
       true
     end
   end
