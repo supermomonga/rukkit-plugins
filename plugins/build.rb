@@ -68,6 +68,12 @@ module Build
           b.data = 0
           play_sound(b.location, Sound::EXPLODE, 1.0, rand(10) * 0.1)
         end
+
+      # for debugging just for now
+      require 'pp'
+      pp dots
+
+      sender.send_message "SUCCESS with consuing all your #{btype}s."
       sender.item_in_hand = nil
       true
     when 'draw-circle'
@@ -89,7 +95,7 @@ module Build
           b.data = 0
           play_sound(b.location, Sound::EXPLODE, 1.0, rand(10) * 0.1)
         end
-        sender.send_message "SUCCESS with consuing all your #{btype}s."
+      sender.send_message "SUCCESS with consuing all your #{btype}s."
       sender.item_in_hand = nil
       true
     end
