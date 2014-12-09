@@ -12,15 +12,18 @@ module RareMaterialNotification
     msg =
       case item.item_stack.type
       when Material::DIAMOND_ORE
-        'ダイアモンド鉱石ゲットだぜ！'
+        "[RARE MATERIAL] <#{player.name}> ダイアモンド鉱石ゲットだぜ！"
       when Material::LAPIS_ORE
-        'ラピスラズリ鉱石 ヽ(*´∀｀)ノ ｷｬｯﾎｰｲ!!'
+        "[RARE MATERIAL] <#{player.name}> ラピスラズリ鉱石 ヽ(*´∀｀)ノ ｷｬｯﾎｰｲ!!"
       when Material::EMERALD_ORE
-        'エメラルド鉱石 ｷﾀﾜｧ*:.｡..｡.:*･ﾟ (n‘∀‘)ηﾟ･*:.｡..｡.:* ﾐ ☆'
+        "[RARE MATERIAL] <#{player.name}> エメラルド鉱石 ｷﾀﾜｧ*:.｡..｡.:*･ﾟ (n‘∀‘)ηﾟ･*:.｡..｡.:* ﾐ ☆"
       else
         nil
       end
 
-    player.chat(msg) if msg
+    if msg
+      broadcast msg
+      Lingr.post msg
+    end
   end
 end
