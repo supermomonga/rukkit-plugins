@@ -46,4 +46,22 @@ module HumanBulldozer
       end
     end
   end
+
+  def on_command(sender, command, label, args)
+    return unless label == 'rukkit'
+    args = args.to_a
+    return unless args.shift == 'human-bulldozer'
+
+    soons = @num_blocks[sender.name].select {|k, v| 120 < v && v <= 180 }
+    verysoons = @num_blocks[sender.name].select {|k, v| 180 < v }
+
+    text =
+      if soons.empty? && verysoons.empty?
+        "[HUMAN BULLDOZER] #{sender.name} Nothing to report"
+      else
+        "[HUMAN BULLDOZER] #{sender.name} soon: #{soons.values.join ', '}, very soon: #{verysoons.values.join ', '}"
+      end
+    Lingr.post(text)
+    broadcast(text)
+  end
 end
