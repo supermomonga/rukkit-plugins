@@ -29,18 +29,9 @@ module HumanBulldozer
     if @num_blocks[player.name][block.type] > 200
       @num_blocks[player.name][block.type] = 0
 
-      text = "[HUMAN BULLDOZER] #{player.name} broke 200 #{block.type}s."
+      text = "[HUMAN BULLDOZER] #{player.name} broke 200 #{block.type}s. #{player.name} can dig faster for 1 minute from now, without consuming pickaxe!"
       Lingr.post text
       broadcast text
-
-      text = "[HUMAN BULLDOZER] #{player.name} can dig faster for 1 minute from now!"
-      Lingr.post text
-      broadcast text
-      player.add_potion_effect(PotionEffectType::FAST_DIGGING.create_effect(sec(60), 7))
-
-      text = "[HUMAN BULLDOZER] #{player.name} no pickaxe use consumption for 1 minutes, but no counter increment as well during that!"
-      Lingr.post(text)
-      broadcast(text)
 
       @bonus_time[player.name] = true
       later sec(60) do
