@@ -3,6 +3,7 @@
 import 'org.bukkit.Sound'
 import 'org.bukkit.entity.Player'
 import 'org.bukkit.event.entity.EntityDamageEvent'
+import 'org.bukkit.potion.PotionEffectType'
 
 module HumanBulldozer
   extend self
@@ -20,9 +21,14 @@ module HumanBulldozer
     if @num_blocks[player.name][block.type] > 200
       @num_blocks[player.name][block.type] = 0
 
-      text = "#{player.name} broke 200 #{block.type}s!"
+      text = "[HUMAN BULLDOZER] #{player.name} broke 200 #{block.type}s."
       Lingr.post text
       broadcast text
+
+      text = "[HUMAN BULLDOZER] #{player.name} can dig faster for 1 minute from now!"
+      Lingr.post text
+      broadcast text
+      player.add_potion_effect(PotionEffectType::FAST_DIGGING.create_effect(sec(60), 2))
 
       play_sound(player.location, Sound::DONKEY_DEATH , 1.0, 0.0)
       play_sound(player.location, Sound::LEVEL_UP , 0.8, 1.5)
