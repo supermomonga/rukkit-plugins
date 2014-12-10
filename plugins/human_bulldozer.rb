@@ -9,6 +9,9 @@ module HumanBulldozer
   extend self
   extend Rukkit::Util
 
+  @num_blocks ||= {}
+  @bonus_time ||= {}
+
   def on_block_break(evt)
     block = evt.block
     player = evt.player
@@ -19,7 +22,6 @@ module HumanBulldozer
       return
     end
 
-    @num_blocks ||= {}
     @num_blocks[player.name] ||= {}
     @num_blocks[player.name][block.type] ||= 0
     @num_blocks[player.name][block.type] += 1
