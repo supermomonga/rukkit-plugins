@@ -59,7 +59,7 @@ module HumanBulldozer
       if soons.empty? && verysoons.empty?
         "[HUMAN BULLDOZER] #{sender.name} Nothing to report"
       else
-        "[HUMAN BULLDOZER] #{sender.name} soon: #{soons.values.join ', '}, very soon: #{verysoons.values.join ', '}"
+        "[HUMAN BULLDOZER] #{sender.name} soon: #{soons.keys.join ', '}, very soon: #{verysoons.keys.join ', '}"
       end
     Lingr.post(text)
     broadcast(text)
