@@ -36,15 +36,22 @@ module HumanBulldozer
       text = "[HUMAN BULLDOZER] #{player.name} can dig faster for 1 minute from now!"
       Lingr.post text
       broadcast text
-      player.add_potion_effect(PotionEffectType::FAST_DIGGING.create_effect(sec(60), 10))
+      player.add_potion_effect(PotionEffectType::FAST_DIGGING.create_effect(sec(60), 7))
 
       text = "[HUMAN BULLDOZER] #{player.name} no pickaxe use consumption for 1 minutes, but no counter increment as well during that!"
       Lingr.post(text)
       broadcast(text)
+
       @bonus_time[player.name] = true
       later sec(60) do
         @bonus_time[player.name] = false
+
+        play_sound(player.location, Sound::DONKEY_DEATH , 1.0, 0.3)
+        text = "[HUMAN BULLDOZER] #{player.name}'s bonus time ended."
+        Lingr.post(text)
+        broadcast(text)
       end
+
 
       play_sound(player.location, Sound::DONKEY_DEATH , 1.0, 0.0)
       play_sound(player.location, Sound::LEVEL_UP , 0.8, 1.5)
