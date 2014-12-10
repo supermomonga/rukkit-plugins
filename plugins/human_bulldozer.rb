@@ -26,7 +26,7 @@ module HumanBulldozer
     @num_blocks[player.name][block.type] ||= 0
     @num_blocks[player.name][block.type] += 1
 
-    if @num_blocks[player.name][block.type] > 20
+    if @num_blocks[player.name][block.type] > 200
       @num_blocks[player.name][block.type] = 0
 
       text = "[HUMAN BULLDOZER] #{player.name} broke 200 #{block.type}s."
