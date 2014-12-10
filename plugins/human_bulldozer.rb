@@ -18,7 +18,7 @@ module HumanBulldozer
 
     if @bonus_time[player.name]
       evt.cancelled = true
-      block.break_natually(player.item_in_hand)
+      block.break_naturally(player.item_in_hand)
       return
     end
 
