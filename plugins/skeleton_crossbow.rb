@@ -5,7 +5,6 @@ require 'set'
 # import 'org.bukkit.inventory.ItemStack'
 import 'org.bukkit.entity.Skeleton'
 import 'org.bukkit.event.entity.CreatureSpawnEvent'
-import 'org.bukkit.entity.Skeleton.SkeletonType'
 import 'org.bukkit.entity.Arrow'
 
 module SkeltonCrossbow
@@ -18,7 +17,7 @@ module SkeltonCrossbow
     return unless evt.spawn_reason == CreatureSpawnEvent::SpawnReason::NATURAL
     skelton = evt.entity
     return unless Skeleton === skeleton
-    return unless skeleton.skeleton_type == SkeletonType::NORMAL
+    return unless skeleton.skeleton_type == Skeleton::SkeletonType::NORMAL
     # return unless rand(10) == 0
 
     @skeletons.add(skeleton)
