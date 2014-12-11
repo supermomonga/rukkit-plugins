@@ -34,7 +34,7 @@ module SkeletonCrossbow
   def on_entity_death(evt)
     entity = evt.entity
     if @skeletons.include?(entity)
-      evt.dropped_exp *= 10
+      evt.dropped_exp *= 2
     end
   end
 
