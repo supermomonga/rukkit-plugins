@@ -22,6 +22,7 @@ module SkeltonCrossbow
     # return unless rand(10) == 0
 
     @skeletons.add(skeleton)
+    Bukkit.get_player('ujm').send_message @skeletons.inspect
   end
 
   def on_projectile_launch(evt)
