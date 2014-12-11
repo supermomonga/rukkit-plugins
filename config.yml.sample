@@ -12,6 +12,7 @@ rukkit:
     # - notifications
     - human_bulldozer
     - shared_chest
+    - skeleton_crossbow
   scripts:
     - lingr
   plugin_config:
