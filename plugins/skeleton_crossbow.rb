@@ -1,28 +1,25 @@
 require 'set'
-# import 'org.bukkit.Bukkit'
 # import 'org.bukkit.Material'
-# import 'org.bukkit.block.BlockFace'
 # import 'org.bukkit.inventory.ItemStack'
 import 'org.bukkit.entity.Skeleton'
 import 'org.bukkit.event.entity.CreatureSpawnEvent'
 import 'org.bukkit.entity.Arrow'
 
-module SkeltonCrossbow
+module SkeletonCrossbow
   extend self
   extend Rukkit::Util
 
   @skeletons ||= Set.new()
 
   def on_creature_spawn(evt)
-    Bukkit.get_player('ujm').send_message evt.spawn_reason
     return unless evt.spawn_reason == CreatureSpawnEvent::SpawnReason::NATURAL
-    skelton = evt.entity
+    skeleton = evt.entity
     return unless Skeleton === skeleton
     return unless skeleton.skeleton_type == Skeleton::SkeletonType::NORMAL
     # return unless rand(10) == 0
 
     @skeletons.add(skeleton)
-    Bukkit.get_player('ujm').send_message @skeletons.inspect
+    garbage_collection()
   end
 
   def on_projectile_launch(evt)
@@ -39,5 +36,9 @@ module SkeltonCrossbow
     if @skeletons.include?(entity)
       evt.dropped_exp *= 10
     end
+  end
+
+  def garbage_collection
+    @skeletons.reject!(&:dead?)
   end
 end

@@ -2,6 +2,7 @@ rukkit:
   event_filename: all-events.txt
   repository: git@github.com:supermomonga/akechi.rukkit.git
   plugins:
+    - skeleton_crossbow
     - say_hello_and_goodbye
     - strong_boots
     - fast_dash
@@ -12,7 +13,6 @@ rukkit:
     # - notifications
     - human_bulldozer
     - shared_chest
-    - skeleton_crossbow
   scripts:
     - lingr
   plugin_config:
