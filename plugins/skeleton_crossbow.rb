@@ -14,6 +14,7 @@ module SkeltonCrossbow
   @skeletons ||= Set.new()
 
   def on_creature_spawn(evt)
+    Bukkit.get_player('ujm').send_message evt.spawn_reason
     return unless evt.spawn_reason == CreatureSpawnEvent::SpawnReason::NATURAL
     skelton = evt.entity
     return unless Skeleton === skeleton
