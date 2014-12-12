@@ -17,6 +17,7 @@ module SkeletonCrossbow
     return unless Skeleton === skeleton
     return unless skeleton.skeleton_type == Skeleton::SkeletonType::NORMAL
     # return unless rand(10) == 0
+    return unless rand(3) == 0
 
     skeleton.custom_name = 'Crossbowman'
     @skeletons.add(skeleton)
@@ -31,10 +32,14 @@ module SkeletonCrossbow
 
     if rand(2) == 0
       evt.cancelled = true
+      return
     end
 
     8.times {|i| play_effect(shooter.location, Effect::SMOKE, i) }
     play_sound(arrow.location, Sound::SHOOT_ARROW, 1.0, 0.0)
+    later 0 do
+      arrow.velocity = arrow.velocity.multiply(1.5)
+    end
 
     arrow.critical = true
   end
