@@ -33,6 +33,8 @@ module HumanBulldozer
       Lingr.post text
       broadcast text
 
+      player.add_potion_effect(PotionEffectType::FAST_DIGGING.create_effect(sec(60), 5))
+
       @bonus_time[player.name] = true
       later sec(60) do
         @bonus_time[player.name] = false
