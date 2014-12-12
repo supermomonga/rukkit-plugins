@@ -96,17 +96,6 @@ module Player
   def block_with_sword?
     self.equip_sword? && self.is_blocking
   end
-
-  attr_writer :knight
-  attr_writer :fighter
-
-  def knight?
-    @knight ? true : false
-  end
-
-  def fighter?
-    @fighter ? true : false
-  end
 end
 
 class Material
