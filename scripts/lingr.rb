@@ -85,7 +85,7 @@ class LingrServer < Sinatra::Base
         self,
         Port: Rukkit::Util.plugin_config('lingr.server_port'),
         AccessLog: [],
-        Logger: WEBrick::Log.new('/dev/null')
+        Logger: WEBrick::Log.new(Rukkit::Util.rukkit_dir + 'lingr_webrick.log')
       )
     rescue Exception => e
       puts e.message
