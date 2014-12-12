@@ -76,6 +76,7 @@ class LingrServer < Sinatra::Base
     end
 
     begin
+      puts "launch server on port #{Rukkit::Util.plugin_config('lingr.server_port')}."
       Rack::Handler::WEBrick.run(
         self,
         Port: Rukkit::Util.plugin_config('lingr.server_port'),
