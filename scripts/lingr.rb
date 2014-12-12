@@ -47,18 +47,18 @@ module Lingr
 end
 
 class LingrServer < Sinatra::Base
-  # register Sinatra::Reloader
-  #
-  # post '/chats/' do
-  #   JSON.parse(request.body.read)['events'].map{ |e|
-  #     e['message']
-  #   }.each do |m|
-  #     text = m['text']
-  #     user = Rukkit::Util.colorize(m['nickname'], :gray)
-  #     message = "<#{user}> #{text}"
-  #     Rukkit::Util.broadcast message
-  #   end
-  # end
+  register Sinatra::Reloader
+
+  post '/chats/' do
+    JSON.parse(request.body.read)['events'].map{ |e|
+      e['message']
+    }.each do |m|
+      text = m['text']
+      user = Rukkit::Util.colorize(m['nickname'], :gray)
+      message = "<#{user}> #{text}"
+      Rukkit::Util.broadcast message
+    end
+  end
 
   get '/' do
     {
@@ -88,24 +88,24 @@ class LingrServer < Sinatra::Base
     end
   end
 
-  # private
-  # def agent
-  #   @@agent ||= Mechanize.new
-  # end
-  # def login
-  #   # TODO
-  # end
-  # def bot_list
-  #   # TODO
-  #   res = agent.get 'http://lingr.com/developer'
-  #   if res.code == '200'
-  #   else
-  #     login
-  #   end
-  # end
-  # def create_bot(id, name)
-  #   # TODO
-  # end
+  private
+  def agent
+    @@agent ||= Mechanize.new
+  end
+  def login
+    # TODO
+  end
+  def bot_list
+    # TODO
+    res = agent.get 'http://lingr.com/developer'
+    if res.code == '200'
+    else
+      login
+    end
+  end
+  def create_bot(id, name)
+    # TODO
+  end
 end
 
 Thread.start do
