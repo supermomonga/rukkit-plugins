@@ -15,8 +15,8 @@ module PlayerJob
     @be_fighters = @be_fighters || {}
     @be_knights[player] = true if random.rand(100) < 50
     @be_fighters[player] = true if random.rand(100) < 50
-    broadcast "#{player.name}さんが剣士になりました" if @be_knights[player]
-    broadcast "#{player.name}さんが武闘家になりました" if @be_fighters[player]
+    broadcast "#{player.name}さんが剣士になりました(剣の攻撃と防御が強くなります!)" if @be_knights[player]
+    broadcast "#{player.name}さんが武闘家になりました(装備なし、手持ちなしで攻撃と防御が強くなります!)" if @be_fighters[player]
   end
 
   def on_player_quit(evt)
