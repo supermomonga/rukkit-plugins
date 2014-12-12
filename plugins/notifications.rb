@@ -17,7 +17,7 @@ module Notifications
     when Player
       case entity
       when Chicken
-        text = "[KILL] ・°°・(((p(≧□≦)q)))・°°・。ｳﾜｰﾝ!! #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect}."
+        text = "[KILL] ・°°・(((p(≧□≦)q)))・°°・。ｳﾜｰﾝ!! #{player.name} killed a #{readable_name(entity)}."
       when Player
         if player.name == entity.name
           text = "[KILL] #{player.name}さんが#{player.item_in_hand.type}で自害いたしました。というかたぶん事故です。"
@@ -28,14 +28,26 @@ module Notifications
         if entity.baby?
           evt.dropped_exp *= 3
         end
-        text = "[KILL] #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect} (exp #{evt.dropped_exp}.)"
+        text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
       else
-        text = "[KILL] #{player.name} killed a #{entity.type ? entity.type.name.downcase : entity.inspect} (exp #{evt.dropped_exp}.)"
+        text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
       end
       Lingr.post text
       broadcast text
     end
   end
+
+  def readable_name(entity)
+    case
+    when entity.custom_name
+      entity.custom_name
+    when entity.type
+      entity.type.name.downcase
+    else
+      entity.inspect
+    end
+  end
+  private :readable_name
 
   def on_player_death(evt)
     player = evt.entity

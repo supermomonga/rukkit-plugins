@@ -18,6 +18,7 @@ module SkeletonCrossbow
     return unless skeleton.skeleton_type == Skeleton::SkeletonType::NORMAL
     # return unless rand(10) == 0
 
+    skeleton.custom_name = 'Crossbowman'
     @skeletons.add(skeleton)
     garbage_collection()
   end
@@ -28,7 +29,14 @@ module SkeletonCrossbow
     shooter = arrow.shooter
     return unless @skeletons.include?(shooter)
 
-    play_sound(arrow.location, Sound::EXPLODE, 1.0, 0.0)
+    if rand(2) == 0
+      evt.cancelled = true
+    end
+
+    8.times {|i| play_effect(shooter.location, Effect::SMOKE, i) }
+    play_sound(arrow.location, Sound::SHOOT_ARROW, 1.0, 0.0)
+
+    arrow.critical = true
   end
 
   def on_entity_death(evt)
