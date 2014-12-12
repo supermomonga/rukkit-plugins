@@ -49,6 +49,10 @@ end
 class LingrServer < Sinatra::Base
   register Sinatra::Reloader
 
+  before do
+    p "Just for debug"
+  end
+
   post '/chats/' do
     JSON.parse(request.body.read)['events'].map{ |e|
       e['message']
