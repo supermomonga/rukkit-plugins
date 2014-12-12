@@ -1,4 +1,5 @@
 # encoding: utf-8
+require 'set'
 import 'org.bukkit.entity.Player'
 import 'org.bukkit.Material'
 
@@ -11,12 +12,12 @@ module PlayerJob
     random = Random.new
 
     # become job with 50% of probability
-    @be_knights = @be_knights || {}
-    @be_fighters = @be_fighters || {}
-    @be_knights[player] = true if random.rand(100) < 50
-    @be_fighters[player] = true if random.rand(100) < 50
-    broadcast "#{player.name}さんが剣士になりました(剣の攻撃と防御が強くなります!)" if @be_knights[player]
-    broadcast "#{player.name}さんが武闘家になりました(装備なし、手持ちなしで攻撃と防御が強くなります!)" if @be_fighters[player]
+    @be_knights ||= Set.new
+    @be_fighters ||= Set.new
+    @be_knights.add(player) if random.rand(100) < 50
+    @be_fighters.add(player) if random.rand(100) < 50
+    broadcast "#{player.name}さんが剣士になりました(剣の攻撃と防御が強くなります!)" if @be_knights.include?(player)
+    broadcast "#{player.name}さんが武闘家になりました(装備なし、手持ちなしで攻撃と防御が強くなります!)" if @be_fighters.include?(player)
   end
 
   def on_player_quit(evt)
@@ -35,12 +36,12 @@ module PlayerJob
     damagee = evt.get_entity
 
     if damager.is_a?(Player)
-      if @be_knights.key?(damager) && damager.equip_sword?
+      if @be_knights.include?(damager) && damager.equip_sword?
         evt.set_damage(evt.get_damage + 1.0)
       end
     end
     if damagee.is_a?(Player)
-      if @be_knights.key?(damagee) && damagee.block_with_sword?
+      if @be_knights.include?(damagee) && damagee.block_with_sword?
         evt.set_damage(damage_after_defend(evt.get_damage, 3.0))
       end
     end
@@ -51,12 +52,12 @@ module PlayerJob
     damagee = evt.get_entity
 
     if damager.is_a?(Player)
-      if @be_fighters.key?(damager) && damager.naked?
+      if @be_fighters.include?(damager) && damager.naked?
         evt.set_damage(evt.get_damage + 3.0)
       end
     end
     if damagee.is_a?(Player)
-      if @be_fighters.key?(damagee) && damagee.naked?
+      if @be_fighters.include?(damagee) && damagee.naked?
         evt.set_damage(damage_after_defend(evt.get_damage, 10.0))
       end
     end
