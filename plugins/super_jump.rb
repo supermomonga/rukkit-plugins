@@ -84,7 +84,7 @@ module SuperJump
     entity = evt.entity
     return unless block_below(block).type == Material::GOLD_ORE
 
-    play_sound(player.location, Sound::CAT_HIT, 0.5, 1.0)
+    play_sound(entity.location, Sound::CAT_HIT, 0.5, 1.0)
     later 0 do
       entity.velocity.y = 1.5
     end
