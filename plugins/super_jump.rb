@@ -77,16 +77,20 @@ module SuperJump
     end
   end
 
+  def on_player_interact(evt)
+    return unless org.bukkit.event.block.Action::PHYSICAL === evt.action
+    on_entity_interact(evt) # This is tricky
+  end
+
   def on_entity_interact(evt)
     block = evt.block
-    p :on_entity_interact, block.type
     return unless block.type == Material::WOOD_PLATE
     entity = evt.entity
     return unless block_below(block).type == Material::GOLD_ORE
 
     play_sound(entity.location, Sound::CAT_HIT, 0.5, 1.0)
     later 0 do
-      entity.velocity.y = 1.5
+      entity.velocity = entity.velocity.tap {|v| v.set_y(jfloat(1.5)) }
     end
   end
 end
