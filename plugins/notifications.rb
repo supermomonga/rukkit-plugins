@@ -23,7 +23,7 @@ module Notifications
           text = "[KILL] #{player.name}さんが#{player.item_in_hand.type}で自害いたしました。というかたぶん事故です。"
         else
           text = "[KILL] 殺人事件発生! #{player.name}容疑者が#{entity.name}さんを#{player.item_in_hand.type}殺害した疑いで書類送検されました"
-          murder = true
+          important = true
         end
       when Zombie
         if entity.baby?
@@ -33,7 +33,7 @@ module Notifications
       else
         text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
       end
-      Lingr.post text if murder
+      Lingr.post text if important || Bukkit.online_players.to_a.size == 1
       broadcast text
     end
   end
