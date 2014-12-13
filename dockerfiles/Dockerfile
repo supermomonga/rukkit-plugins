@@ -26,7 +26,7 @@ VOLUME ["/craftbukkit/plugins/rukkit/repository"]
 VOLUME ["/data"]
 
 EXPOSE 8123:8123
-EXPOSE 8082:8082
+EXPOSE 8124:8124
 
 ENTRYPOINT ["/bin/bash", "/usr/local/bin/craftbukkit"]
 CMD ["2048M"]

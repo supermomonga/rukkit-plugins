@@ -11,7 +11,7 @@ rukkit:
   ports:
     - 25565
     - 8123
-    - 8082
+    - 8124
   volumes: []
   volumes_from:
     - data
