@@ -14,12 +14,16 @@ RUN git clone git@github.com:supermomonga/akechi.rukkit.git /craftbukkit/plugins
 RUN cd /craftbukkit/plugins/rukkit/repository && java -jar ~/.m2/repository/org/jruby/jruby-complete/*/jruby-complete-*.jar -S \
  $GEM_HOME/gems/bundler-*/bin/bundle install --path /bundler
 
-RUN ln -s -f /data/world /craftbukkit/world
-RUN ln -s -f /data/world_nether /craftbukkit/world_nether
-RUN ln -s -f /data/world_the_end /craftbukkit/world_the_end
-RUN ln -s -f /data/world_the_end /craftbukkit/world_the_end
-RUN ln -s -f /data/rukkit/config.yml /craftbukkit/plugins/rukkit/config.yml
-RUN ln -s -f /data/dynmap /craftbukkit/plugins/dynmap
+RUN mkdir -p /celler
+RUN cp /craftbukkit/plugins/rukkit/repository/config.yml.sample /celler/config.yml
+
+RUN ln -s -f /data/world /craftbukkit/world && \
+    ln -s -f /data/world_nether /craftbukkit/world_nether && \
+    ln -s -f /data/world_the_end /craftbukkit/world_the_end && \
+    ln -s -f /data/world_the_end /craftbukkit/world_the_end && \
+    ln -s -f /data/rukkit/config.yml /craftbukkit/plugins/rukkit/config.yml && \
+    ln -s -f /data/dynmap /craftbukkit/plugins/dynmap
+
 
 VOLUME ["/craftbukkit/plugins/rukkit/config.yml"]
 VOLUME ["/craftbukkit/plugins/rukkit/repository"]
