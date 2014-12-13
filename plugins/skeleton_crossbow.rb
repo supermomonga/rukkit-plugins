@@ -48,9 +48,10 @@ module SkeletonCrossbow
   def on_entity_damage_by_entity(evt)
     player = evt.entity
     arrow = evt.damager
-    skeleton = arrow.shooter
     return unless Player === player
     return unless Arrow === arrow
+
+    skeleton = arrow.shooter
     return unless @skeletons.include?(skeleton)
 
     evt.final_damage = evt.damage
