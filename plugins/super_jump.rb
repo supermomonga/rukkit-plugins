@@ -79,6 +79,7 @@ module SuperJump
 
   def on_entity_interact(evt)
     block = evt.block
+    p :on_entity_interact, block.type
     return unless block.type == Material::WOOD_PLATE
     entity = evt.entity
     return unless block_below(block).type == Material::GOLD_ORE
