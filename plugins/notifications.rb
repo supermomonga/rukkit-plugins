@@ -23,6 +23,7 @@ module Notifications
           text = "[KILL] #{player.name}さんが#{player.item_in_hand.type}で自害いたしました。というかたぶん事故です。"
         else
           text = "[KILL] 殺人事件発生! #{player.name}容疑者が#{entity.name}さんを#{player.item_in_hand.type}殺害した疑いで書類送検されました"
+          murder = true
         end
       when Zombie
         if entity.baby?
@@ -32,7 +33,7 @@ module Notifications
       else
         text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
       end
-      Lingr.post text
+      Lingr.post text if murder
       broadcast text
     end
   end
@@ -51,11 +52,11 @@ module Notifications
 
   def on_player_death(evt)
     player = evt.entity
-    Lingr.post "#{player.name} died: #{evt.death_message.sub(/^#{player.name}/, '')} at (#{player.location.x.to_i}, #{player.location.z.to_i}) in #{player.location.world.name}."
+    # Lingr.post "#{player.name} died: #{evt.death_message.sub(/^#{player.name}/, '')} at (#{player.location.x.to_i}, #{player.location.z.to_i}) in #{player.location.world.name}."
 
     text = "[DESPAWN] It has been 4 minutes after #{player.name}'s death. You have only one minute left to gain all the items dropped if you still didn't get them yet."
     later sec(4 * 60) do
-      Lingr.post(text)
+      # Lingr.post(text)
       broadcast(text)
     end
   end
@@ -82,7 +83,7 @@ module Notifications
         end
         text += " (#{players}は今すぐ寝#{%w[ましょう ろ んかい ようね♡].sample})"
       end
-      Lingr.post text
+      # Lingr.post text
       broadcast text
     end
 
