@@ -54,7 +54,7 @@ module SkeletonCrossbow
     skeleton = arrow.shooter
     return unless @skeletons.include?(skeleton)
 
-    evt.final_damage = evt.damage
+    evt.damage = evt.final_damage
     Lingr.post("[CROWSSBOW] #{player.name} was damaged by Crossbowman (#{evt.final_damage})")
   end
 
