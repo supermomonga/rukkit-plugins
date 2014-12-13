@@ -92,7 +92,7 @@ module SuperJump
 
     play_sound(entity.location, Sound::CAT_HIT, 0.5, 1.0)
     later 0 do
-      entity.velocity = entity.velocity.tap {|v| v.set_y(jfloat(1.5)) }
+      entity.velocity = entity.velocity.tap {|v| v.set_y(jfloat(1.8)) }
     end
   end
 end
