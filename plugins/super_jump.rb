@@ -76,4 +76,16 @@ module SuperJump
       end
     end
   end
+
+  def on_entity_interact(evt)
+    block = evt.block
+    return unless block.type == Material::WOOD_PLATE
+    entity = evt.entity
+    return unless block_below(block).type == Material::GOLD_ORE
+
+    play_sound(player.location, Sound::CAT_HIT, 0.5, 1.0)
+    later 0 do
+      entity.velocity.y = 1.5
+    end
+  end
 end
