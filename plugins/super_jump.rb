@@ -61,9 +61,9 @@ module SuperJump
         phi = (player.location.yaw + 90) % 360
         x, y, z =
           Math.cos(phi / 180.0 * Math::PI),
-          0.8,
+          1.3,
           Math.sin(phi / 180.0 * Math::PI)
-        x, y, z = 0, 3, 0 if player.sneaking?
+        x, y, z = 0, 2, 0 if player.sneaking?
 
         entity = player.vehicle ? player.vehicle : player
         player.velocity = org.bukkit.util.Vector.new(
