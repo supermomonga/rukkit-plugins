@@ -1,3 +1,6 @@
+
+p :debug1
+
 require 'digest/sha1'
 require 'erb'
 require 'open-uri'
@@ -7,6 +10,9 @@ import 'org.bukkit.ChatColor'
 require 'sinatra/base'
 require 'sinatra/reloader'
 require 'mechanize'
+
+p :debug2
+
 
 module Lingr
   extend self
@@ -70,10 +76,16 @@ class LingrServer < Sinatra::Base
   end
 
   def self.run
+
+    p :debug4
+
     begin
       Rack::Handler::WEBrick.shutdown
     rescue
     end
+
+    p :debug5
+
 
     begin
       puts "launch server on port #{Rukkit::Util.plugin_config('lingr.server_port')}."
@@ -86,6 +98,9 @@ class LingrServer < Sinatra::Base
     rescue Exception => e
       puts e.message
     end
+
+    p :debug6
+
   end
 
   private
@@ -108,7 +123,13 @@ class LingrServer < Sinatra::Base
   end
 end
 
+p :debug3
+
+
 Thread.start do
   LingrServer.run
 end
+
+p :debug7
+
 
