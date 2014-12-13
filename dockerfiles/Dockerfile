@@ -24,8 +24,6 @@ RUN ln -s -f /data/world /craftbukkit/world && \
     ln -s -f /data/rukkit/config.yml /craftbukkit/plugins/rukkit/config.yml && \
     ln -s -f /data/dynmap /craftbukkit/plugins/dynmap
 
-
-VOLUME ["/craftbukkit/plugins/rukkit/config.yml"]
 VOLUME ["/craftbukkit/plugins/rukkit/repository"]
 VOLUME ["/data"]
 

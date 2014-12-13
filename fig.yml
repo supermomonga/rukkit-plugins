@@ -20,4 +20,3 @@ data:
   command: /bin/sh
   volumes:
     - /data
-    - /craftbukkit/plugins/rukkit/config.yml
