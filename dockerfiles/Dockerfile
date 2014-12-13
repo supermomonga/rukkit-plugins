@@ -21,6 +21,8 @@ RUN ln -s -f /data/world_the_end /craftbukkit/world_the_end
 RUN ln -s -f /data/rukkit/config.yml /craftbukkit/plugins/rukkit/config.yml
 RUN ln -s -f /data/dynmap /craftbukkit/plugins/dynmap
 
+RUN cp -r /rukkit ~/rukkit_files
+
 VOLUME ["/craftbukkit/plugins/rukkit/config.yml"]
 VOLUME ["/craftbukkit/plugins/rukkit/repository"]
 VOLUME ["/data"]
