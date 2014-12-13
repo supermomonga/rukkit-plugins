@@ -21,4 +21,3 @@ data:
   volumes:
     - /data
     - /craftbukkit/plugins/rukkit/config.yml
-    - /craftbukkit/plugins/rukkit/repository
