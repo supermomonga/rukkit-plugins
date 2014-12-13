@@ -46,6 +46,11 @@ module SuperJump
   end
 
   def on_player_interact(evt)
+    if org.bukkit.event.block.Action::PHYSICAL === evt.action
+      wood_plate_jump(evt.player, evt.clicked_block)
+      return
+    end
+
     player = evt.player
     return unless [Action::LEFT_CLICK_AIR, Action::LEFT_CLICK_BLOCK].include?(evt.action)
     # return unless player.item_in_hand.type == Material::AIR
@@ -75,11 +80,6 @@ module SuperJump
         @vertical_accelerated[player.name] = false
       end
     end
-  end
-
-  def on_player_interact(evt)
-    return unless org.bukkit.event.block.Action::PHYSICAL === evt.action
-    wood_plate_jump(evt.player, evt.clicked_block)
   end
 
   def on_entity_interact(evt)
