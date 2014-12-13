@@ -79,13 +79,15 @@ module SuperJump
 
   def on_player_interact(evt)
     return unless org.bukkit.event.block.Action::PHYSICAL === evt.action
-    on_entity_interact(evt) # This is tricky
+    wood_plate_jump(evt.player, evt.clicked_block)
   end
 
   def on_entity_interact(evt)
-    block = evt.block
+    wood_plate_jump(evt.entity, evt.block)
+  end
+
+  def wood_plate_jump(entity, block)
     return unless block.type == Material::WOOD_PLATE
-    entity = evt.entity
     return unless block_below(block).type == Material::GOLD_ORE
 
     play_sound(entity.location, Sound::CAT_HIT, 0.5, 1.0)
