@@ -4,6 +4,7 @@ require 'set'
 import 'org.bukkit.entity.Skeleton'
 import 'org.bukkit.event.entity.CreatureSpawnEvent'
 import 'org.bukkit.entity.Arrow'
+import 'org.bukkit.entity.Player'
 
 module SkeletonCrossbow
   extend self
@@ -38,10 +39,22 @@ module SkeletonCrossbow
     8.times {|i| play_effect(shooter.location, Effect::SMOKE, i) }
     play_sound(arrow.location, Sound::SHOOT_ARROW, 1.0, 0.0)
     later 0 do
-      arrow.velocity = arrow.velocity.multiply(1.5)
+      arrow.velocity = arrow.velocity.multiply(1.2)
     end
 
     arrow.critical = true
+  end
+
+  def on_entity_damage_by_entity(evt)
+    player = evt.entity
+    arrow = evt.damager
+    skeleton = arrow.shooter
+    return unless Player === player
+    return unless Arrow === arrow
+    return unless @skeletons.include?(skeleton)
+
+    evt.final_damage = evt.damage
+    Lingr.post("[CROWSSBOW] #{player.name} was damaged by Crossbowman (#{evt.final_damage})")
   end
 
   def on_entity_death(evt)
