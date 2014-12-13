@@ -61,13 +61,13 @@ module SuperJump
         phi = (player.location.yaw + 90) % 360
         x, y, z =
           Math.cos(phi / 180.0 * Math::PI),
-          1.3,
+          0.8,
           Math.sin(phi / 180.0 * Math::PI)
         x, y, z = 0, 2, 0 if player.sneaking?
 
         entity = player.vehicle ? player.vehicle : player
         player.velocity = org.bukkit.util.Vector.new(
-          x * 1.2, y, z * 1.2)
+          x * 1.5, y, z * 1.5)
       end
 
       @vertical_accelerated[player.name] = true
