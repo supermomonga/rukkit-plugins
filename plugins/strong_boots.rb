@@ -19,7 +19,8 @@ module StrongBoots
         b = player.inventory.boots or return
 
         evt.cancelled = true
-        play_sound(player.location, Sound::BAT_HURT, 0.5, 0.0)
+        # play_sound(player.location, Sound::BAT_HURT, 0.5, 0.0)
+        play_sound(player.location, Sound::BURP, 0.5, 0.0)
 
         if !@deprecated_message[player.name]
           @deprecated_message[player.name] = true
