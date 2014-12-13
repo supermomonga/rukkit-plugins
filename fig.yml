@@ -1,0 +1,22 @@
+redis:
+  image: redis
+  ports:
+    - 6379
+  volumes_from:
+    - data
+rukkit:
+  image: supermomonga/akechi.rukkit
+  links:
+    - redis
+  ports:
+    - 25565
+    - 8123
+    - 8082
+  volumes_from:
+    - data
+data:
+  image: busybox
+  command: /bin/sh
+  volumes:
+    - /data
+    - /rukkit
