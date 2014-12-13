@@ -36,12 +36,12 @@ module PlayerJob
     damagee = evt.get_entity
 
     if damager.is_a?(Player)
-      if @be_knights.include?(damager) && damager.equip_sword?
+      if @be_knights.include?(damager) && PlayerUtil.equip_sword?(damager)
         evt.set_damage(evt.get_damage + 1.0)
       end
     end
     if damagee.is_a?(Player)
-      if @be_knights.include?(damagee) && damagee.block_with_sword?
+      if @be_knights.include?(damagee) && PlayerUtil.block_with_sword?(damagee)
         evt.set_damage(damage_after_defend(evt.get_damage, 3.0))
       end
     end
@@ -52,12 +52,12 @@ module PlayerJob
     damagee = evt.get_entity
 
     if damager.is_a?(Player)
-      if @be_fighters.include?(damager) && damager.naked?
+      if @be_fighters.include?(damager) && PlayerUtil.naked?(damager)
         evt.set_damage(evt.get_damage + 3.0)
       end
     end
     if damagee.is_a?(Player)
-      if @be_fighters.include?(damagee) && damagee.naked?
+      if @be_fighters.include?(damagee) && PlayerUtil.naked?(damagee)
         evt.set_damage(damage_after_defend(evt.get_damage, 10.0))
       end
     end
@@ -68,39 +68,44 @@ module PlayerJob
   end
 end
 
-module Player
-
-  def naked?
-    no_armor? && no_hold_item?
+module PlayerUtil
+  def naked?(player)
+    no_armor?(player) && no_hold_item?(player)
   end
 
-  def no_armor?
-    inventory = self.get_inventory
+  def no_armor?(player)
+    inventory = player.get_inventory
     armor = inventory.get_armor_contents
     armor.all? { |x| x.get_amount == 0 }
   end
 
-  def no_hold_item?
-    inventory = self.get_inventory
+  def no_hold_item?(player)
+    inventory = player.get_inventory
     item = inventory.get_item_in_hand
     item.get_amount == 0
   end
 
-  def equip_sword?
-    inventory = self.get_inventory
+  def equip_sword?(player)
+    inventory = player.get_inventory
     item = inventory.get_item_in_hand
     material = item.get_type
-    material.sword?
+    MaterialUtil.sword?(material)
   end
 
-  def block_with_sword?
-    self.equip_sword? && self.is_blocking
+  def block_with_sword?(player)
+    equip_sword?(player) && self.is_blocking
   end
+
+  module_function :naked?
+  module_function :no_armor?
+  module_function :no_hold_item?
+  module_function :equip_sword?
+  module_function :block_with_sword?
 end
 
-class Material
-  def sword?
-    case self
+module MaterialUtil
+  def sword?(material)
+    case material
     when Material::IRON_SWORD,
          Material::WOOD_SWORD,
          Material::STONE_SWORD,
@@ -111,4 +116,6 @@ class Material
       false
     end
   end
+
+  module_function :sword?
 end
