@@ -71,6 +71,7 @@ module Build
 
       sender.send_message "SUCCESS with consuing all your #{btype}s."
       sender.item_in_hand = nil
+      sender.health = 1
       true
     when 'draw-circle'
       if !sender.item_in_hand.type.block? || sender.item_in_hand.amount < 64
@@ -94,6 +95,7 @@ module Build
         end
       sender.send_message "SUCCESS with consuing all your #{btype}s."
       sender.item_in_hand = nil
+      sender.health = 1
       true
     end
   end
