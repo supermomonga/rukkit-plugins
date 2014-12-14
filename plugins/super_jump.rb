@@ -46,38 +46,38 @@ module SuperJump
   end
 
   def on_player_interact(evt)
-    if org.bukkit.event.block.Action::PHYSICAL === evt.action
-      wood_plate_jump(evt.player, evt.clicked_block)
-      return
-    end
-
     player = evt.player
-    return unless [Action::LEFT_CLICK_AIR, Action::LEFT_CLICK_BLOCK].include?(evt.action)
-    # return unless player.item_in_hand.type == Material::AIR
-    return unless player.item_in_hand.type == Material::FEATHER
-    return if player.on_ground?
 
-    @vertical_accelerated ||= {}
-    unless @vertical_accelerated[player.name]
-      # play_sound(player.location, Sound::BAT_IDLE, 0.5, 0.0)
-      play_sound(player.location, Sound::BURP, 0.5, 0.0)
-      iikanji_effect(player.location)
-      later 0 do
-        phi = (player.location.yaw + 90) % 360
-        x, y, z =
-          Math.cos(phi / 180.0 * Math::PI),
-          0.8,
-          Math.sin(phi / 180.0 * Math::PI)
-        x, y, z = 0, 2, 0 if player.sneaking?
+    case evt.action
+    when org.bukkit.event.block.Action::PHYSICAL
+      wood_plate_jump(player, evt.clicked_block)
 
-        entity = player.vehicle ? player.vehicle : player
-        player.velocity = org.bukkit.util.Vector.new(
-          x * 2.0, y, z * 2.0)
-      end
+    when Action::LEFT_CLICK_AIR, Action::LEFT_CLICK_BLOCK
+      return unless player.item_in_hand.type == Material::FEATHER
+      return if player.on_ground?
 
-      @vertical_accelerated[player.name] = true
-      later sec(0.6) do
-        @vertical_accelerated[player.name] = false
+      @vertical_accelerated ||= {}
+      unless @vertical_accelerated[player.name]
+        # play_sound(player.location, Sound::BAT_IDLE, 0.5, 0.0)
+        play_sound(player.location, Sound::BURP, 0.5, 0.0)
+        iikanji_effect(player.location)
+        later 0 do
+          phi = (player.location.yaw + 90) % 360
+          x, y, z =
+            Math.cos(phi / 180.0 * Math::PI),
+            0.8,
+            Math.sin(phi / 180.0 * Math::PI)
+          x, y, z = 0, 2, 0 if player.sneaking?
+
+          entity = player.vehicle ? player.vehicle : player
+          player.velocity = org.bukkit.util.Vector.new(
+            x * 2.0, y, z * 2.0)
+        end
+
+        @vertical_accelerated[player.name] = true
+        later sec(0.6) do
+          @vertical_accelerated[player.name] = false
+        end
       end
     end
   end
