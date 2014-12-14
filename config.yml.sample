@@ -13,6 +13,7 @@ rukkit:
     # - notifications
     - human_bulldozer
     - shared_chest
+    - killer_queen
   scripts:
     - lingr
   plugin_config:
