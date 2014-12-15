@@ -17,7 +17,7 @@ module Kickory
 
     [-1, 1].each do |ydiff|
       block = add_loc(woodlog.location, 0, ydiff, 0).block
-      next unless [Material::LOG, Material::LOG_2].include?(woodlog.type)
+      next unless [Material::LOG, Material::LOG_2].include?(block.type)
       block.break_naturally(axe)
     end
   end
