@@ -14,6 +14,7 @@ rukkit:
     - human_bulldozer
     - shared_chest
     - killer_queen
+    - kickory
   scripts:
     - lingr
   plugin_config:
