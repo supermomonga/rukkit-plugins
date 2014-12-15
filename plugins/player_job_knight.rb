@@ -26,17 +26,17 @@ module PlayerJobKnight
   end
 
   def act_as_knight(evt)
-    damager = evt.get_damager
-    damagee = evt.get_entity
+    damager = evt.damager
+    damagee = evt.entity
 
     if damager.is_a?(Player)
       if @be_knights.include?(damager) && PlayerUtil.equip_sword?(damager)
-        evt.set_damage(evt.get_damage + 1.0)
+        evt.damage = evt.damage + 1.0
       end
     end
     if damagee.is_a?(Player)
       if @be_knights.include?(damagee) && PlayerUtil.block_with_sword?(damagee)
-        evt.set_damage(damage_after_defend(evt.get_damage, 3.0))
+        evt.damage = damage_after_defend(evt.damage, 3.0)
       end
     end
   end

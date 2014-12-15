@@ -26,17 +26,17 @@ module PlayerJobFighter
   end
 
   def act_as_fighter(evt)
-    damager = evt.get_damager
-    damagee = evt.get_entity
+    damager = evt.damager
+    damagee = evt.entity
 
     if damager.is_a?(Player)
       if @be_fighters.include?(damager) && PlayerUtil.naked?(damager)
-        evt.set_damage(evt.get_damage + 3.0)
+        evt.damage = evt.damage + 3.0
       end
     end
     if damagee.is_a?(Player)
       if @be_fighters.include?(damagee) && PlayerUtil.naked?(damagee)
-        evt.set_damage(damage_after_defend(evt.get_damage, 10.0))
+        evt.damage = damage_after_defend(evt.damage, 10.0)
       end
     end
   end
