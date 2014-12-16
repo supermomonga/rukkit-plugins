@@ -15,8 +15,9 @@ rukkit:
   volumes: []
   volumes_from:
     - data
+  mem_limit: 4g
 data:
   image: busybox
   command: /bin/sh
   volumes:
-    - /data
+    - ./data:/data
