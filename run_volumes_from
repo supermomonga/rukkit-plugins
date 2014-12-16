@@ -1,5 +1,5 @@
 #!/bin/bash
 PWD="$(pwd)"
 [ -f "${PWD}/data/rukkit/config.yml" ] || (mkdir -p ${PWD}/data/rukkit && cp "${PWD}/config.yml.sample" "${PWD}/data/rukkit/config.yml")
-docker run -d -v ${PWD}/data:/data -v ${PWD}:/craftbukkit/plugins/rukkit/repository --name data busybox
-docker run -i -t --rm -p 25565:25565 -p 8123:8123 -p 8124:8124 --volumes-from data --name rukkit-local momonga/akechi.rukkit $1
+docker run -d -v ${PWD}/data:/data -v ${PWD}:/craftbukkit/plugins/rukkit/repository --name rukkit-local-data busybox
+docker run -i -t --rm -p 25565:25565 -p 8123:8123 -p 8124:8124 --volumes-from rukkit-local-data --name rukkit-local momonga/akechi.rukkit $1
