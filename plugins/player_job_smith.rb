@@ -1,4 +1,5 @@
 # encoding: utf-8
+import 'org.bukkit.event.block.Action'
 
 module PlayerJobSmith
   extend self

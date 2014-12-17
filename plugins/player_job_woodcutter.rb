@@ -1,4 +1,6 @@
 # encoding: utf-8
+import 'org.bukkit.Material'
+import 'org.bukkit.event.block.Action'
 
 module PlayerJobWoodcutter
   extend self
