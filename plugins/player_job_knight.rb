@@ -11,13 +11,13 @@ module PlayerJobKnight
 
     # become job with 50% of probability
     @be_knights ||= Set.new
-    @be_knights.add(player) if rand(100) < 50
-    broadcast "#{player.name}さんが剣士になりました(剣の攻撃と防御が強くなります!)" if @be_knights.include?(player)
+    @be_knights.add(player.entity_id) if rand(100) < 50
+    broadcast "#{player.name}さんが剣士になりました(剣の攻撃と防御が強くなります!)" if @be_knights.include?(player.entity_id)
   end
 
   def on_player_quit(evt)
     player = evt.player
-    @be_knights.delete(player)
+    @be_knights.delete(player.entity_id)
   end
 
   def on_entity_damage_by_entity(evt)
@@ -29,12 +29,12 @@ module PlayerJobKnight
     damagee = evt.entity
 
     if damager.is_a?(Player)
-      if @be_knights.include?(damager) && PlayerUtil.equip_sword?(damager)
+      if @be_knights.include?(damager.entity_id) && PlayerUtil.equip_sword?(damager)
         evt.damage = evt.damage + 1.0
       end
     end
     if damagee.is_a?(Player)
-      if @be_knights.include?(damagee) && PlayerUtil.block_with_sword?(damagee)
+      if @be_knights.include?(damagee.entity_id) && PlayerUtil.block_with_sword?(damagee)
         evt.damage = damage_after_defend(evt.damage, 3.0)
       end
     end

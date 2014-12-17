@@ -10,13 +10,13 @@ module PlayerJobSmith
 
     # become job with 50% of probability
     @be_smith ||= Set.new
-    @be_smith.add(player) if rand(100) < 50
-    broadcast "#{player.name}さんが鍛冶屋になりました(空気中で剣、斧などを振ると耐久力回復)" if @be_smith.include?(player)
+    @be_smith.add(player.entity_id) if rand(100) < 50
+    broadcast "#{player.name}さんが鍛冶屋になりました(空気中で剣、斧などを振ると耐久力回復)" if @be_smith.include?(player.entity_id)
   end
 
   def on_player_quit(evt)
     player = evt.player
-    @be_smith.delete(player)
+    @be_smith.delete(player.entity_id)
   end
 
   def on_player_interact(evt)
