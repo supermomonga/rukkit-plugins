@@ -10,10 +10,6 @@ module PlayerJobFighter
   end
 
   def on_entity_damage_by_entity(evt)
-    act_as_fighter(evt)
-  end
-
-  def act_as_fighter(evt)
     damager = evt.damager
     damagee = evt.entity
 
