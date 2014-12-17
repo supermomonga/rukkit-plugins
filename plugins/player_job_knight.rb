@@ -8,11 +8,10 @@ module PlayerJobKnight
 
   def on_player_join(evt)
     player = evt.player
-    random = Random.new
 
     # become job with 50% of probability
     @be_knights ||= Set.new
-    @be_knights.add(player) if random.rand(100) < 50
+    @be_knights.add(player) if rand(100) < 50
     broadcast "#{player.name}さんが剣士になりました(剣の攻撃と防御が強くなります!)" if @be_knights.include?(player)
   end
 

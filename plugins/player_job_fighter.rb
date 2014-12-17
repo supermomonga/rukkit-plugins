@@ -8,11 +8,10 @@ module PlayerJobFighter
 
   def on_player_join(evt)
     player = evt.player
-    random = Random.new
 
     # become job with 50% of probability
     @be_fighters ||= Set.new
-    @be_fighters.add(player) if random.rand(100) < 50
+    @be_fighters.add(player) if rand(100) < 50
     broadcast "#{player.name}さんが武闘家になりました(装備なし、手持ちなしで攻撃と防御が強くなります!)" if @be_fighters.include?(player)
   end
 
