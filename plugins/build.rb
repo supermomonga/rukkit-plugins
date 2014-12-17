@@ -22,9 +22,9 @@ module Build
   def circle(centre, radius)
     centre_x, centre_y, centre_z = centre
     [1, -1].map {|sign|
-      (centre_x - radius .. centre_x + radius).map {|x|
+      (centre_x - radius ... centre_x + radius).map {|x|
         z1 = Math.sqrt(radius ** 2 - (centre_x - x) ** 2).round * sign
-        z2 = Math.sqrt(radius ** 2 - (centre_x - (x + 1)) ** 2).round * sign rescue centre_y
+        z2 = Math.sqrt(radius ** 2 - (centre_x - (x + 1)) ** 2).round * sign
         ([z1, z2].min..[z1, z2].max).map {|z|
           [x, centre_y, centre_z + z]
         }
