@@ -24,6 +24,8 @@ module PlayerJobSmith
     material = evt.material
     action = evt.action
 
+    return unless @be_smith.include?(evt.player.entity_id)
+
     case action
     when Action::LEFT_CLICK_AIR
       if MaterialUtil.pickaxe?(material) ||
