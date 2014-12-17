@@ -1,23 +1,12 @@
 # encoding: utf-8
-require 'set'
 import 'org.bukkit.entity.Player'
 
 module PlayerJobKnight
   extend self
-  extend Rukkit::Util
+  extend PlayerJob
 
-  def on_player_join(evt)
-    player = evt.player
-
-    # become job with 50% of probability
-    @be_knights ||= Set.new
-    @be_knights.add(player.entity_id) if rand(100) < 50
-    broadcast "#{player.name}さんが剣士になりました(剣の攻撃と防御が強くなります!)" if @be_knights.include?(player.entity_id)
-  end
-
-  def on_player_quit(evt)
-    player = evt.player
-    @be_knights.delete(player.entity_id)
+  login_message do |evt|
+    "#{evt.player.name}さんが剣士になりました(剣の攻撃と防御が強くなります!)"
   end
 
   def on_entity_damage_by_entity(evt)
@@ -29,12 +18,12 @@ module PlayerJobKnight
     damagee = evt.entity
 
     if damager.is_a?(Player)
-      if @be_knights.include?(damager.entity_id) && PlayerUtil.equip_sword?(damager)
+      if has_job?(damager) && PlayerUtil.equip_sword?(damager)
         evt.damage = evt.damage + 1.0
       end
     end
     if damagee.is_a?(Player)
-      if @be_knights.include?(damagee.entity_id) && PlayerUtil.block_with_sword?(damagee)
+      if has_job?(damagee) && PlayerUtil.block_with_sword?(damagee)
         evt.damage = damage_after_defend(evt.damage, 3.0)
       end
     end
