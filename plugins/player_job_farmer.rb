@@ -35,8 +35,8 @@ module PlayerJobFarmer
 
     case action
     when Action::LEFT_CLICK_AIR
-      around_square_loc(player.location).each do |xyz|
-        block = world.get_block_at(xyz[0], xyz[1], xyz[2])
+      around_square_loc(player.location).each do |(x, y, z)|
+        block = world.get_block_at(x, y, z)
         state = block.state
         case state.data
         when Crops
