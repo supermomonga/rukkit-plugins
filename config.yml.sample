@@ -15,8 +15,17 @@ rukkit:
     - shared_chest
     - killer_queen
     - kickory
+    - player_job_farmer
+    - player_job_fighter
+    - player_job_knight
+    - player_job_seaman
+    - player_job_smith
+    - player_job_woodcutter
   scripts:
     - lingr
+    - material_util
+    - player_util
+    - player_job
   plugin_config:
     lingr:
       secret: FIXME
