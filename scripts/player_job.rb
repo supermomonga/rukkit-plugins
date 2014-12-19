@@ -7,9 +7,9 @@ module PlayerJob
   def on_player_join(evt)
     player = evt.player
 
-    # become job with 50% of probability
+    # become job with 30% of probability
     @players ||= Set.new
-    @players.add(player.entity_id) if rand(100) < 50
+    @players.add(player.entity_id) if rand(100) < 30
     message = @message_proc.call(evt) if @message_proc
     Rukkit::Util.broadcast(message) if message && has_job?(player)
   end
