@@ -55,8 +55,8 @@ module PlayerJobFarmer
   end
 
   def around_square(x, y, z)
-    xa = (x-2 .. x+2).to_a
-    za = (z-2 .. z+2).to_a
+    xa = [*x-2 .. x+2]
+    za = [*z-2 .. z+2]
     xa.product(za).map { |arr| arr.insert(1, y) }
   end
 end
