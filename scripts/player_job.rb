@@ -16,11 +16,11 @@ module PlayerJob
 
   def on_player_quit(evt)
     player = evt.player
-    @players.delete(player.entity_id)
+    @players.delete(player.entity_id) if @players
   end
 
   def has_job?(player)
-    @players.include?(player.entity_id)
+    @players && @players.include?(player.entity_id)
   end
 
   def login_message(&block)
