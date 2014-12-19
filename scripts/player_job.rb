@@ -10,7 +10,7 @@ module PlayerJob
     # become job with 50% of probability
     @players ||= Set.new
     @players.add(player.entity_id) if rand(100) < 50
-    message = @message_proc.call(evt)
+    message = @message_proc.call(evt) if @message_proc
     Rukkit::Util.broadcast(message) if message && has_job?(player)
   end
 
