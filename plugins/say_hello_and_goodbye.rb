@@ -18,5 +18,12 @@ module SayHelloAndGoodbye
     msg = "[LOGOUT] #{player.name}さんが仮想世界に旅立ちました"
     Rukkit::Util.broadcast msg
     Lingr.post msg if defined? Lingr
+
+    loc = player.loc
+    3.times do |i|
+      later sec(i) do
+        loc.world.strikeLightningEffect(loc)
+      end
+    end
   end
 end
