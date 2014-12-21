@@ -29,7 +29,7 @@ module HumanBulldozer
     if @num_blocks[player.name][block.type] > 200
       @num_blocks[player.name][block.type] = 0
 
-      text = "[HUMAN BULLDOZER] #{player.name} broke 200 #{block.type}s. #{player.name} can dig faster for 1 minute from now, without consuming pickaxe!"
+      text = "[HUMAN BULLDOZER] #{player.name} broke 200 #{block.type}s. #{player.name} can dig faster for 1 minute, without consuming pickaxe!"
       Lingr.post text
       broadcast text
 
@@ -39,7 +39,7 @@ module HumanBulldozer
       later sec(60) do
         @bonus_time[player.name] = false
 
-        play_sound(player.location, Sound::DONKEY_DEATH , 1.0, 0.3)
+        play_sound(player.location, Sound::AMBIENCE_CAVE  , 1.0, 0.3)
         text = "[HUMAN BULLDOZER] #{player.name}'s bonus time ended."
         Lingr.post(text)
         broadcast(text)
