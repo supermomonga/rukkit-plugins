@@ -19,7 +19,7 @@ module SayHelloAndGoodbye
     Rukkit::Util.broadcast msg
     Lingr.post msg if defined? Lingr
 
-    loc = player.loc
+    loc = player.location
     3.times do |i|
       later sec(i) do
         loc.world.strikeLightningEffect(loc)
