@@ -3,6 +3,7 @@
 module SayHelloAndGoodbye
   include_package 'org.bukkit.entity'
   extend self
+  extend Rukkit::Util
 
   def on_player_join(evt)
     player = evt.player
