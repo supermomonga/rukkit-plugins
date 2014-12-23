@@ -2,6 +2,7 @@
 
 import 'org.bukkit.entity.Player'
 import 'org.bukkit.entity.Chicken'
+import 'org.bukkit.entity.Enderman'
 import 'org.bukkit.entity.Zombie'
 import 'org.bukkit.Material'
 
@@ -25,15 +26,17 @@ module Notifications
           text = "[KILL] 殺人事件発生! #{player.name}容疑者が#{entity.name}さんを#{player.item_in_hand.type}殺害した疑いで書類送検されました"
           important = true
         end
+      when Enderman
+        evt.dropped_exp *= 3
       when Zombie
         if entity.baby?
-          evt.dropped_exp *= 3
+          evt.dropped_exp *= 4
         end
         text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
       else
         text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
       end
-      Lingr.post text if important || Bukkit.online_players.to_a.size == 1
+      Lingr.post(text) if important || Bukkit.online_players.to_a.size == 1
       broadcast text
     end
   end
