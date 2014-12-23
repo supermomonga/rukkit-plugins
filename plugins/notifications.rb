@@ -52,11 +52,10 @@ module Notifications
 
   def on_player_death(evt)
     player = evt.entity
-    # Lingr.post "#{player.name} died: #{evt.death_message.sub(/^#{player.name}/, '')} at (#{player.location.x.to_i}, #{player.location.z.to_i}) in #{player.location.world.name}."
+    Lingr.post "#{player.name} died: #{evt.death_message.sub(/^#{player.name}/, '')} at (#{player.location.x.to_i}, #{player.location.z.to_i}) in #{player.location.world.name}."
 
     text = "[DESPAWN] It has been 4 minutes after #{player.name}'s death. You have only one minute left to gain all the items dropped if you still didn't get them yet."
     later sec(4 * 60) do
-      # Lingr.post(text)
       broadcast(text)
     end
   end
@@ -83,17 +82,16 @@ module Notifications
         end
         text += " (#{players}は今すぐ寝#{%w[ましょう ろ んかい ようね♡].sample})"
       end
-      # Lingr.post text
+      Lingr.post(text) if Bukkit.online_players.to_a.size == 1
       broadcast text
     end
-
   end
 
   def on_player_bed_leave(evt)
     player = evt.player
     if player.world.time > 0
       text = "[BED] #{player.name}さんがベッドから身体を起こした模様"
-      Lingr.post text
+      Lingr.post(text) if Bukkit.online_players.to_a.size == 1
       broadcast text
     else
       @good_morning ||= true
@@ -107,7 +105,7 @@ module Notifications
             when 1
               "[BED] あさだーーーーーーー! #{%w[ょ ゅ ゃ ね vim 肉 ! 朝です。 浅田].sample}"
             end
-          Lingr.post text
+          Lingr.post(text) if Bukkit.online_players.to_a.size == 1
           broadcast text
           @good_morning = false
         end
@@ -116,6 +114,6 @@ module Notifications
   end
 
   def on_player_achievement_awarded(evt)
-    Lingr.post [evt.player.name, evt.achievement.name].inspect
+    Lingr.post [:achievement, evt.player.name, evt.achievement.name].inspect
   end
 end
