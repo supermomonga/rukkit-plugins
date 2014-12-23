@@ -5,6 +5,7 @@ import 'org.bukkit.entity.Skeleton'
 import 'org.bukkit.event.entity.CreatureSpawnEvent'
 import 'org.bukkit.entity.Arrow'
 import 'org.bukkit.entity.Player'
+import 'org.bukkit.event.entity.EntityDamageEvent'
 
 module SkeletonCrossbow
   extend self
@@ -55,8 +56,9 @@ module SkeletonCrossbow
     return unless @skeletons.include?(skeleton)
 
     evt.cancelled = true
-    player.damage(4 + rand(2), arrow)
-    Lingr.post("[CROWSSBOW] #{player.name} was damaged by Crossbowman (#{evt.final_damage})")
+    damage_value = 4 + rand(2)
+    evt.setDamage(EntityDamageEvent::DamageModifier::BASE, damage_value)
+    Lingr.post("[CROWSSBOW] #{player.name} was damaged by Crossbowman (#{damage_value})")
   end
 
   def on_entity_death(evt)
