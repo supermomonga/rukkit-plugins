@@ -25,7 +25,7 @@ module PlayerUtil
   end
 
   def block_with_sword?(player)
-    equip_sword?(player) && player.is_blocking
+    equip_sword?(player) && player.blocking?
   end
 
   module_function :naked?
