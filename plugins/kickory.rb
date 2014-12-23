@@ -19,10 +19,10 @@ module Kickory
       block = add_loc(woodlog.location, 0, ydiff, 0).block
 
       later sec(0.5) do
-        if [Material::LOG, Material::LOG_2].include?(block.type)
+        if player.valid? && [Material::LOG, Material::LOG_2].include?(block.type)
           block.break_naturally(axe)
           evt2 = org.bukkit.event.block.BlockBreakEvent.new(block, player)
-          Bukkit.plugin_manager.call_event(evt2)
+          p Bukkit.plugin_manager.call_event(evt2)
         end
       end
     end
