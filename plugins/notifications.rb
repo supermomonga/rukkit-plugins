@@ -68,14 +68,16 @@ module Notifications
     text = [
       "[BED] #{player.name}さんがベッドに横たわっておられる",
       "[BED] #{player.name}さんがベッドに横たわっておられる",
+      "[BED] #{player.name}さんが寝る前の歯磨きすら忘れてベッドに入り就寝する模様です",
       "[BED] #{player.name} went to bed.",
       "[BED] #{player.name}さんがベッドに縦たわっておられる",
+      "[BED] #{player.name}さんが寝落ちしました",
       "[BED] #{player.name}さん爆睡中、寝坊まちがいなし"].sample
 
     later sec(0.5) do
       awake_players = Bukkit.online_players.to_a.reject(&:sleeping?)
       unless awake_players.empty?
-        players = awake_players.map(&:name).join "#{%w[くん さん ちゃん 君 様 君 子 肉].sample} "
+        players = awake_players.map(&:name).join "#{%w[くん さん ちゃん 君 様 君 子].sample} "
         if awake_players.size > 1
           players += "達"
         elsif awake_players.size == 1
@@ -83,7 +85,7 @@ module Notifications
            awake_players[0].send_message "[BED] #{awake_players[0].name}: いいから寝#{%w[ましょう ろ んかい].sample}"
           end
         end
-        text += " (#{players}は今すぐ寝#{%w[ましょう ろ んかい ようね♡].sample})"
+        text += " (#{players}は今すぐ寝#{%w[ましょう ろ んかい ようね♡ ろや てね るべし].sample})"
       end
       Lingr.post(text) if Bukkit.online_players.to_a.size == 1
       broadcast text
@@ -93,20 +95,23 @@ module Notifications
   def on_player_bed_leave(evt)
     player = evt.player
     if player.world.time > 0
-      text = "[BED] #{player.name}さんがベッドから身体を起こした模様"
+      text = "[BED] #{player.name}さんが夜にもかかわらずベッドから身体を起こした模様"
       Lingr.post(text) if Bukkit.online_players.to_a.size == 1
       broadcast text
     else
       @good_morning ||= true
       later sec(1) do
-        play_sound(player.location, Sound::LEVEL_UP, 0.5, 0.5)
+        play_sound(player.location, Sound::LEVEL_UP, 0.0, 0.5)
+        orb = spawn(loc, EntityType::EXPERIENCE_ORB)
+        orb.experience = 5
+
         if @good_morning
           text =
             case rand(2)
             when 0
               "[BED] あさ（あさ）"
             when 1
-              "[BED] あさだーーーーーーー! #{%w[ょ ゅ ゃ ね vim 肉 ! 朝です。 浅田].sample}"
+              "[BED] あさだーーーーーーー! #{%w[ょ ゅ ゃ ね vim 肉 ! 朝です。 淺田].sample}"
             end
           Lingr.post(text) if Bukkit.online_players.to_a.size == 1
           broadcast text
