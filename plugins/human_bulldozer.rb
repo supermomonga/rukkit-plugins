@@ -17,8 +17,8 @@ module HumanBulldozer
     player = evt.player
 
     if @bonus_time[player.name]
-      evt.cancelled = true
-      block.break_naturally(player.item_in_hand)
+      istack = player.item_in_hand
+      istack.durability -= 1 if istack.durability > 0
       return
     end
 
