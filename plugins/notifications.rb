@@ -46,7 +46,7 @@ module Notifications
     when entity.custom_name
       entity.custom_name
     when entity.type
-      entity.type.name.downcase
+      entity.type.name.capitalize
     else
       entity.inspect
     end
