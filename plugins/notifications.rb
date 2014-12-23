@@ -102,7 +102,7 @@ module Notifications
       @good_morning ||= true
       later sec(1) do
         play_sound(player.location, Sound::LEVEL_UP, 0.0, 0.5)
-        orb = spawn(loc, EntityType::EXPERIENCE_ORB)
+        orb = spawn(player.location, EntityType::EXPERIENCE_ORB)
         orb.experience = 5
 
         if @good_morning
