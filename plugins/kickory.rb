@@ -20,9 +20,8 @@ module Kickory
 
       later sec(0.5) do
         if player.valid? && [Material::LOG, Material::LOG_2].include?(block.type)
-          block.break_naturally(axe)
           evt2 = org.bukkit.event.block.BlockBreakEvent.new(block, player)
-          p Bukkit.plugin_manager.call_event(evt2)
+          Bukkit.plugin_manager.call_event(evt2)
         end
       end
     end
