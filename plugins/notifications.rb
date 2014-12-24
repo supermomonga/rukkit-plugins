@@ -36,8 +36,10 @@ module Notifications
       else
         text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
       end
-      Lingr.post(text) if important || Bukkit.online_players.to_a.size == 1
-      broadcast text
+      if text
+        Lingr.post(text) if important || Bukkit.online_players.to_a.size == 1
+        broadcast text
+      end
     end
   end
 
