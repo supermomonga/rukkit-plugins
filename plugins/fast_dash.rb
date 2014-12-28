@@ -12,7 +12,7 @@ module FastDash
       when Material::SAND
         evt.cancelled = true
       when Material::COBBLE_WALL
-        evt.player.walk_speed = 1.0 unless (15..78).include? evt.player.location.y
+        evt.player.walk_speed = 1.0 unless evt.player.location.y.between?(15, 78)
       else
         evt.player.walk_speed = 0.4
       end
