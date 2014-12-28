@@ -25,7 +25,6 @@ module Notifications
           text = "[KILL] #{player.name}さんが#{player.item_in_hand.type}で自害いたしました。というかたぶん事故です。"
         else
           text = "[KILL] 殺人事件発生! #{player.name}容疑者が#{entity.name}さんを#{player.item_in_hand.type}殺害した疑いで書類送検されました"
-          important = true
         end
       when Enderman
         evt.dropped_exp *= 3
@@ -38,8 +37,9 @@ module Notifications
         text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
       end
       if text
-        Lingr.post(text) if important || text != @last_kill_notice.tap{@last_kill_notice = text}
+        Lingr.post(text) if text != @last_kill_notice
         broadcast text
+        @last_kill_notice = text
       end
     end
   end
