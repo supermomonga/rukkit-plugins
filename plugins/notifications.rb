@@ -11,6 +11,7 @@ module Notifications
   extend Rukkit::Util
 
   def on_entity_death(evt)
+    @last_kill_notice ||= ''
     entity = evt.entity
     player = entity.killer
 
@@ -37,7 +38,7 @@ module Notifications
         text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
       end
       if text
-        Lingr.post(text) if important || Bukkit.online_players.to_a.size == 1
+        Lingr.post(text) if important || text != @last_kill_notice
         broadcast text
       end
     end
