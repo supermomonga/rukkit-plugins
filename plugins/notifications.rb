@@ -38,7 +38,7 @@ module Notifications
         text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
       end
       if text
-        Lingr.post(text) if important || text != @last_kill_notice
+        Lingr.post(text) if important || text != @last_kill_notice.tap{@last_kill_notice = text}
         broadcast text
       end
     end
