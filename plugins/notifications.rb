@@ -32,9 +32,9 @@ module Notifications
         if entity.baby?
           evt.dropped_exp *= 4
         end
-        text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
+        # text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
       else
-        text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
+        # text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
       end
       if text
         Lingr.post(text) unless text == @last_kill_notice
