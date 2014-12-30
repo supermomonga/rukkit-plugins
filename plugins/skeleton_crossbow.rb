@@ -59,7 +59,7 @@ module SkeletonCrossbow
     damage_value = 4 + rand(2)
     # evt.setDamage(EntityDamageEvent::DamageModifier::BASE, damage_value)
     evt.setDamage(damage_value)
-    Lingr.post("[CROWSSBOW] #{player.name} was damaged by Crossbowman (#{damage_value})")
+    player.send_message("[CROWSSBOW] #{player.name} was damaged by Crossbowman (#{damage_value})")
   end
 
   def on_entity_death(evt)
