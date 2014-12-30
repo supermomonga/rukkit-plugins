@@ -84,18 +84,20 @@ module Build
       dots = circle(
         [sender.location.x.to_i, sender.location.y.to_i - 1, sender.location.z.to_i],
         n)
+      p [:dots, dots]
 
       btype = sender.item_in_hand.type
       dots.map {|(x, y, z)| sender.world.get_block_at(x, y, z) }.
         reject {|b| b.type.occluding? }.
         each do |b|
+          p [:placing, b.location.x, b.location.y, b.location.z]
           b.type = btype
           b.data = 0
-          play_sound(b.location, Sound::EXPLODE, 1.0, rand(10) * 0.1)
         end
       sender.send_message "SUCCESS with consuing all your #{btype}s."
       sender.item_in_hand = nil
       sender.health = 1
+      play_sound(sender.location, Sound::EXPLODE, 1.0, rand(10) * 0.1)
       true
     end
   end
