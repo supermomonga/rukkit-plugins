@@ -57,7 +57,8 @@ module SkeletonCrossbow
 
     evt.cancelled = true
     damage_value = 4 + rand(2)
-    evt.setDamage(EntityDamageEvent::DamageModifier::BASE, damage_value)
+    # evt.setDamage(EntityDamageEvent::DamageModifier::BASE, damage_value)
+    evt.setDamage(damage_value)
     Lingr.post("[CROWSSBOW] #{player.name} was damaged by Crossbowman (#{damage_value})")
   end
 
