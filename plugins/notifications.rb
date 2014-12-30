@@ -125,6 +125,18 @@ module Notifications
   end
 
   def on_player_achievement_awarded(evt)
-    Lingr.post [:achievement, evt.player.name, evt.achievement.name].inspect
+    text = [:achievement, evt.player.name, evt.achievement.name].inspect
+    Lingr.post(text)
+    broadcast(text)
+  end
+
+  def on_player_portal(evt)
+    player = evt.player
+    from_name = evt.from.world.name
+    to_name = evt.to.world.name
+    text = "[PORTAL] #{player.name}: #{from_name} -> #{to_name} (#{evt.cause.name})"
+
+    Lingr.post(text)
+    broadcast(text)
   end
 end
