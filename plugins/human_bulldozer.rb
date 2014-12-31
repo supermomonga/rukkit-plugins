@@ -59,8 +59,10 @@ module HumanBulldozer
       play_sound(player.location, Sound::DONKEY_DEATH , 1.0, 0.0)
       play_sound(player.location, Sound::LEVEL_UP , 0.8, 1.5)
 
-      player.send_message '(HPが全回復します)'
-      player.health = player.max_health
+      if player.health < player.max_health
+        player.send_message '(HPが全回復します)'
+        player.health = player.max_health
+      end
     end
   end
 
