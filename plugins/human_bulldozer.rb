@@ -90,13 +90,14 @@ module HumanBulldozer
   def on_block_place(evt)
     player = evt.player
     block = evt.block
+    state = evt.getBlockReplacedState()
 
-    if evt.getBlockReplacedState().getType() == Material::STATIONARY_LAVA
+    if state.type == Material::STATIONARY_LAVA
       @num_lava_removed[player.name] ||= 0
       @num_lava_removed[player.name] += 1
 
       # just for now
-      player.send_message("You have removed #{@num_lava_removed[player.name]} statinary lava. #{block.state} #{block.state.data}")
+      player.send_message("You have removed #{@num_lava_removed[player.name]} statinary lava. #{state} #{state.data}")
     end
   end
 end
