@@ -4,6 +4,7 @@ import 'org.bukkit.entity.Player'
 import 'org.bukkit.entity.Chicken'
 import 'org.bukkit.entity.Enderman'
 import 'org.bukkit.entity.Zombie'
+import 'org.bukkit.entity.PigZombie'
 import 'org.bukkit.Material'
 
 module Notifications
@@ -14,6 +15,8 @@ module Notifications
     @last_kill_notice ||= ''
     entity = evt.entity
     player = entity.killer
+
+    return if player.location.y >= 180 # TT
 
     case player
     when Player
@@ -28,13 +31,15 @@ module Notifications
         end
       when Enderman
         evt.dropped_exp *= 3
+      when PigZombie
+        text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
       when Zombie
         if entity.baby?
           evt.dropped_exp *= 4
         end
-        # text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
+        text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
       else
-        # text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
+        text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
       end
       if text
         Lingr.post(text) unless text == @last_kill_notice
