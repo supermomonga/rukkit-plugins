@@ -16,10 +16,10 @@ module Notifications
     entity = evt.entity
     player = entity.killer
 
-    return if player.location.y >= 180 # TT
-
     case player
     when Player
+      return if player.location.y >= 180 # TT
+
       case entity
       when Chicken
         text = "[KILL] ・°°・(((p(≧□≦)q)))・°°・。ｳﾜｰﾝ!! #{player.name} killed a #{readable_name(entity)}."
