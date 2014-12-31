@@ -96,7 +96,7 @@ module HumanBulldozer
       @num_lava_removed[player.name] += 1
 
       # just for now
-      player.send_message("You have removed #{@num_lava_removed[player.name]} statinary lava. #{block.data}")
+      player.send_message("You have removed #{@num_lava_removed[player.name]} statinary lava. #{block.state} #{block.state.data}")
     end
   end
 end
