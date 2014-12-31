@@ -92,7 +92,7 @@ module HumanBulldozer
     block = evt.block
     state = evt.getBlockReplacedState()
 
-    if state.type == Material::STATIONARY_LAVA && state.data == 0
+    if state.type == Material::STATIONARY_LAVA && state.data.to_i == 0
       @num_lava_removed[player.name] ||= 0
       @num_lava_removed[player.name] += 1
 
