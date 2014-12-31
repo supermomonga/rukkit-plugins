@@ -92,12 +92,18 @@ module HumanBulldozer
     block = evt.block
     state = evt.getBlockReplacedState()
 
-    if state.type == Material::STATIONARY_LAVA
+    if state.type == Material::STATIONARY_LAVA && state.data == 0
       @num_lava_removed[player.name] ||= 0
       @num_lava_removed[player.name] += 1
 
-      # just for now
-      player.send_message("You have removed #{@num_lava_removed[player.name]} statinary lava. #{state} #{state.data}")
+      player.send_message("You have removed #{@num_lava_removed[player.name]} statinary lava.")
+
+      if @num_lava_removed[player.name] >= 20
+        text = 'Congratulations! You filled 20 lava'
+        # Lingr.post(text)
+        broadcast(text)
+        @num_lava_removed[player.name] = 0
+      end
     end
   end
 end
