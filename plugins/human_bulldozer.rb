@@ -12,6 +12,8 @@ module HumanBulldozer
   @num_blocks ||= {}
   @bonus_time ||= {}
 
+  @num_lava_removed ||= {}
+
   remove_const :BONUS_TABLE if const_defined? :BONUS_TABLE
   BONUS_TABLE = {
     Material::STONE => 500,
@@ -83,5 +85,18 @@ module HumanBulldozer
       end
     Lingr.post(text)
     broadcast(text)
+  end
+
+  def on_block_place(evt)
+    player = evt.player
+    block = evt.block
+
+    if evt.getBlockReplacedState().getType() == Material::STATIONARY_LAVA
+      @num_lava_removed[player.name] ||= 0
+      @num_lava_removed[player.name] += 1
+    end
+
+    # just for now
+    player.send_message("You have removed #{@num_lava_removed[player.name]} statinary lava.")
   end
 end
