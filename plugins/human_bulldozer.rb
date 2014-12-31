@@ -12,9 +12,19 @@ module HumanBulldozer
   @num_blocks ||= {}
   @bonus_time ||= {}
 
+  remove_const :BONUS_TABLE if const_defined? :BONUS_TABLE
+  BONUS_TABLE = {
+    Material::STONE => 500,
+    Material::DIRT => 500,
+    Material::GRASS => 450,
+    Material::SAND => 300,
+  }
+
   def on_block_break(evt)
     block = evt.block
     player = evt.player
+
+    threshould = BONUS_TABLE[block.type] || 150
 
     if @bonus_time[player.name]
       istack = player.item_in_hand
@@ -26,10 +36,10 @@ module HumanBulldozer
     @num_blocks[player.name][block.type] ||= 0
     @num_blocks[player.name][block.type] += 1
 
-    if @num_blocks[player.name][block.type] > 200
+    if @num_blocks[player.name][block.type] > threshould
       @num_blocks[player.name][block.type] = 0
 
-      text = "[HUMAN BULLDOZER] #{player.name} broke 200 #{block.type}s. #{player.name} can dig faster for 1 minute, without consuming pickaxe!"
+      text = "[HUMAN BULLDOZER] #{player.name} broke #{threshould} #{block.type}s. #{player.name} can dig faster for 1 minute, without consuming pickaxe/spade!"
       Lingr.post text
       broadcast text
 
@@ -49,17 +59,8 @@ module HumanBulldozer
       play_sound(player.location, Sound::DONKEY_DEATH , 1.0, 0.0)
       play_sound(player.location, Sound::LEVEL_UP , 0.8, 1.5)
 
-      player.send_message '(HPが全回復し、expちょっともらえます)'
+      player.send_message '(HPが全回復します)'
       player.health = player.max_health
-      10.times do |i|
-        later sec(i) do
-          loc = player.location
-          later sec(1) do
-            orb = spawn(loc, EntityType::EXPERIENCE_ORB)
-            orb.experience = 1
-          end
-        end
-      end
     end
   end
 
@@ -68,8 +69,9 @@ module HumanBulldozer
     args = args.to_a
     return unless args.shift == 'human-bulldozer'
 
-    soons = @num_blocks[sender.name].select {|k, v| 120 < v && v <= 180 }
-    verysoons = @num_blocks[sender.name].select {|k, v| 180 < v }
+    threshould = BONUS_TABLE[block.type] || 150
+    soons = @num_blocks[sender.name].select {|k, v| threshould * 0.5 < v && v <= threshould * 0.8 }
+    verysoons = @num_blocks[sender.name].select {|k, v| threshould * 0.8 < v }
 
     text =
       if soons.empty? && verysoons.empty?
