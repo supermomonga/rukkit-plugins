@@ -94,9 +94,9 @@ module HumanBulldozer
     if evt.getBlockReplacedState().getType() == Material::STATIONARY_LAVA
       @num_lava_removed[player.name] ||= 0
       @num_lava_removed[player.name] += 1
-    end
 
-    # just for now
-    player.send_message("You have removed #{@num_lava_removed[player.name]} statinary lava.")
+      # just for now
+      player.send_message("You have removed #{@num_lava_removed[player.name]} statinary lava. #{block.data}")
+    end
   end
 end
