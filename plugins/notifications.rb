@@ -169,7 +169,7 @@ module Notifications
 
   def on_player_level_change(evt)
     player = evt.player
-    if player.level % 10 == 0
+    if player.level > 0 && player.level % 10 == 0
       text = "[NOTIFICATIONS] #{player.name} level: #{evt.old_level} -> #{player.level}"
       Lingr.post(text)
       broadcast(text)
