@@ -71,13 +71,13 @@ module SuperJump
 
           entity = player.vehicle ? player.vehicle : player
           player.velocity = org.bukkit.util.Vector.new(
-            x * 20.0, y, z * 20.0)
+            x * 2.0, y, z * 2.0)
         end
 
-        # @vertical_accelerated[player.name] = true
-        # later sec(0.6) do
-        #   @vertical_accelerated[player.name] = false
-        # end
+        @vertical_accelerated[player.name] = true
+        later sec(0.6) do
+          @vertical_accelerated[player.name] = false
+        end
       end
     end
   end
