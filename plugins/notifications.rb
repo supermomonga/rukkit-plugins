@@ -1,15 +1,18 @@
 # encoding: utf-8
-
+require 'set'
 import 'org.bukkit.entity.Player'
 import 'org.bukkit.entity.Chicken'
 import 'org.bukkit.entity.Enderman'
 import 'org.bukkit.entity.Zombie'
 import 'org.bukkit.entity.PigZombie'
 import 'org.bukkit.Material'
+import 'org.bukkit.event.entity.EntityDamageEvent'
 
 module Notifications
   extend self
   extend Rukkit::Util
+
+  @lava_notified ||= Set.new
 
   def on_entity_death(evt)
     @last_kill_notice ||= ''
@@ -143,5 +146,24 @@ module Notifications
 
     Lingr.post(text)
     broadcast(text)
+  end
+
+  def on_entity_damage(evt)
+    player = evt.entity
+    return unless Player === player
+
+    case evt.cause
+    when EntityDamageEvent::DamageCause::LAVA
+      unless @lava_notified.include?(player.name)
+        text = "[NOTIFICATIONS] #{player.name} is swimming in lava"
+        Lingr.post(text)
+        broadcast(text)
+
+        @lava_notified.add(player.name)
+        later sec(2) do
+          @lava_notified.delete(player.name)
+        end
+      end
+    end
   end
 end
