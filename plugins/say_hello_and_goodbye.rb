@@ -21,7 +21,7 @@ module SayHelloAndGoodbye
     Lingr.post msg if defined? Lingr
 
     loc = player.location
-    3.times do |i|
+    10.times do |i|
       later sec(i) do
         loc.world.strikeLightningEffect(loc)
       end
