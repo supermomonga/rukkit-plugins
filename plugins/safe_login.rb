@@ -18,7 +18,7 @@ module SafeLogin
   def on_entity_target(evt)
     player = evt.target
     return unless Player === player
-    return unless @within_3_sec.include?(evt.player.name)
+    return unless @within_3_sec.include?(player.name)
     evt.cancelled = true
   end
 end
