@@ -49,7 +49,7 @@ module SuperJump
     player = evt.player
 
     case evt.action
-    when org.bukkit.event.block.Action::PHYSICAL
+    when Action::PHYSICAL
       wood_plate_jump(player, evt.clicked_block)
 
     when Action::LEFT_CLICK_AIR, Action::LEFT_CLICK_BLOCK
