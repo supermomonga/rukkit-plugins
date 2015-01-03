@@ -55,6 +55,7 @@ module SuperJump
     when Action::LEFT_CLICK_AIR, Action::LEFT_CLICK_BLOCK
       return unless player.item_in_hand.type == Material::FEATHER
       return if player.on_ground?
+      evt.cancelled = true
 
       @vertical_accelerated ||= {}
       unless @vertical_accelerated[player.name]
