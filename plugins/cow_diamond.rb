@@ -15,7 +15,7 @@ module CowDiamond
     Lingr.post(text)
     broadcast(text)
 
-    return if rand(10000) < 5 # p = 0.0005
+    return unless rand(10000) < 5 # p = 0.0005
     text = "Congratulations! #{player.name} got a diamond by breeding the cow!"
     Lingr.post(text)
     broadcast(text)
