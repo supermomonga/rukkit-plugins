@@ -23,6 +23,7 @@ rukkit:
     - player_job_woodcutter
     - safe_login
     - dart_to_clay_recipe
+    - cow_diamond
   scripts:
     - lingr
     - material_util
