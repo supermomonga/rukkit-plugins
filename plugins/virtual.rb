@@ -7,13 +7,29 @@ module Virtual
 
   def on_command(sender, command, label, args)
     return unless label == 'rukkit'
+    return unless Player === sender
 
     args = args.to_a
     case args.shift
     when 'virtual'
-      material = Material.const_get(args.shift.upcase) rescue return
-      Bukkit.online_players.each do |player|
-        player.send_block_change(sender.location, material, 0)
+      arg2 = args.shift
+      case
+      when (material = Material.const_get(arg2.upcase) rescue false)
+        Bukkit.online_players.each do |player|
+          player.send_block_change(sender.location, material, 0)
+        end
+      when arg2 == 'dry'
+        (-10..10).each do |xdiff|
+          (-1..10).each do |ydiff|
+            (-10..10).each do |zdiff|
+              sender.send_block_change(
+                add_loc(sender.location, xdiff, ydiff, zdiff),
+                Material::AIR,
+                0)
+            end
+          end
+        end
+      else
       end
     else
     end
