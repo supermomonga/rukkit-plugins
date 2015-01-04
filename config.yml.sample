@@ -24,6 +24,7 @@ rukkit:
     - safe_login
     - dart_to_clay_recipe
     - cow_diamond
+    - virtual
   scripts:
     - lingr
     - material_util
