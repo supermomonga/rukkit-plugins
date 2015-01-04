@@ -169,7 +169,7 @@ module ChatConvert
           /^[\p{hiragana}ー,.!?()\d]*$/ =~ word ? word : message_text
         }
       end
-    tmp.map{|message_text|
+    tmp.map {|message_text|
       # Convert by dictionary
       message_text = CONVERSION_TABLE.inject(message_text) {|acc, (k, v)| acc.gsub(k, v) }
       RANDOM_CONVERSION_TABLE.inject(message_text) {|acc, (k, vs)| acc.gsub(k, vs.sample) }
