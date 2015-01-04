@@ -22,10 +22,8 @@ module Virtual
         (-10..10).each do |xdiff|
           (-1..10).each do |ydiff|
             (-10..10).each do |zdiff|
-              sender.send_block_change(
-                add_loc(sender.location, xdiff, ydiff, zdiff),
-                Material::AIR,
-                0)
+              loc = add_loc(sender.location, xdiff, ydiff, zdiff)
+              sender.send_block_change(loc, Material::AIR, 0) if loc.block.liquid?
             end
           end
         end
