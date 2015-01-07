@@ -27,6 +27,9 @@ module Virtual
             end
           end
         end
+      when arg2 == 'logout'
+        msg = "[LOGOUT] #{player.name}さんが空想世界に旅立ちました"
+        SayHelloAndGoodbye.on_player_quit(evt) if defined? SayHelloAndGoodbye
       else
       end
     else
