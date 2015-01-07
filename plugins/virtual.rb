@@ -30,6 +30,11 @@ module Virtual
       when arg2 == 'logout'
         evt = Object.new.instance_eval { define_singleton_method(:player) { sender }; self }
         SayHelloAndGoodbye.on_player_quit(evt) if defined? SayHelloAndGoodbye
+      when arg2 == 'login'
+        target = args.shift
+        msg = "[LOGIN] #{target}さんが現実世界に帰ってきました"
+        broadcast(msg)
+        Lingr.post(msg) if defined? Lingr
       else
       end
     else
