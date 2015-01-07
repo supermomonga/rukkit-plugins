@@ -28,7 +28,7 @@ module Virtual
           end
         end
       when arg2 == 'logout'
-        evt = Object.new.instance_eval { define_singleton_method(:player) { 123 }; self }
+        evt = Object.new.instance_eval { define_singleton_method(:player) { sender }; self }
         SayHelloAndGoodbye.on_player_quit(evt) if defined? SayHelloAndGoodbye
       else
       end
