@@ -12,11 +12,35 @@ module RareMaterialNotification
     msg =
       case item.item_stack.type
       when Material::DIAMOND
-        "[RARE MATERIAL] <#{player.name}> ダイアモンド鉱石#{item.item_stack.amount}ゲットだぜ！"
+        unless @diamond
+          @diamond ||= true
+          later sec(10) do
+            @diamond = false
+          end
+          "[RARE MATERIAL] <#{player.name}> ダイアモンド鉱石#{item.item_stack.amount}ゲットだぜ！"
+        else
+          nil
+        end
       when Material::LAPIS_ORE
-        "[RARE MATERIAL] <#{player.name}> ラピスラズリ鉱石#{item.item_stack.amount} ヽ(*´∀｀)ノ ｷｬｯﾎｰｲ!!"
+        unless @lapis
+          @lapis ||= true
+          later sec(10) do
+            @lapis = false
+          end
+          "[RARE MATERIAL] <#{player.name}> ラピスラズリ鉱石#{item.item_stack.amount} ヽ(*´∀｀)ノ ｷｬｯﾎｰｲ!!"
+        else
+          nil
+        end
       when Material::EMERALD
-        "[RARE MATERIAL] <#{player.name}> エメラルド鉱石#{item.item_stack.amount} ｷﾀﾜｧ*:.｡..｡.:*･ﾟ (n‘∀‘)ηﾟ･*:.｡..｡.:* ﾐ ☆"
+        unless @emerald
+          @emerald ||= true
+          later sec(10) do
+            @emerald = false
+          end
+          "[RARE MATERIAL] <#{player.name}> エメラルド鉱石#{item.item_stack.amount} ｷﾀﾜｧ*:.｡..｡.:*･ﾟ (n‘∀‘)ηﾟ･*:.｡..｡.:* ﾐ ☆"
+        else
+          nil
+        end
       else
         nil
       end
