@@ -35,7 +35,7 @@ module PlayerJobLegion
 
   def on_command(sender, command, label, args)
     return unless label == 'rukkit'
-    player = evt.sender
+    player = sender
     return unless Player === player
     args = args.to_a
     return unless args.shift == 'player-job-legion'
