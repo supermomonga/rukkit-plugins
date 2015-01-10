@@ -106,7 +106,7 @@ module PlayerJobLegion
     return unless @legioning[damager.name]
     return unless damager.item_in_hand.type == Material::IRON_SWORD
     evt.damage += 8
-    play_sound(player.location, Sound::ANVIL_BREAK, 0.3, 1.0)
+    play_sound(damager.location, Sound::ANVIL_BREAK, 0.3, 1.0)
   end
   private :legion_iron_sword_attack
 
@@ -117,7 +117,7 @@ module PlayerJobLegion
     return unless damagee.item_in_hand.type == Material::IRON_SWORD
     return unless damagee.blocking?
     evt.damage = [evt.damage - 8, 0].max
-    play_sound(player.location, Sound::ANVIL_USE, 0.3, 1.0)
+    play_sound(damagee.location, Sound::ANVIL_USE, 0.3, 1.0)
   end
   private :legion_iron_sword_guard
 
