@@ -67,7 +67,7 @@ module PlayerJobLegion
     xmove = evt.to.x - evt.from.x
     zmove = evt.to.z - evt.from.z
     return if xmove == 0.0 && zmove == 0.0
-    [xdiff, zdiff] =
+    xdiff, zdiff =
       xmove.abs > zmove.abs ? [xmove > 0 ? 1 : -1, 0] : [0, zmove > 0 ? 1 : -1]
 
     blocks = [-2, -1].map {|ydiff|
