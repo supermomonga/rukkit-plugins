@@ -49,7 +49,7 @@ module PlayerJobLegion
       return false
     end
 
-    text = "[LEGION] レギオンの#{player.name}さんがモードを#{@legioning[player.name]}から#{toggled_mode(@legioning[player.name])}に変更しました。(でもまだ何も実装してないですすみません)"
+    text = "[LEGION] レギオンの#{player.name}さんがモードを#{@legioning[player.name]}から#{toggled_mode(@legioning[player.name])}に変更しました。"
     broadcast(text)
     Lingr.post(text)
 
@@ -129,7 +129,7 @@ module PlayerJobLegion
     return unless @legioning[player.name] == :fortress
     return unless block.type == Material::COBBLESTONE
 
-    players = Bukkit.online_players.to_a.select {|p| block.chunk == p.chunk }
+    players = Bukkit.online_players.to_a.select {|p| block.chunk == p.location.chunk }
     (1..8).each do |ydiff|
       b = add_loc(block.location, 0, ydiff, 0).block
       return if players.any? {|p| p.location.block == b }
