@@ -15,11 +15,13 @@ module PlayerJobLegion
   @legioning ||= {}
 
   def on_inventory_click(evt)
+    p evt
     player = evt.who_clicked
     return unless has_job?(player)
 
     armor_contents = player.inventory.armor_contents.to_a.to_set
     new_legioning_p = [Material::IRON_CHESTPLATE, Material::IRON_HELMET].to_set.subset?(armor_contents)
+    p [player.name, armor_contents.to_a, new_legioning_p]
     if !@legioning[player.name] && new_legioning_p
       broadcast("[LEGION] #{player.name}さんがただのローマ市民からレギオンになりました")
       Lingr.post("[LEGION] #{player.name}さんがただのローマ市民からレギオンになりました")
@@ -31,7 +33,7 @@ module PlayerJobLegion
     end
   end
 
-  def on_command(evt)
+  def on_command(sender, command, label, args)
     return unless label == 'rukkit'
     player = evt.sender
     return unless Player === player
