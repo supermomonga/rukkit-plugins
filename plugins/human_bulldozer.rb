@@ -41,14 +41,14 @@ module HumanBulldozer
     if @num_blocks[player.name][block.type] > threshould
       @num_blocks[player.name][block.type] = 0
 
-      text = "[HUMAN BULLDOZER] #{player.name} broke #{threshould} #{block.type}s. #{player.name} can dig faster for 1 minute, without consuming pickaxe/spade!"
+      text = "[HUMAN BULLDOZER] #{player.name} broke #{threshould} #{block.type}s. #{player.name} can dig faster for 1 minute 30 second, without consuming pickaxe/spade!"
       Lingr.post text
       broadcast text
 
-      player.add_potion_effect(PotionEffectType::FAST_DIGGING.create_effect(sec(60), 5))
+      player.add_potion_effect(PotionEffectType::FAST_DIGGING.create_effect(sec(90), 5))
 
       @bonus_time[player.name] = true
-      later sec(60) do
+      later sec(90) do
         @bonus_time[player.name] = false
 
         play_sound(player.location, Sound::AMBIENCE_CAVE  , 1.0, 0.3)
