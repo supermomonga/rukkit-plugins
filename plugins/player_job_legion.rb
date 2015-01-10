@@ -7,6 +7,7 @@ import 'org.bukkit.Sound'
 module PlayerJobLegion
   extend self
   extend PlayerJob
+  extend Rukkit::Util
 
   login_message do |evt|
     "#{evt.player.name}さんが古代ローマ市民になりました (鉄装備で固めるとローマの栄光を得ます)"
