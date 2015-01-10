@@ -64,7 +64,32 @@ module PlayerJobLegion
     return unless player.on_ground?
     return unless player.inventory.contains(Material::COBBLESTONE)
 
-    # TODO
+    xmove = evt.to.x - evt.from.x
+    zmove = evt.to.z - evt.from.z
+    return if xmove == 0.0 && zmove == 0.0
+    [xdiff, zdiff] =
+      xmove.abs > zmove.abs ? [xmove > 0 ? 1 : -1, 0] : [0, zmove > 0 ? 1 : -1]
+
+    blocks = [-2, -1].map {|ydiff|
+      add_loc(player.location, xdiff, ydiff, zdiff).block
+    }
+    # TODO item consumption
+    case @legioning[player.name]
+    when :road
+      blocks.reject {|b| b.type.occluding? }.each do |b|
+        b.type = Material::COBBLESTONE
+        b.data = 0
+      end
+    when :foundation
+      unless blocks[0].type.occluding?
+        blocks[0].type = Material::COBBLESTONE
+        blocks[0].data = 0
+      end
+      unless blocks[1].type.occluding?
+        blocks[1].type = Material::DIRT
+        blocks[1].data = 0
+      end
+    end
   end
 
   def on_entity_damage_by_entity(evt)
