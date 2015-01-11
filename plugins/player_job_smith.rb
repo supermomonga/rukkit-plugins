@@ -22,7 +22,8 @@ module PlayerJobSmith
          MaterialUtil.sword?(material) ||
          MaterialUtil.axe?(material) ||
          MaterialUtil.spade?(material) ||
-         MaterialUtil.hoe?(material)
+         MaterialUtil.hoe?(material) ||
+         material == Material::BOW
         item.durability = item.durability - 1 if item.durability > 0
       end
     end
