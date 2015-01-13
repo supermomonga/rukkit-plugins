@@ -116,11 +116,9 @@ module SuperJump
     @time_sneaked.delete(player.name)
     play_sound(player.location, Sound::BURP, 0.5, 0.0)
     iikanji_effect(player.location)
-    if time_diff > 0
-      later 0 do
-        f = Math.log(time_diff) / 3.0 + 1.0
-        player.velocity = player.velocity.tap {|v| v.set_y jfloat(f) }
-      end
+    later 0 do
+      f = [time_diff / 3.0 + 1.0, 5.0].min
+      player.velocity = player.velocity.tap {|v| v.set_y jfloat(f) }
     end
   end
 end
