@@ -38,7 +38,7 @@ module SuperJump
         play_sound(add_loc(loc, 0, 5, 0), Sound::BAT_TAKEOFF, 0.9, 0.0)
         iikanji_effect(loc)
 
-        # evt.player.send_message "superjump!"
+        player.send_message('[SUPER JUMP] This feature will be removed soon.')
         player.fall_distance = 0.0
         player.velocity = player.velocity.tap {|v| v.set_y jfloat(1.3) }
       end
@@ -94,6 +94,16 @@ module SuperJump
     play_sound(entity.location, Sound::CAT_HIT, 0.5, 1.0)
     later 0 do
       entity.velocity = entity.velocity.tap {|v| v.set_y(jfloat(1.8)) }
+    end
+  end
+
+  def on_player_move(evt)
+    player = evt.player
+    return unless player.sneaking?
+    return unless evt.from.y < evt.to.y
+    return unless player.on_ground?
+    later 0 do
+      player.velocity = player.velocity.tap {|v| v.set_y jfloat(1.3) }
     end
   end
 end
