@@ -109,6 +109,7 @@ module SuperJump
     return unless player.sneaking?
     return unless evt.from.y < evt.to.y
     return unless player.on_ground?
+    Bukkit.get_player('ujm').send_message(evt.to.y - evt.from.y) rescue nil
     return unless %w[world world_nether].include?(player.location.world.name)
     return unless @time_sneaked[player.name]
 
