@@ -50,7 +50,6 @@ module PlayerJobFarmer
     when Action::RIGHT_CLICK_BLOCK
       clicked_block = evt.clicked_block
       return unless [Material::DIRT, Material::GRASS].include?(clicked_block.type)
-      evt.cancelled = true
       around_square_loc(clicked_block.location).each do |(x, y, z)|
         block = world.get_block_at(x, y, z)
         block.type = Material::SOIL if [Material::DIRT, Material::GRASS].include?(block.type)
