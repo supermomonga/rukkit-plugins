@@ -1,9 +1,11 @@
 # encoding: utf-8
 
+require 'set'
 import 'org.bukkit.Sound'
 import 'org.bukkit.entity.Player'
 import 'org.bukkit.event.entity.EntityDamageEvent'
 import 'org.bukkit.potion.PotionEffectType'
+import 'org.bukkit.Effect'
 
 module HumanBulldozer
   extend self
@@ -104,6 +106,20 @@ module HumanBulldozer
         broadcast(text)
         @num_lava_removed[player.name] = 0
       end
+    end
+  end
+
+  @glass_punched ||= Set.new
+  def on_block_damage(evt)
+    player = evt.player
+    block = evt.block
+    return if @glass_punched.include?(player.name)
+    return unless [Material::GLASS, Material::THIN_GLASS].include?(block.type)
+    play_effect(block.location, Effect::ZOMBIE_CHEW_IRON_DOOR, 0)
+
+    @glass_punched.add(player.name)
+    later sec(1) do
+      @glass_punched.delete(player.name)
     end
   end
 end
