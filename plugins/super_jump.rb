@@ -111,11 +111,12 @@ module SuperJump
     return unless player.on_ground?
     return unless %w[world world_nether].include?(player.location.world.name)
 
+    time_diff = Time.now.to_i - @time_sneaked[player.name]
     @time_sneaked.delete(player.name)
     play_sound(player.location, Sound::BURP, 0.5, 0.0)
     iikanji_effect(player.location)
     later 0 do
-      f = Math.log(Time.now.to_i - @time_sneaked[player.name]) / 3.0 + 1.0
+      f = Math.log(time_diff) / 3.0 + 1.0
       player.velocity = player.velocity.tap {|v| v.set_y jfloat(f) }
     end
   end
