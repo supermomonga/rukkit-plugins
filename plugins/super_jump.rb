@@ -108,8 +108,8 @@ module SuperJump
     player = evt.player
     return unless player.sneaking?
     return unless evt.from.y < evt.to.y
+    return if evt.to.y - evt.from.y == 0.5
     return unless player.on_ground?
-    Bukkit.get_player('ujm').send_message((evt.to.y - evt.from.y).to_s) rescue nil
     return unless %w[world world_nether].include?(player.location.world.name)
     return unless @time_sneaked[player.name]
 
