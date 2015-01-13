@@ -20,7 +20,7 @@ module PlayerJobFarmer
   ]
 
   login_message do |evt|
-    "#{evt.player.name}さんが農家になりました(空気中で鍬を振ると周りの作物が成長)"
+    "#{evt.player.name}さんが農家になりました(空気中で鍬を振ると周りの作物が成長。範囲耕しが可能)"
   end
 
   def on_player_interact(evt)
@@ -31,10 +31,10 @@ module PlayerJobFarmer
 
     return unless has_job?(player)
     return unless MaterialUtil.hoe?(material)
-    return unless rand(3) == 0
 
     case action
     when Action::LEFT_CLICK_AIR
+      return unless rand(3) == 0
       around_square_loc(player.location).each do |(x, y, z)|
         block = world.get_block_at(x, y, z)
         state = block.state
@@ -46,6 +46,14 @@ module PlayerJobFarmer
             state.update
           end
         end
+      end
+    when Action::RIGHT_CLICK_BLOCK
+      clicked_block = evt.clicked_block
+      return unless [Material::DIRT, Material::GRASS].include?(clicked_block.type)
+      evt.cancelled = true
+      around_square_loc(clicked_block.location).each do |(x, y, z)|
+        block = world.get_block_at(x, y, z)
+        block.type = Material::SOIL if [Material::DIRT, Material::GRASS].include?(block.type)
       end
     end
   end
