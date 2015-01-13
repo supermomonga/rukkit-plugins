@@ -18,6 +18,9 @@ module SuperJump
     #   orb.experience = 0
     # end
   end
+  private :iikanji_effect
+
+  @time_sneaked ||= {}
 
   def on_player_toggle_sneak(evt)
     player = evt.player
@@ -28,6 +31,8 @@ module SuperJump
     @crouching_counter[name] ||= 0
     @crouching_countingdown ||= false
     if evt.sneaking?
+      @time_sneaked[name] = Time.now.to_i
+
       # counting up
       @crouching_counter[name] += 1
       later sec(1.5) do
@@ -42,6 +47,8 @@ module SuperJump
         player.fall_distance = 0.0
         player.velocity = player.velocity.tap {|v| v.set_y jfloat(1.3) }
       end
+    else
+      @time_sneaked.delete(name)
     end
   end
 
@@ -102,8 +109,14 @@ module SuperJump
     return unless player.sneaking?
     return unless evt.from.y < evt.to.y
     return unless player.on_ground?
+    return unless %w[world world_nether].include?(player.location.world.name)
+
+    @time_sneaked.delete(name)
+    play_sound(player.location, Sound::BURP, 0.5, 0.0)
+    iikanji_effect(player.location)
     later 0 do
-      player.velocity = player.velocity.tap {|v| v.set_y jfloat(1.3) }
+      f = Math.log(i) / 3.0 + 1.0
+      player.velocity = player.velocity.tap {|v| v.set_y jfloat(f) }
     end
   end
 end
