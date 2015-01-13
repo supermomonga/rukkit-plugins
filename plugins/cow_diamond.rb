@@ -11,9 +11,6 @@ module CowDiamond
     cow = evt.entity
     return unless Cow === cow
     player = Bukkit.online_players.to_a.min_by {|p| cow.location.distance(p.location) }
-    text = "#{player.name} bred a cow."
-    Lingr.post(text)
-    broadcast(text)
 
     return unless rand(10000) < 5 # p = 0.0005
     text = "Congratulations! #{player.name} got a diamond by breeding the cow!"
