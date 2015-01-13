@@ -19,16 +19,18 @@ module PlayerJobLegion
     player = evt.who_clicked
     return unless has_job?(player)
 
-    armor_contents = player.inventory.armor_contents.to_a.map(&:type).to_set
-    new_legioning_p = [Material::IRON_CHESTPLATE, Material::IRON_HELMET].to_set.subset?(armor_contents)
-    if !@legioning[player.name] && new_legioning_p
-      broadcast("[LEGION] #{player.name}さんがただのローマ市民からレギオンになりました")
-      Lingr.post("[LEGION] #{player.name}さんがただのローマ市民からレギオンになりました")
-      @legioning[player.name] = :vanila
-    elsif @legioning[player.name] && !new_legioning_p
-      broadcast("[LEGION] #{player.name}さんがレギオンからただのローマ市民になりました")
-      Lingr.post("[LEGION] #{player.name}さんがレギオンからただのローマ市民になりました")
-      @legioning.delete(player.name)
+    later 0 do
+      armor_contents = player.inventory.armor_contents.to_a.map(&:type).to_set
+      new_legioning_p = [Material::IRON_CHESTPLATE, Material::IRON_HELMET].to_set.subset?(armor_contents)
+      if !@legioning[player.name] && new_legioning_p
+        broadcast("[LEGION] #{player.name}さんがただのローマ市民からレギオンになりました")
+        Lingr.post("[LEGION] #{player.name}さんがただのローマ市民からレギオンになりました")
+        @legioning[player.name] = :vanila
+      elsif @legioning[player.name] && !new_legioning_p
+        broadcast("[LEGION] #{player.name}さんがレギオンからただのローマ市民になりました")
+        Lingr.post("[LEGION] #{player.name}さんがレギオンからただのローマ市民になりました")
+        @legioning.delete(player.name)
+      end
     end
   end
 
