@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'set'
 import 'org.bukkit.entity.Player'
 # import 'org.bukkit.inventory.ItemStack'
