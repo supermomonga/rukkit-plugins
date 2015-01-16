@@ -78,14 +78,12 @@ module PlayerJobFarmer
     clicked_block = evt.clicked_block
 
     return unless player.item_in_hand.type == Material::SEEDS
-    upper_loc = clicked_block.location.clone
-    upper_loc.y += 1
-    upper_block = world.get_block_at(upper_loc)
+    upper_block = clicked_block.get_relative(BlockFace::UP)
     return unless clicked_block.type == Material::SOIL && upper_block.type == Material::AIR
     evt.cancelled = true
     around_square_loc(clicked_block.location).each do |(x, y, z)|
       block = world.get_block_at(x, y, z)
-      upper_block = world.get_block_at(x, y+1, z)
+      upper_block = block.get_relative(BlockFace::UP)
       if block.type == Material::SOIL && upper_block.type == Material::AIR
         upper_block.type = Material::CROPS
         if player.item_in_hand.amount == 1
