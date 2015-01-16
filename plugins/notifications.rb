@@ -114,7 +114,7 @@ module Notifications
       later sec(1) do
         play_sound(player.location, Sound::LEVEL_UP, 0.0, 0.5)
         orb = spawn(player.location, EntityType::EXPERIENCE_ORB)
-        orb.experience = 5
+        orb.experience = Bukkit.online_players.to_a.size * 5
 
         if @good_morning
           text =
