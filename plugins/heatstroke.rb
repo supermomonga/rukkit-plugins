@@ -1,10 +1,9 @@
 # encoding: utf-8
 =begin
-砂漠とその類、あと台地における、日陰・水中を除く
-炎天下の場所にいると player は熱射病になりダメージを食らう.
-熱射病による kill は起こさない.
 
-iron helmet を装備している場合は、ダメージを受ける間隔が短くなる
+Player who is in biome like kind of desert and mesa can be hurt by sunlight.
+Sunlight can't hurt plyer who is in the water or shade or equippes helmet.
+However, when player equips iron helmet, player is hurt more terribly.
 
 TODO
 * じっとしてる時に heatstroke の条件下にいる時間を判定 <- すぐできなさそう
@@ -58,7 +57,7 @@ module Heatstroke
        !@daytime.include?(player.world.get_time)                                         ||
        head_guard
 
-      @player_info = {}
+      @player_info.delete(player.name)
       if @need_to_escape
         broadcast "[HEATSTROKE] あぶないあぶない"
         @need_to_escape = false
@@ -79,7 +78,7 @@ module Heatstroke
         "iron_helmet" => iron_helmet
       }
 
-      text = "[HEATSTROKE] ここはあついなー！！！！熱射病に気をつけましょう"
+      text = "[HEATSTROKE] ここはあついなー！！！！ 熱射病に気をつけましょう"
       text += "(鉄被ってると激ヤバです)" if iron_helmet
       broadcast text
     end
@@ -95,5 +94,8 @@ module Heatstroke
       player.set_health player.health-1
       play_sound(player.location, Sound::HURT_FLESH, 1.0, 1.0)
     end
+  end
+
+  def on_inventory_click(evt)
   end
 end
