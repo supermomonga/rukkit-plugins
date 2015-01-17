@@ -1,6 +1,6 @@
 # encoding: utf-8
 =begin
-砂漠とその類、あと赤土の地域における、日陰・水中を除く
+砂漠とその類、あと台地における、日陰・水中を除く
 炎天下の場所にいると player は日射病になりダメージを食らう.
 日射病による kill は起こさない.
 
@@ -8,6 +8,7 @@ iron helmet を装備している場合は、ダメージを受ける間隔が�
 
 TODO
 * じっとしてる時も日射病の条件下にいる時間を判定 <- すぐできなさそう
+* あえてiron helmet を装備した時のアラートを出す <- できるとは思う
 =end
 
 import 'org.bukkit.Sound'
@@ -44,7 +45,7 @@ module SunlightAttack
     # ここどうにかしたい
     if player.inventory.helmet
       iron_helmet = player.inventory.helmet.data.item_type == Material::IRON_HELMET
-      head_guard = true ? !iron_helmet : false
+      head_guard = !iron_helmet ? true : false
     else
       iron_helmet = false
       head_guard = false
@@ -67,12 +68,6 @@ module SunlightAttack
 
     @need_to_escape = true
 
-    # for development
-    player.saturation = 10
-    if player.health == 1
-      player.health = 20
-    end
-
     now = Time.now
     if !@player_info[player.name]
 
@@ -85,7 +80,7 @@ module SunlightAttack
       }
 
       text = "ここはあついなー！！！！日射病に気をつけましょう"
-      text += "(鉄の吸収率は激ヤバです)" if iron_helmet
+      text += "(鉄被ってると激ヤバです)" if iron_helmet
       broadcast text
     end
 
