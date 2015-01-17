@@ -79,7 +79,7 @@ module Heatstroke
         "iron_helmet" => iron_helmet
       }
 
-      text = "[HEATSTROKE] ここはあついなー！！！！日射病に気をつけましょう"
+      text = "[HEATSTROKE] ここはあついなー！！！！熱射病に気をつけましょう"
       text += "(鉄被ってると激ヤバです)" if iron_helmet
       broadcast text
     end
