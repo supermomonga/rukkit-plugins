@@ -26,7 +26,7 @@ rukkit:
     - dirt_to_clay_recipe
     - cow_diamond
     - virtual
-    - sunlight_attack
+    - heatstroke
   scripts:
     - lingr
     - material_util
