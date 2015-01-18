@@ -7,6 +7,7 @@ import 'org.bukkit.entity.Zombie'
 import 'org.bukkit.entity.PigZombie'
 import 'org.bukkit.Material'
 import 'org.bukkit.event.entity.EntityDamageEvent'
+import 'org.bukkit.entity.EntityType'
 
 module Notifications
   extend self
@@ -33,6 +34,7 @@ module Notifications
           text = "[KILL] 殺人事件発生! #{player.name}容疑者が#{entity.name}さんを#{player.item_in_hand.type}殺害した疑いで書類送検されました"
         end
       when Enderman
+        text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
         evt.dropped_exp *= 3
       when PigZombie
         text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
@@ -57,7 +59,16 @@ module Notifications
     when entity.custom_name
       entity.custom_name
     when entity.type
-      entity.type.name.capitalize
+      case entity.type
+      when EntityType::SKELETON
+        if entity.skeleton_type == org.bukkit.entity.Skeleton.SkeletonType::WITHER
+          'WitherSkeleton'
+        else
+          entity.type.name.capitalize
+        end
+      else
+        entity.type.name.capitalize
+      end
     else
       entity.inspect
     end
