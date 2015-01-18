@@ -129,11 +129,13 @@ module Notifications
 
         if @good_morning
           text =
-            case rand(2)
+            case rand(3)
             when 0
               "[BED] あさ（あさ）"
             when 1
               "[BED] あさだーーーーーーー! #{%w[ょ ゅ ゃ ね vim 肉 ! 朝です。 淺田].sample}"
+            when 2
+              "[BED] ああああああああああああああああああさだー"
             end
           Lingr.post(text) if Bukkit.online_players.to_a.size == 1
           broadcast text
