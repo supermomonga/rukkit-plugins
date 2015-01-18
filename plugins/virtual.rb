@@ -33,7 +33,7 @@ module Virtual
         SayHelloAndGoodbye.on_player_quit(evt) if defined? SayHelloAndGoodbye
       when arg2 == 'login'
         target = args.shift || sender.name
-        msg = "[LOGIN] #{target}さんが現実世界に帰ってきました"
+        msg = "[LOGIN] #{target}さんが実現世界に帰ってきました"
         broadcast(msg)
         Lingr.post(msg) if defined? Lingr
       else
