@@ -61,7 +61,7 @@ module Notifications
     when entity.type
       case entity.type
       when EntityType::SKELETON
-        if entity.skeleton_type == org.bukkit.entity.Skeleton.SkeletonType::WITHER
+        if entity.skeleton_type == org.bukkit.entity.Skeleton::SkeletonType::WITHER
           'WitherSkeleton'
         else
           entity.type.name.capitalize
