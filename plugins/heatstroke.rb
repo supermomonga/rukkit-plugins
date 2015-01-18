@@ -6,8 +6,8 @@ Sunlight can't hurt plyer who is in the water or shade or equippes helmet.
 However, when player equips iron helmet, player is hurt more terribly.
 
 TODO
-* じっとしてる時に heatstroke の条件下にいる時間を判定 <- すぐできなさそう
-* あえてiron helmet を装備した時のアラートを出す <- できるとは思う
+* じっとしてる時に heatstroke のダメージ食らう <- すぐできなさそう
+* @iron_helmet_equipped を @player_info に保持させる <- 実装間に合ってないマン
 =end
 
 import 'org.bukkit.Sound'
@@ -46,7 +46,7 @@ module Heatstroke
     # ここどうにかしたい
     if player.inventory.helmet
       @iron_helmet_equipped = player.inventory.helmet.data.item_type == Material::IRON_HELMET
-      head_guard = !@iron_helmet_equipped ? true : false
+      head_guard = !@iron_helmet_equipped
     else
       @iron_helmet_equipped = false
       head_guard = false
@@ -77,6 +77,7 @@ module Heatstroke
         "alert" => @iron_helmet_equipped ? now+@iron_alert_time : now+@alert_time,
         "alert_done" => false,
         "damage" => @iron_helmet_equipped ? now+@iron_damage_time : now+@damage_time,
+        "iron_eqquiped" => @iron_helmet_equipped
       }
 
       text = "[HEATSTROKE] ここはあついなー！！！！ 熱射病に気をつけましょう"
