@@ -25,7 +25,7 @@ module SharedChest
 
   def shared_chest_inventory
     chest = Bukkit.get_world('world').get_block_at(0, 0, 0)
-    if chest.type != Material::CHEST
+    unless chest.type == Material::CHEST
       create_shared_chest(chest)
     end
     chest.state.block_inventory
@@ -45,5 +45,4 @@ module SharedChest
     evt.cancelled = true
     evt.player.open_inventory(shared_chest_inventory)
   end
-
 end
