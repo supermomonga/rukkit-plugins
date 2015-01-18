@@ -3,7 +3,7 @@ import 'org.bukkit.inventory.ItemStack'
 import 'org.bukkit.inventory.ShapedRecipe'
 import 'org.bukkit.Material'
 
-module DartToClayRecipe
+module DirtToClayRecipe
   extend self
   extend Rukkit::Util
 
@@ -12,7 +12,7 @@ module DartToClayRecipe
     str.ord
   end
 
-  def dart_to_clay_recipe
+  def dirt_to_clay_recipe
     ShapedRecipe.new(
       ItemStack.new(Material::CLAY_BALL, 8)
     ).shape(
@@ -22,5 +22,5 @@ module DartToClayRecipe
     ).set_ingredient(char('#'), Material::DIRT).set_ingredient(char('_'), Material::WATER_BUCKET)
   end
 
-  Bukkit.add_recipe(dart_to_clay_recipe)
+  Bukkit.add_recipe(dirt_to_clay_recipe)
 end
