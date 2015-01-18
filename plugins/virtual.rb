@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 # encoding: utf-8
+=======
+>>>>>>> try to implememnt sunlightattack for rukkit
 import 'org.bukkit.Material'
 import 'org.bukkit.Bukkit'
 

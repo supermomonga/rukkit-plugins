@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 # encoding: utf-8
+=======
+>>>>>>> try to implememnt sunlightattack for rukkit
 require 'set'
 import 'org.bukkit.entity.Player'
 # import 'org.bukkit.inventory.ItemStack'
