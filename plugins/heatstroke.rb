@@ -2,8 +2,8 @@
 =begin
 
 A player in desert or mesa biome gets hurt by sunlight.
-Sunlight doesn't hurt a player who is in the water/shade or equipped helmet.
-However, when a player equips iron helmet, the player gets hurt more terribly.
+Sunlight doesn't hurt a player who is in the water/shade or equips helmet.
+However, when a player equips an iron helmet, the player gets hurt more terribly.
 
 TODO
 * じっとしてる時に heatstroke のダメージ食らう <- すぐできなさそう
