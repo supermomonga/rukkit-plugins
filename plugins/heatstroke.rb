@@ -62,7 +62,7 @@ module Heatstroke
     end
 
     @need_to_escape = true
-    @iron_helmet_equipped = !head_guard && helmet ? true : false
+    @iron_helmet_equipped = !head_guard && helmet
 
     now = Time.now
     if !@player_info[player.name]
