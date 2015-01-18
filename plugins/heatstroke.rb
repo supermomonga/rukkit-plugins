@@ -38,15 +38,17 @@ module Heatstroke
   @iron_damage_time = @damage_time * @iron_heat_ratio
   @iron_damage_interval = @damage_interval * @iron_heat_ratio
 
-  def on_player_move(evt)
+  @iron_helmet_equipped = false
+
+  def on_player_move(evt) # {{{
     player = evt.player
 
     # ここどうにかしたい
     if player.inventory.helmet
-      iron_helmet = player.inventory.helmet.data.item_type == Material::IRON_HELMET
-      head_guard = !iron_helmet ? true : false
+      @iron_helmet_equipped = player.inventory.helmet.data.item_type == Material::IRON_HELMET
+      head_guard = !@iron_helmet_equipped ? true : false
     else
-      iron_helmet = false
+      @iron_helmet_equipped = false
       head_guard = false
     end
 
@@ -59,7 +61,7 @@ module Heatstroke
 
       @player_info.delete(player.name)
       if @need_to_escape
-        broadcast "[HEATSTROKE] あぶないあぶない"
+        broadcast "[HEATSTROKE] ご自愛ください"
         @need_to_escape = false
       end
       return
@@ -72,14 +74,13 @@ module Heatstroke
 
       # これどうにかならんかな
       @player_info[player.name] = {
-        "alert" => iron_helmet ? now+@iron_alert_time : now+@alert_time,
+        "alert" => @iron_helmet_equipped ? now+@iron_alert_time : now+@alert_time,
         "alert_done" => false,
-        "damage" => iron_helmet ? now+@iron_damage_time : now+@damage_time,
-        "iron_helmet" => iron_helmet
+        "damage" => @iron_helmet_equipped ? now+@iron_damage_time : now+@damage_time,
       }
 
       text = "[HEATSTROKE] ここはあついなー！！！！ 熱射病に気をつけましょう"
-      text += "(鉄被ってると激ヤバです)" if iron_helmet
+      text += "(鉄被ってると激ヤバです)" if @iron_helmet_equipped
       broadcast text
     end
 
@@ -89,13 +90,29 @@ module Heatstroke
     elsif now > @player_info[player.name]["damage"] && player.health != 1
 
       # これどうにかならんかな
-      @player_info[player.name]["damage"] = iron_helmet ? now+@iron_damage_interval : now+@damage_interval
+      @player_info[player.name]["damage"] = @iron_helmet_equipped ? now+@iron_damage_interval : now+@damage_interval
 
       player.set_health player.health-1
       play_sound(player.location, Sound::HURT_FLESH, 1.0, 1.0)
     end
-  end
+  end # }}}
 
-  def on_inventory_click(evt)
-  end
+  def on_inventory_click(evt) # {{{
+    player = evt.who_clicked
+
+    if !@strong_sunlight_spot.include?(player.location.block.biome)                      ||
+       player.location.block.light_from_sky < @strong_sunlight                           ||
+       player.location.world.has_storm                                                   ||
+       player.location.y < player.location.world.get_highest_block_at(player.location).y ||
+       !@daytime.include?(player.world.get_time)
+      return
+    end
+
+    later 0 do
+      hold_iron_helmet = evt.get_current_item.data.item_type == Material::IRON_HELMET
+      @iron_helmet_equipped = player.inventory.armor_contents.to_a[-1].data.item_type == Material::IRON_HELMET
+
+      broadcast "[HEATSTROKE] 鉄はヤバいって！！" if @iron_helmet_equipped && hold_iron_helmet
+    end
+  end # }}}
 end
