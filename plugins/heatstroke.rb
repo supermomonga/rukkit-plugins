@@ -19,10 +19,8 @@ module Heatstroke
   extend Rukkit::Util
 
   # constants {{{
-  remove_const :STRONG_SUNLIGHT if const_defined? :STRONG_SUNLIGHT
   STRONG_SUNLIGHT = 14
 
-  remove_const :STRONG_SUNLIGHT_SPOT if const_defined? :STRONG_SUNLIGHT_SPOT
   STRONG_SUNLIGHT_SPOT = [
     Biome::DESERT,
     Biome::DESERT_HILLS,
@@ -30,28 +28,20 @@ module Heatstroke
     Biome::MESA
   ]
 
-  remove_const :ALERT_TIME if const_defined? :ALERT_TIME
   ALERT_TIME = 6
 
-  remove_const :DAMAGE_TIME if const_defined? :DAMAGE_TIME
   DAMAGE_TIME = 15
 
-  remove_const :DAMAGE_INTERVAL  if const_defined? :DAMAGE_INTERVAL
   DAMAGE_INTERVAL = 3
 
-  remove_const :DAYTIME  if const_defined? :DAYTIME
   DAYTIME = 4000..11000
 
-  remove_const :IRON_HEAT_RATIO   if const_defined? :IRON_HEAT_RATIO
   IRON_HEAT_RATIO = 0.7
 
-  remove_const :IRON_ALERT_TIME   if const_defined? :IRON_ALERT_TIME
   IRON_ALERT_TIME = ALERT_TIME * IRON_HEAT_RATIO
 
-  remove_const :IRON_DAMAGE_TIME   if const_defined? :IRON_DAMAGE_TIME
   IRON_DAMAGE_TIME = DAMAGE_TIME * IRON_HEAT_RATIO
 
-  remove_const :IRON_DAMAGE_INTERVAL   if const_defined? :IRON_DAMAGE_INTERVAL
   IRON_DAMAGE_INTERVAL = DAMAGE_INTERVAL * IRON_HEAT_RATIO
   # }}}
 
