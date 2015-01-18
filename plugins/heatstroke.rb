@@ -1,8 +1,8 @@
 # encoding: utf-8
 =begin
 
-Player who is in biome like kind of desert and mesa can be hurt by sunlight.
-Sunlight can't hurt plyer who is in the water or shade or equippes helmet.
+A player in desert or mesa biome gets hurt by sunlight.
+Sunlight doesn't hurt a player who is in the water/shade or equippes helmet.
 However, when player equips iron helmet, player is hurt more terribly.
 
 TODO
