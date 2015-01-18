@@ -81,8 +81,8 @@ module PlayerJobFarmer
     upper_block = clicked_block.get_relative(BlockFace::UP)
     return unless clicked_block.type == Material::SOIL && upper_block.type == Material::AIR
     evt.cancelled = true
-    around_square_loc(clicked_block.location).each do |(x, y, z)|
-      block = world.get_block_at(x, y, z)
+    uzumaki_loc(clicked_block.location, 25).each do |(location)|
+      block = world.get_block_at(location)
       upper_block = block.get_relative(BlockFace::UP)
       if block.type == Material::SOIL && upper_block.type == Material::AIR
         upper_block.type = Material::CROPS
@@ -103,5 +103,31 @@ module PlayerJobFarmer
     xa = [*x-2 .. x+2]
     za = [*z-2 .. z+2]
     xa.product(za).map { |arr| arr.insert(1, y) }
+  end
+
+  def uzumaki_loc(location, num)
+    [*0..num].map do |n|
+      x, z = uzumaki_base(n)
+      location.clone.add(x, 0, z)
+    end
+  end
+
+  def uzumaki_base(n)
+    base = Math.sqrt(n).floor.to_i
+    delta = n - base**2
+    if base%2 == 0
+      basex = -base / 2
+      basey = base / 2
+      xdir = 1
+      ydir = -1
+    else
+      basex = base / 2 + 1
+      basey = -base / 2 + 1
+      xdir = -1
+      ydir = 1
+    end
+    x = basex.to_i + xdir * (delta > base ? delta - base : 0)
+    y = basey.to_i + ydir * (delta < base ? delta : base)
+    [x, y]
   end
 end
