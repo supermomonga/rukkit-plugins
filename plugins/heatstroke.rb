@@ -12,6 +12,7 @@ TODO
 import 'org.bukkit.Sound'
 import 'org.bukkit.Material'
 import 'org.bukkit.block.Biome'
+import 'org.bukkit.Effect'
 
 module Heatstroke
   extend self
@@ -114,6 +115,7 @@ module Heatstroke
 
       player.set_health player.health-1
       play_sound(player.location, Sound::HURT_FLESH, 1.0, 1.0)
+      play_effect(player.location, Effect::SMOKE, 0)
     end
   end # }}}
 
