@@ -132,6 +132,7 @@ module ChatConvert
     /^すごーい$/ => 'スゴーイ',
     /^sm$/ => 'スゴーイ、やっぱマイクラ知り尽くしてるね',
     /ぽちおん\|portion/ => 'ポーション',
+    /ぽいそん/ => 'ポイズン'
   } # }}}
   RANDOM_CONVERSION_TABLE = { # {{{
     /^thx$/ => [
