@@ -6,6 +6,7 @@ import 'org.bukkit.event.entity.CreatureSpawnEvent'
 import 'org.bukkit.entity.Arrow'
 import 'org.bukkit.entity.Player'
 import 'org.bukkit.event.entity.EntityDamageEvent'
+import 'org.bukkit.entity.EntityType'
 
 module SkeletonCrossbow
   extend self
@@ -18,11 +19,16 @@ module SkeletonCrossbow
     skeleton = evt.entity
     return unless Skeleton === skeleton
     return unless skeleton.skeleton_type == Skeleton::SkeletonType::NORMAL
+    return if skeleton.location.y >= 180
     # return unless rand(10) == 0
     return unless rand(3) == 0
 
-    skeleton.custom_name = 'Crossbowman'
-    @skeletons.add(skeleton)
+    skeletons = [skeleton, spawn(skeleton.location, EntityType::SKELETON)]
+    skeletons.each do |s|
+      s.custom_name = 'Crossbowman'
+      @skeletons.add(s)
+    end
+
     garbage_collection()
   end
 
@@ -32,17 +38,13 @@ module SkeletonCrossbow
     shooter = arrow.shooter
     return unless @skeletons.include?(shooter)
 
-    if rand(2) == 0
+    if rand(3) == 0
       evt.cancelled = true
       return
     end
 
     8.times {|i| play_effect(shooter.location, Effect::SMOKE, i) }
     play_sound(arrow.location, Sound::SHOOT_ARROW, 1.0, 0.0)
-    later 0 do
-      arrow.velocity = arrow.velocity.multiply(1.2)
-    end
-
     arrow.critical = true
   end
 
@@ -65,7 +67,7 @@ module SkeletonCrossbow
   def on_entity_death(evt)
     entity = evt.entity
     if @skeletons.include?(entity)
-      evt.dropped_exp *= 2
+      evt.dropped_exp = (evt.dropped_exp * 1.5).round
     end
   end
 
