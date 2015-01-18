@@ -18,7 +18,9 @@ module Heatstroke
   extend self
   extend Rukkit::Util
 
-  @strong_sunlight = 14
+  remove_const :STRONG_SUNLIGHT if const_defined? :STRONG_SUNLIGHT
+  STRONG_SUNLIGHT = 14
+
   @strong_sunlight_spot = [
     Biome::DESERT,
     Biome::DESERT_HILLS,
@@ -47,7 +49,7 @@ module Heatstroke
     head_guard = helmet && helmet.data.item_type != Material::IRON_HELMET
 
     if !@strong_sunlight_spot.include?(player.location.block.biome)                      ||
-       player.location.block.light_from_sky < @strong_sunlight                           ||
+       player.location.block.light_from_sky < STRONG_SUNLIGHT                           ||
        player.location.world.has_storm                                                   ||
        player.location.y < player.location.world.get_highest_block_at(player.location).y ||
        !@daytime.include?(player.world.get_time)                                         ||
@@ -96,7 +98,7 @@ module Heatstroke
     player = evt.who_clicked
 
     if !@strong_sunlight_spot.include?(player.location.block.biome)                      ||
-       player.location.block.light_from_sky < @strong_sunlight                           ||
+       player.location.block.light_from_sky < STRONG_SUNLIGHT                           ||
        player.location.world.has_storm                                                   ||
        player.location.y < player.location.world.get_highest_block_at(player.location).y ||
        !@daytime.include?(player.world.get_time)
