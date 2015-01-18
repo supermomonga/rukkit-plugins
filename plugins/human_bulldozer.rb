@@ -117,6 +117,9 @@ module HumanBulldozer
     return unless [Material::GLASS, Material::THIN_GLASS].include?(block.type)
     play_effect(block.location, Effect::ZOMBIE_CHEW_IRON_DOOR, 0)
 
+    orb = spawn(block.location, EntityType::EXPERIENCE_ORB)
+    orb.experience = 0
+
     @glass_punched.add(player.name)
     later sec(1) do
       @glass_punched.delete(player.name)
