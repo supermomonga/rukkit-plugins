@@ -153,10 +153,12 @@ module Notifications
     player = evt.player
     from_name = evt.from.world.name
     to_name = evt.to.world.name
-    text = "[PORTAL] #{player.name}: #{from_name} -> #{to_name} (#{evt.cause.name})"
+      text = "[PORTAL] #{player.name}: #{from_name} -> #{to_name} (#{evt.cause.name})"
 
-    Lingr.post(text)
-    broadcast(text)
+    later sec(1) do
+      Lingr.post(text)
+      broadcast(text)
+    end
   end
 
   def on_entity_damage(evt)
