@@ -9,7 +9,7 @@ require 'json'
 import 'org.bukkit.ChatColor'
 # require 'sinatra/base'
 # require 'sinatra/reloader'
-require 'mechanize'
+# require 'mechanize'
 
 p :debug2
 
@@ -104,24 +104,24 @@ class LingrServer < Sinatra::Base
 
   end
 
-  private
-  def agent
-    @@agent ||= Mechanize.new
-  end
-  def login
-    # TODO
-  end
-  def bot_list
-    # TODO
-    res = agent.get 'http://lingr.com/developer'
-    if res.code == '200'
-    else
-      login
-    end
-  end
-  def create_bot(id, name)
-    # TODO
-  end
+  # private
+  # def agent
+  #   @@agent ||= Mechanize.new
+  # end
+  # def login
+  #   # TODO
+  # end
+  # def bot_list
+  #   # TODO
+  #   res = agent.get 'http://lingr.com/developer'
+  #   if res.code == '200'
+  #   else
+  #     login
+  #   end
+  # end
+  # def create_bot(id, name)
+  #   # TODO
+  # end
 end
 
 end
