@@ -195,6 +195,6 @@ module Notifications
     contents = evt.contents
     text = "[NOTIFICATIONS] #{contents.ingredient.type.to_s.sub(/^Material::/, '')}(#{contents.ingredient.amount}) -> ?"
     Lingr.post(text)
-    broadcast(test)
+    broadcast(text)
   end
 end
