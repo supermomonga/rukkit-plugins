@@ -7,8 +7,8 @@ require 'open-uri'
 require 'json'
 
 import 'org.bukkit.ChatColor'
-require 'sinatra/base'
-require 'sinatra/reloader'
+# require 'sinatra/base'
+# require 'sinatra/reloader'
 require 'mechanize'
 
 p :debug2
@@ -52,6 +52,7 @@ module Lingr
   end
 end
 
+if false
 class LingrServer < Sinatra::Base
   register Sinatra::Reloader
 
@@ -121,6 +122,8 @@ class LingrServer < Sinatra::Base
   def create_bot(id, name)
     # TODO
   end
+end
+
 end
 
 p :debug3
