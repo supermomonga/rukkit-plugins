@@ -3,6 +3,14 @@ require 'set'
 
 module PlayerJob
   extend self
+  class << self
+    include Enumerable
+
+    def each(&block)
+      @@job_plugins ||= []
+      @@job_plugins.each(&block)
+    end
+  end
 
   def on_player_join(evt)
     player = evt.player
@@ -34,10 +42,5 @@ module PlayerJob
 
   def login_message(&block)
     @message_proc = block
-  end
-
-  def self.each_job(&block)
-    @@job_plugins ||= []
-    @@job_plugins.each(&block)
   end
 end

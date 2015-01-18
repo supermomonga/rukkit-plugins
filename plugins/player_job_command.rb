@@ -18,17 +18,23 @@ module PlayerJobCommand
         return unless name
         player = sender.world.players.find { |p| p.name ==  name }
         return unless player
-        PlayerJob.each_job do |job|
-          sender.send_message(job.detail) if job.has_job?(player) && job.respond_to?(:detail)
-        end
+        PlayerJob.select { |job|
+           job.has_job?(player) && job.respond_to?(:detail)
+        }.each { |job|
+          sender.send_message(job.detail)
+        }
       when arg2 == 'me'
-        PlayerJob.each_job do |job|
-          sender.send_message(job.detail) if job.has_job?(sender) && job.respond_to?(:detail)
-        end
+        PlayerJob.select { |job|
+          job.has_job?(sender) && job.respond_to?(:detail)
+        }.each { |job|
+          sender.send_message(job.detail)
+        }
       when arg2 == 'list'
-        PlayerJob.each_job do |job|
-          sender.send_message(job.detail) if job.respond_to?(:detail)
-        end
+        PlayerJob.select { |job|
+          job.respond_to?(:detail)
+        }.each { |job|
+          sender.send_message(job.detail)
+        }
       when arg2 == 'help'
         broadcast '/rukkit player_job id [user id] --'
         broadcast '        show current job of user specified by id'
