@@ -19,6 +19,7 @@ module HumanBulldozer
   remove_const :BONUS_TABLE if const_defined? :BONUS_TABLE
   BONUS_TABLE = {
     Material::STONE => 500,
+    Material::NETHERRACK => 500,
     Material::DIRT => 500,
     Material::GRASS => 450,
     Material::SAND => 300,
@@ -43,14 +44,14 @@ module HumanBulldozer
     if @num_blocks[player.name][block.type] > threshould
       @num_blocks[player.name][block.type] = 0
 
-      text = "[HUMAN BULLDOZER] #{player.name} broke #{threshould} #{block.type}s. #{player.name} can dig faster for 1 minute 30 second, without consuming pickaxe/spade!"
+      text = "[HUMAN BULLDOZER] #{player.name} broke #{threshould} #{block.type}s. #{player.name} can dig faster for 1 minute, without consuming pickaxe/spade!"
       Lingr.post text
       broadcast text
 
-      player.add_potion_effect(PotionEffectType::FAST_DIGGING.create_effect(sec(60), 5))
+      player.add_potion_effect(PotionEffectType::FAST_DIGGING.create_effect(sec(42), 5)) # it's actually 63
 
       @bonus_time[player.name] = true
-      later sec(90) do
+      later sec(60) do
         @bonus_time[player.name] = false
 
         play_sound(player.location, Sound::AMBIENCE_CAVE  , 1.0, 0.3)
@@ -59,8 +60,9 @@ module HumanBulldozer
         broadcast(text)
       end
 
-
-      play_sound(player.location, Sound::DONKEY_DEATH , 1.0, 0.0)
+      Bukkit.online_players.to_a.each do |p|
+        play_sound(p.location, Sound::DONKEY_DEATH , 1.0, 0.0)
+      end
       play_sound(player.location, Sound::LEVEL_UP , 0.8, 1.5)
 
       if player.health < player.max_health
