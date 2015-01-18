@@ -16,8 +16,10 @@ module Virtual
       arg2 = args.shift
       case
       when (material = Material.const_get(arg2.upcase) rescue false)
+        below_p = args.shift == '-b'
+        loc = add_loc(sender.location, 0, below_p ? -1 : 0, 0)
         Bukkit.online_players.each do |player|
-          player.send_block_change(sender.location, material, 0)
+          player.send_block_change(loc, material, 0)
         end
       when arg2 == 'dry'
         (-10..10).each do |xdiff|
