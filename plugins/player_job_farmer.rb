@@ -23,6 +23,10 @@ module PlayerJobFarmer
     "#{evt.player.name}さんが農家になりました(空気中で鍬を振ると周りの作物が成長。範囲耕しが可能)"
   end
 
+  def detail
+    '[農家]:空気中で鍬を振ると周りの作物が成長。範囲耕しが可能'
+  end
+
   def on_player_interact(evt)
     material = evt.material
     action = evt.action

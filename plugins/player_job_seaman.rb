@@ -9,6 +9,10 @@ module PlayerJobSeaman
     "#{evt.player.name}さんが海士になりました(海に入っても溺れない)"
   end
 
+  def detail
+    '[海士]:海に入っても溺れない'
+  end
+
   def on_entity_damage(evt)
     return unless has_job?(evt.entity)
 
