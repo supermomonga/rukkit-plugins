@@ -148,7 +148,7 @@ module Notifications
   def on_player_achievement_awarded(evt)
     text = [:achievement, evt.player.name, evt.achievement.name].inspect
     Lingr.post(text)
-    broadcast(text)
+    broadcast(Lingr.remove_colors(text))
   end
 
   def on_player_portal(evt)
