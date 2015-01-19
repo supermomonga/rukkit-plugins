@@ -88,7 +88,7 @@ module Crossbow
     return unless args.first == 'crossbow'
     return unless sender.item_in_hand
     return unless sender.item_in_hand.type == Material::BOW
-    old_name = sender.item_in_hand.item_meta.display_name
+    old_name = sender.item_in_hand.item_meta.display_name || 'Bow'
     new_display_name = old_name == 'Crossbow' ? 'Bow' : 'Crossbow'
     sender.item_in_hand.tap {|itemstack| itemstack.setItemMeta(itemstack.item_meta.tap {|im| im.display_name = new_display_name }) }
 
