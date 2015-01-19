@@ -1,6 +1,7 @@
 import 'org.bukkit.Bukkit'
 import 'org.bukkit.entity.Squid'
 import 'org.bukkit.Material'
+import 'org.bukkit.Effect'
 
 module FastDash
   extend self
