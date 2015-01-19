@@ -16,7 +16,6 @@ module HumanBulldozer
 
   @num_lava_removed ||= {}
 
-  remove_const :BONUS_TABLE if const_defined? :BONUS_TABLE
   BONUS_TABLE = {
     Material::STONE => 500,
     Material::NETHERRACK => 500,
