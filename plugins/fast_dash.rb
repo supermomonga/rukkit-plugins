@@ -24,9 +24,9 @@ module FastDash
           new_yaw =
             case
             when yaw_mod < 40
-              player.location.yaw - yaw_mod
+              (player.location.yaw - yaw_mod) % 360
             when yaw_mod > 60
-              player.location.yaw + 270 + yaw_mod
+              (player.location.yaw + 90 - yaw_mod) % 360
             else
               nil
             end
