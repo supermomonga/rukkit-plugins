@@ -55,6 +55,10 @@ module FastDash
     yaw_mod = evt.to.yaw % 90
     new_yaw =
       case
+      when yaw_mod < 1
+        return # !
+      when yaw_mod > 89
+        return # !
       when yaw_mod < 10
         (player.location.yaw - yaw_mod) % 360
       when yaw_mod > 80
