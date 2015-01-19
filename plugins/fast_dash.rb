@@ -49,22 +49,22 @@ module FastDash
   def on_player_move(evt)
     player = evt.player
     return unless player.walk_speed == 1.0
+    block_below = add_loc(player.location, 0, -1, 0).block
+    return unless block_below.type == Material::COBBLE_WALL
     yaw_mod = evt.to.yaw % 90
-    return if yaw_mod < 1 || yaw_mod > 89
     new_yaw =
       case
-      when yaw_mod < 15
+      when yaw_mod < 10
         (player.location.yaw - yaw_mod) % 360
-      when yaw_mod > 75
+      when yaw_mod > 80
         (player.location.yaw + 90 - yaw_mod) % 360
       else
-        nil
+        return # !
       end
-    if new_yaw
-      later(0) do
-        new_loc = player.location.tap {|l| l.set_yaw(new_yaw) }
-        player.teleport(new_loc)
-      end
+    later(0) do
+      new_loc = player.location.tap {|l| l.set_yaw(new_yaw) }
+      player.teleport(new_loc)
+      play_effect(player.location, Effect::SMOKE, 0)
     end
   end
 
