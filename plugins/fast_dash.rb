@@ -50,6 +50,7 @@ module FastDash
     player = evt.player
     return unless player.walk_speed == 1.0
     yaw_mod = evt.to.yaw % 90
+    return if yaw_mod < 1 || yaw_mod > 89
     new_yaw =
       case
       when yaw_mod < 15
