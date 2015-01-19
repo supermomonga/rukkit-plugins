@@ -102,6 +102,7 @@ module Heatstroke
       text = "[HEATSTROKE] ここはあついなー！！！！ 熱射病に気をつけましょう"
       text += "(鉄被ってると激ヤバです)" if @iron_helmet_equipped
       player.send_message text
+      play_sound(player.location, Sound::FUSE, 1.0, 1.0)
     end
 
     @player_info[player.name]["iron_eqquiped"] = @iron_helmet_equipped
