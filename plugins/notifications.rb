@@ -197,4 +197,15 @@ module Notifications
     Lingr.post(text)
     broadcast(text)
   end
+
+  def on_weather_change(evt)
+    world = evt.world
+    prev_weather = world.has_storm
+    later(0) do
+      cur_weather = world.has_storm
+      text = "[NOTIFICATIONS] 天気が#{prev_weather ? '雨' : '晴れ'}から#{cur_weather ? '雨' : '晴れ'}になりました..."
+      Lingr.post(text) if Bukkit.online_players.to_a.size == 1
+      broadcast(text)
+    end
+  end
 end
