@@ -6,7 +6,11 @@ module PlayerJobKnight
   extend PlayerJob
 
   login_message do |evt|
-    "#{evt.player.name}さんが剣士になりました(剣の攻撃と防御が強くなります!)"
+    "#{evt.player.name}さんが剣士になりました(剣の攻撃と防御が強くなります)"
+  end
+
+  def detail
+    '[剣士]:剣の攻撃と防御が強くなります'
   end
 
   def on_entity_damage_by_entity(evt)

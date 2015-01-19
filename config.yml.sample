@@ -15,6 +15,7 @@ rukkit:
     - shared_chest
     - killer_queen
     - kickory
+    - player_job_command
     - player_job_farmer
     - player_job_fighter
     - player_job_knight
@@ -27,6 +28,7 @@ rukkit:
     - cow_diamond
     - virtual
     - heatstroke
+    - crossbow
   scripts:
     - lingr
     - material_util

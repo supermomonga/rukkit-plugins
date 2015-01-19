@@ -6,10 +6,6 @@ import 'org.bukkit.ChatColor'
 module ChatConvert
   # for warning
   # TODO: Find smarter way
-  remove_const :KANA_CONVERSION_TABLE if const_defined? :KANA_CONVERSION_TABLE
-  remove_const :ROMAJI_CONVERSION_TABLE if const_defined? :ROMAJI_CONVERSION_TABLE
-  remove_const :CONVERSION_TABLE if const_defined? :CONVERSION_TABLE
-  remove_const :RANDOM_CONVERSION_TABLE if const_defined? :RANDOM_CONVERSION_TABLE
   ROMAJI_CONVERSION_TABLE = { # {{{
     # four charcters
     xtsu: 'っ',
@@ -26,7 +22,7 @@ module ChatConvert
     ppya: 'っぴゃ', ppyu: 'っぴゅ', ppyo: 'っぴょ',
     rrya: 'っりゃ', rryu: 'っりゅ', rryo: 'っりょ',
     # three charcters
-    xtu: 'っ',
+    tsu: 'つ',
     xya: 'ゃ', xyu: 'ゅ', xyo: 'ょ', xwa: 'ゎ',
     vva: 'っう゛ぁ', vvi: 'っう゛ぃ', vvu: 'っう゛', vve: 'っう゛ぇ', vvo: 'っう゛ぉ',
     kka: 'っか', kki: 'っき', kku: 'っく', kke: 'っけ', kko: 'っこ',
@@ -59,7 +55,7 @@ module ChatConvert
     dya: 'ぢゃ', dyi: 'でぃ', dyu: 'ぢゅ', dyo: 'ぢょ',
     mya: 'みゃ', myu: 'みゅ', myo: 'みょ',
     # two characters
-    ta: 'た', ti: 'ち', chi: 'ち', tu: 'つ', tsu: 'つ', te: 'て', to: 'と',
+    ta: 'た', ti: 'ち', chi: 'ち', tu: 'つ', tt: 'っ', te: 'て', to: 'と',
     da: 'だ', di: 'ぢ', du: 'づ', de: 'で', do: 'ど',
     na: 'な', ni: 'に', nu: 'ぬ', ne: 'ね', no: 'の',
     ha: 'は', hi: 'ひ', hu: 'ふ', fu: 'ふ', he: 'へ', ho: 'ほ',
@@ -72,7 +68,7 @@ module ChatConvert
     ka: 'か', ki: 'き', ku: 'く', ke: 'け', ko: 'こ',
     ga: 'が', gi: 'ぎ', gu: 'ぐ', ge: 'げ', go: 'ご',
     sa: 'さ', si: 'し', su: 'す', se: 'せ', so: 'そ',
-    za: 'ざ', zi: 'じ', ji: 'じ', zu: 'ず', ze: 'ぜ', zo: 'ぞ',
+    za: 'ざ', zi: 'じ', ji: 'じ', je: 'じぇ', zu: 'ず', ze: 'ぜ', zo: 'ぞ',
     ja: 'じゃ', ju: 'じゅ', jo: 'じょ',
     xa: 'ぁ', xi: 'ぃ', xu: 'ぅ', xe: 'ぇ', xo: 'ぉ',
     wa: 'わ', wi: 'うぃ', we: 'うぇ', wo: 'を',
