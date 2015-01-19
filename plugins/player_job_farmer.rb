@@ -90,6 +90,8 @@ module PlayerJobFarmer
       upper_block = block.get_relative(BlockFace::UP)
       if block.type == Material::SOIL && upper_block.type == Material::AIR
         upper_block.type = Material::CROPS
+
+        # TODO: deris will use consume_item() instead.
         if player.item_in_hand.amount == 1
           player.item_in_hand = ItemStack.new(Material::AIR)
           return
