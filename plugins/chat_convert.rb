@@ -22,7 +22,7 @@ module ChatConvert
     ppya: 'っぴゃ', ppyu: 'っぴゅ', ppyo: 'っぴょ',
     rrya: 'っりゃ', rryu: 'っりゅ', rryo: 'っりょ',
     # three charcters
-    xtu: 'っ',
+    tsu: 'つ',
     xya: 'ゃ', xyu: 'ゅ', xyo: 'ょ', xwa: 'ゎ',
     vva: 'っう゛ぁ', vvi: 'っう゛ぃ', vvu: 'っう゛', vve: 'っう゛ぇ', vvo: 'っう゛ぉ',
     kka: 'っか', kki: 'っき', kku: 'っく', kke: 'っけ', kko: 'っこ',
@@ -55,7 +55,7 @@ module ChatConvert
     dya: 'ぢゃ', dyi: 'でぃ', dyu: 'ぢゅ', dyo: 'ぢょ',
     mya: 'みゃ', myu: 'みゅ', myo: 'みょ',
     # two characters
-    ta: 'た', ti: 'ち', chi: 'ち', tu: 'つ', tsu: 'つ', te: 'て', to: 'と',
+    ta: 'た', ti: 'ち', chi: 'ち', tu: 'つ', tt: 'っ', te: 'て', to: 'と',
     da: 'だ', di: 'ぢ', du: 'づ', de: 'で', do: 'ど',
     na: 'な', ni: 'に', nu: 'ぬ', ne: 'ね', no: 'の',
     ha: 'は', hi: 'ひ', hu: 'ふ', fu: 'ふ', he: 'へ', ho: 'ほ',
