@@ -50,14 +50,15 @@ module FastDash
     player = evt.player
     return unless player.walk_speed == 1.0
     yaw_mod = evt.to.yaw % 90
-    case
-    when yaw_mod < 15
-      (player.location.yaw - yaw_mod) % 360
-    when yaw_mod > 75
-      (player.location.yaw + 90 - yaw_mod) % 360
-    else
-      nil
-    end
+    new_yaw =
+      case
+      when yaw_mod < 15
+        (player.location.yaw - yaw_mod) % 360
+      when yaw_mod > 75
+        (player.location.yaw + 90 - yaw_mod) % 360
+      else
+        nil
+      end
     if new_yaw
       later(0) do
         new_loc = player.location.tap {|l| set_yaw(new_yaw) }
