@@ -28,6 +28,7 @@ rukkit:
     - cow_diamond
     - virtual
     - heatstroke
+    - crossbow
   scripts:
     - lingr
     - material_util
