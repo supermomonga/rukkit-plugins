@@ -10,7 +10,7 @@ module FastDash
     player = evt.player
 
     return if player.passenger && Squid === player.passenger
-    block_below = player.location.clone.add(0, -1, 0).block
+    block_below = add_loc(player.location, 0, -1, 0).block
     if evt.sprinting? && !player.passenger
       case block_below.type
       when Material::SAND
