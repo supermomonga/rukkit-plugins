@@ -2,6 +2,27 @@ import 'org.bukkit.entity.Arrow'
 import 'org.bukkit.entity.Player'
 import 'org.bukkit.util.Vector'
 
+=begin
+## Summary
+
+This provides alternative bow that you can choose either normal bow or this
+special bow called crossbow.
+
+## Command
+
+/rukkit crossbow
+
+This will work only when you have a bow in your hand. This will toggle your bow
+to crossbow, and vice versa.
+
+## Crossbow
+
+* You have to charge more than usual, other than it won't launch.
+* Crossbow arrows go faster than normal.
+* Crossbow arrows go more straight than normal.
+* Crossbow arrows stop after certain distance.
+
+=end
 module Crossbow
   extend self
   extend Rukkit::Util
