@@ -50,6 +50,17 @@ module Lingr
       memo.gsub(color.to_s, '')
     }
   end
+
+  def command(text)
+    command = text.split(/[\s　]+/)
+    if "/rukkit" == command.shift
+      case command.shift
+      when "member"
+      when "update"
+      else
+      end
+    end
+  end
 end
 
 class LingrServer < Sinatra::Base
@@ -60,6 +71,7 @@ class LingrServer < Sinatra::Base
       e['message']
     }.each do |m|
       text = m['text']
+      Lingr::command(text)
       user = Rukkit::Util.colorize(m['nickname'], :gray)
       message = "<#{user}> #{text}"
       Rukkit::Util.broadcast message
