@@ -4,6 +4,7 @@ import 'org.bukkit.Material'
 
 module FastDash
   extend self
+  extend Rukkit::Util
 
   def on_player_toggle_sprint(evt)
     player = evt.player
