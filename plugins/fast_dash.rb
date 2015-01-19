@@ -10,8 +10,9 @@ module FastDash
     player = evt.player
 
     return if player.passenger && Squid === player.passenger
+    block_below = player.location.clone.add(0, -1, 0).block
     if evt.sprinting? && !player.passenger
-      case player.location.clone.add(0, -1, 0).block.type
+      case block_below.type
       when Material::SAND
         evt.cancelled = true
       when Material::COBBLE_WALL
@@ -29,11 +30,12 @@ module FastDash
             else
               nil
             end
-          if new_yaw
-            later(0) do
-              new_loc = player.location.tap {|l| l.set_yaw(new_yaw) }
-              player.teleport(new_loc)
-            end
+          later(0) do
+            new_loc = player.location
+            new_loc.set_yaw(new_yaw) if new_yaw
+            new_loc.set_x(block_below.location.x + 0.5)
+            new_loc.set_z(block_below.location.z + 0.5)
+            player.teleport(new_loc)
           end
         end
       else
