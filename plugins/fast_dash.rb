@@ -61,7 +61,7 @@ module FastDash
       end
     if new_yaw
       later(0) do
-        new_loc = player.location.tap {|l| set_yaw(new_yaw) }
+        new_loc = player.location.tap {|l| l.set_yaw(new_yaw) }
         player.teleport(new_loc)
       end
     end
