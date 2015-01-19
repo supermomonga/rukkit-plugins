@@ -23,9 +23,9 @@ module FastDash
           yaw_mod = player.location.yaw % 90
           new_yaw =
             case
-            when yaw_mod < 40
+            when yaw_mod < 45
               (player.location.yaw - yaw_mod) % 360
-            when yaw_mod > 60
+            when yaw_mod > 45
               (player.location.yaw + 90 - yaw_mod) % 360
             else
               nil
@@ -43,6 +43,26 @@ module FastDash
       end
     else
       player.walk_speed = 0.2
+    end
+  end
+
+  def on_player_move(evt)
+    player = evt.player
+    return unless player.walk_speed == 1.0
+    yaw_mod = evt.to.yaw % 90
+    case
+    when yaw_mod < 15
+      (player.location.yaw - yaw_mod) % 360
+    when yaw_mod > 75
+      (player.location.yaw + 90 - yaw_mod) % 360
+    else
+      nil
+    end
+    if new_yaw
+      later(0) do
+        new_loc = player.location.tap {|l| set_yaw(new_yaw) }
+        player.teleport(new_loc)
+      end
     end
   end
 
