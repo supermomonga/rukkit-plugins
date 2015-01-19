@@ -6,33 +6,35 @@ module FastDash
   extend self
 
   def on_player_toggle_sprint(evt)
-    return if evt.player.passenger && Squid === evt.player.passenger
-    if evt.sprinting? && !evt.player.passenger
-      case evt.player.location.clone.add(0, -1, 0).block.type
+    player = evt.player
+
+    return if player.passenger && Squid === player.passenger
+    if evt.sprinting? && !player.passenger
+      case player.location.clone.add(0, -1, 0).block.type
       when Material::SAND
         evt.cancelled = true
       when Material::COBBLE_WALL
         # monorail
-        unless evt.player.location.y.between?(15, 78)
-          evt.player.walk_speed = 1.0
+        unless player.location.y.between?(15, 78)
+          player.walk_speed = 1.0
           # align yaw if it's close enough
-          yaw_mod = evt.player.location.yaw % 90
+          yaw_mod = player.location.yaw % 90
           new_yaw =
             case
             when yaw_mod < 20
-              evt.player.location.yaw - yaw_mod
+              player.location.yaw - yaw_mod
             when yaw_mod > 70
-              evt.player.location.yaw - 90 + yaw_mod
+              player.location.yaw - 90 + yaw_mod
             else
               nil
             end
-          evt.to = evt.to.tap {|l| l.set_yaw(new_yaw) } if new_yaw
+          evt.to.tap {|l| l.set_yaw(new_yaw) } if new_yaw
         end
       else
-        evt.player.walk_speed = 0.4
+        player.walk_speed = 0.4
       end
     else
-      evt.player.walk_speed = 0.2
+      player.walk_speed = 0.2
     end
   end
 
