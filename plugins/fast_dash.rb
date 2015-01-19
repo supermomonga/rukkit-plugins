@@ -28,7 +28,12 @@ module FastDash
             else
               nil
             end
-          evt.to.tap {|l| l.set_yaw(new_yaw) } if new_yaw
+          if new_yaw
+            later(0) do
+              new_loc = player.location.tap {|l| l.set_yaw(new_yaw) }
+              endplayer.teleport(new_loc)
+            end
+          end
         end
       else
         player.walk_speed = 0.4
