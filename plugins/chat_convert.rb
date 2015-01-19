@@ -68,7 +68,7 @@ module ChatConvert
     ka: 'か', ki: 'き', ku: 'く', ke: 'け', ko: 'こ',
     ga: 'が', gi: 'ぎ', gu: 'ぐ', ge: 'げ', go: 'ご',
     sa: 'さ', si: 'し', su: 'す', se: 'せ', so: 'そ',
-    za: 'ざ', zi: 'じ', ji: 'じ', zu: 'ず', ze: 'ぜ', zo: 'ぞ',
+    za: 'ざ', zi: 'じ', ji: 'じ', je: 'じぇ', zu: 'ず', ze: 'ぜ', zo: 'ぞ',
     ja: 'じゃ', ju: 'じゅ', jo: 'じょ',
     xa: 'ぁ', xi: 'ぃ', xu: 'ぅ', xe: 'ぇ', xo: 'ぉ',
     wa: 'わ', wi: 'うぃ', we: 'うぇ', wo: 'を',
