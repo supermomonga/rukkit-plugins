@@ -18,6 +18,13 @@ This makes you very fun when you descend the stairs!
 　::　,,　:::::　,,　;￣￣￣　　"､　:::: "　,, ,　:::　　 "　::　"　::::　　"
 
 
+## Usage
+
+This needs that `player.sneaking?` is true.
+When you want to play slider, please press `w` with `shift` key.
+Have fun. :-)
+
+
 TODO
 * 横移動の時の判定 <- よくわかんない(direction をどうのする)
 =end
