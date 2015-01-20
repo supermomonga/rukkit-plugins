@@ -33,6 +33,7 @@ module PlayerJob
   end
 
   def on_plugin_disable(evt)
+    @@job_plugins ||= []
     @@job_plugins.delete(self) if @@job_plugins.include?(self)
   end
 
