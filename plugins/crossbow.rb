@@ -1,6 +1,7 @@
 import 'org.bukkit.entity.Arrow'
 import 'org.bukkit.entity.Player'
 import 'org.bukkit.util.Vector'
+import 'org.bukkit.event.block.Action'
 
 =begin
 ## Summary
@@ -17,7 +18,8 @@ to crossbow, and vice versa.
 
 ## Crossbow
 
-* You have to charge more than usual, other than it won't launch.
+* If you fully charge "Crossbow" and attempted to launch, this becomes "Crossbow (charged)" without launching an arrow.
+* If you right-click when you have "Crossbow (charged)", it will immediately launch an arrow, and changes it to "Crossbow"
 * Crossbow arrows go faster than normal.
 * Crossbow arrows go more straight than normal.
 * Crossbow arrows stop after certain distance.
@@ -32,38 +34,62 @@ module Crossbow
     return unless Arrow === arrow
     shooter = arrow.shooter
     return unless Player === shooter
-    return unless shooter.item_in_hand.item_meta.display_name == 'Crossbow'
-
-    unless arrow.critical?
-      shooter.send_message("[CROWSSBOW] Not enough charge. It didn't get launched.")
+    case shooter.item_in_hand.item_meta.display_name
+    when 'Crossbow'
       evt.cancelled = true
-    end
-    vel = arrow.velocity
-    original_loc = arrow.location
-    play_sound(original_loc, Sound::SHOOT_ARROW, 1.0, 0.0)
-    arrow.setMetadata('crossbow', org.bukkit.metadata.FixedMetadataValue.new(Bukkit.plugin_manager.get_plugin("rukkit"), true))
-
-    repeated_task = -> {
-      # if rand(1000) == 0
-      #   broadcast('randome die')
-      #   return
-      # end
-      return if arrow.on_ground?
-      return unless arrow.valid?
-      if arrow.location.distance(original_loc) > 30.0
-        # broadcast("can't fly more")
-        play_effect(arrow.location, Effect::SMOKE, 0)
-        arrow.velocity = Vector.new()
-        arrow.critical = false
-        return
+      if arrow.critical?
+        change_bow_name(shooter, 'Crossbow (charged)')
+      else
+        shooter.send_message("[CROWSSBOW] Not enough charge. It didn't get launched.")
       end
-      later(1) do
+    when 'Crossbow (charged)'
+      # nop. see on_player_interact
+    else
+      # nop
+    end
+  end
+
+  def on_player_interact(evt)
+    action = evt.action
+    player = evt.player
+
+    case action
+    when Action::RIGHT_CLICK_BLOCK, Action::RIGHT_CLICK_AIR
+      return unless player.item_in_hand
+      return unless player.item_in_hand.item_meta.display_name == 'Crossbow (charged)'
+      evt.cancelled = true
+      arrow = player.launch_projectile(Arrow.java_class)
+      arrow.critical = true
+
+      change_bow_name(player, 'Crossbow')
+
+      vel = arrow.velocity
+      original_loc = arrow.location
+      play_sound(original_loc, Sound::SHOOT_ARROW, 1.0, 0.0)
+      arrow.setMetadata('crossbow', org.bukkit.metadata.FixedMetadataValue.new(Bukkit.plugin_manager.get_plugin("rukkit"), true))
+
+      repeated_task = -> {
+        # if rand(1000) == 0
+        #   broadcast('randome die')
+        #   return
+        # end
+        return if arrow.on_ground?
+        return unless arrow.valid?
+        if arrow.location.distance(original_loc) > 30.0
+          # broadcast("can't fly more")
+          play_effect(arrow.location, Effect::SMOKE, 0)
+          arrow.velocity = Vector.new()
+          arrow.critical = false
+          return
+        end
+        later(1) do
+          repeated_task.()
+        end
+      }
+      later(0) do
+        arrow.velocity = vel.normalize.multiply(4.0) # normal max is 3
         repeated_task.()
       end
-    }
-    later(0) do
-      arrow.velocity = vel.multiply(1.8)
-      repeated_task.()
     end
   end
 
@@ -78,7 +104,7 @@ module Crossbow
     # detect crossbow arrow
     if arrow.get_metadata('crossbow').to_a.any? {|m| m.asBoolean }
       # reduce, because it's too strong due to the speed
-      evt.setDamage((evt.damage * 0.7).round)
+      evt.setDamage((evt.damage * 0.9).round)
     end
   end
 
@@ -89,11 +115,16 @@ module Crossbow
     return unless sender.item_in_hand
     return unless sender.item_in_hand.type == Material::BOW
     old_name = sender.item_in_hand.item_meta.display_name || 'Bow'
-    new_display_name = old_name == 'Crossbow' ? 'Bow' : 'Crossbow'
-    sender.item_in_hand.tap {|itemstack| itemstack.setItemMeta(itemstack.item_meta.tap {|im| im.display_name = new_display_name }) }
+    new_display_name = /^Crossbow/ =~ old_name ? 'Bow' : 'Crossbow'
+    change_bow_name(sender, new_display_name)
 
-    text = "[CROWSSBOW] #{sender.name} toggled the bow from #{old_name} to #{new_display_name}"
+    text = "[CROWSSBOW] #{sender.name} toggled the bow from '#{old_name}' to '#{new_display_name}'"
     Lingr.post(text)
     broadcast(text)
   end
+
+  def change_bow_name(player, new_display_name)
+    player.item_in_hand.tap {|itemstack| itemstack.setItemMeta(itemstack.item_meta.tap {|im| im.display_name = new_display_name }) }
+  end
+  private :change_bow_name
 end
