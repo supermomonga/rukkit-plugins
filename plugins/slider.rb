@@ -26,7 +26,8 @@ Have fun. :-)
 
 
 TODO
-* 横移動の時の判定 <- よくわかんない(direction をどうのする)
+* 横/背面移動の時の判定 <- よくわかんない(direction をどうのするみたいな？)
+* 吸い付き <- いらないかも
 =end
 
 import 'org.bukkit.Bukkit'
@@ -52,21 +53,11 @@ module Slider
     Material::WOOD_STAIRS,
   ]
 
-
   def on_player_move(evt)
     player = evt.player
-    loc = evt.to
+    #loc = evt.to
+    loc = player.location
 
-    return unless [0, -1].any? {|ydiff| STAIRS.include?(add_loc(loc.clone, 0, ydiff,0).block.type)}
-
-    if desc?(loc) && player.sneaking?
-      later 0 do
-        player.velocity = org.bukkit.util.Vector.new(loc.direction.x, loc.direction.y*0.5, loc.direction.z)
-      end
-    end
-  end
-
-  def desc?(loc)
     # quote from `fast_dash`
     # detect the direction
     yaw_mod = loc.yaw % 90
@@ -80,6 +71,17 @@ module Slider
         nil
       end
 
+    return unless desc?(loc, new_yaw)
+
+    if player.sneaking?
+      later 0 do
+        loc.set_pitch 54.75
+        player.velocity = Vector.new(loc.direction.x, loc.direction.y*0.5, loc.direction.z)
+      end
+    end
+  end
+
+  def desc?(loc, new_yaw)
     check_stair = loc.clone
     # right in front
     check_stair.set_yaw new_yaw if new_yaw
