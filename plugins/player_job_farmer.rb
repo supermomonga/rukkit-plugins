@@ -8,7 +8,7 @@ module PlayerJobFarmer
   extend Rukkit::Util
   extend PlayerJob
 
-  @crop_state = [
+  CROP_STATE = [
     CropState::SEEDED,
     CropState::GERMINATED,
     CropState::VERY_SMALL,
@@ -58,7 +58,7 @@ module PlayerJobFarmer
       case state.data
       when Crops
         if state.data.state != CropState::RIPE
-          next_state = @crop_state[@crop_state.index(state.data.state) + 1]
+          next_state = CROP_STATE[CROP_STATE.index(state.data.state) + 1]
           state.data.state = next_state
           state.update
         end
