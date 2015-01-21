@@ -56,6 +56,7 @@ module Crossbow
     case action
     when Action::RIGHT_CLICK_BLOCK, Action::RIGHT_CLICK_AIR
       return unless player.item_in_hand
+      return unless player.item_in_hand.item_meta
       return unless player.item_in_hand.item_meta.display_name == 'Crossbow (charged)'
       evt.cancelled = true
       arrow = player.launch_projectile(Arrow.java_class)
