@@ -42,10 +42,10 @@ module PlayerJobFarmer
       when Action::RIGHT_CLICK_BLOCK
         boost_cultivation(evt)
       end
-    elsif material == Material::SEEDS
+    elsif [Material::SEEDS, Material::CARROT_ITEM].include?(material)
       case action
       when Action::RIGHT_CLICK_BLOCK
-        boost_seeding(evt)
+        boost_seeding(evt, material)
       end
     end
   end
@@ -76,12 +76,12 @@ module PlayerJobFarmer
     end
   end
 
-  def boost_seeding(evt)
+  def boost_seeding(evt, seeding_type)
     player = evt.player
     world = player.world
     clicked_block = evt.clicked_block
 
-    return unless player.item_in_hand.type == Material::SEEDS
+    return unless player.item_in_hand.type == seeding_type
     upper_block = clicked_block.get_relative(BlockFace::UP)
     return unless clicked_block.type == Material::SOIL && upper_block.type == Material::AIR
     evt.cancelled = true
