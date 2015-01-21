@@ -29,11 +29,11 @@ module PlayerJobLegion
       new_legioning_p = [Material::IRON_CHESTPLATE, Material::IRON_HELMET].to_set.subset?(armor_contents)
       if !@legioning[player.name] && new_legioning_p
         broadcast("[LEGION] #{player.name}さんがただのローマ市民からレギオンになりました")
-        Lingr.post("[LEGION] #{player.name}さんがただのローマ市民からレギオンになりました")
+        # Lingr.post("[LEGION] #{player.name}さんがただのローマ市民からレギオンになりました")
         @legioning[player.name] = :vanila
       elsif @legioning[player.name] && !new_legioning_p
         broadcast("[LEGION] #{player.name}さんがレギオンからただのローマ市民になりました")
-        Lingr.post("[LEGION] #{player.name}さんがレギオンからただのローマ市民になりました")
+        # Lingr.post("[LEGION] #{player.name}さんがレギオンからただのローマ市民になりました")
         @legioning.delete(player.name)
       end
     end
@@ -58,7 +58,7 @@ module PlayerJobLegion
 
     text = "[LEGION] レギオンの#{player.name}さんがモードを#{@legioning[player.name]}から#{toggled_mode(@legioning[player.name])}に変更しました。"
     broadcast(text)
-    Lingr.post(text)
+    Lingr.post(text) if Bukkit.online_players.to_a.size == 1
 
     @legioning[player.name] = toggled_mode(@legioning[player.name])
     play_sound(player.location, Sound::LEVEL_UP, 0.5, 0.5)
