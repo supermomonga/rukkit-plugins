@@ -10,7 +10,7 @@ module PlayerJobCommand
 
     args = args.to_a
     case args.shift
-    when 'player_job'
+    when 'player-job'
       arg2 = args.shift
       case
       when arg2 == 'id'
@@ -36,11 +36,11 @@ module PlayerJobCommand
           sender.send_message(job.detail)
         }
       when arg2 == 'help'
-        broadcast '/rukkit player_job id [user id] --'
+        broadcast '/rukkit player-job id [user id] --'
         broadcast '        show current job of user specified by id'
-        broadcast '/rukkit player_job me -- show current job of youself'
-        broadcast '/rukkit player_job list -- show all job list'
-        broadcast '/rukkit player_job help -- show help'
+        broadcast '/rukkit player-job me -- show current job of youself'
+        broadcast '/rukkit player-job list -- show all job list'
+        broadcast '/rukkit player-job help -- show help'
       end
     else
     end
