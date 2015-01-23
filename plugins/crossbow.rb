@@ -38,7 +38,7 @@ module Crossbow
     when 'Crossbow'
       evt.cancelled = true
       if arrow.critical?
-        change_bow_name(shooter, 'Crossbow (charged)')
+        change_bow_name(shooter, "Crossbow (charged#{arrow.getKnockbackStrength()})")
       else
         shooter.send_message("[CROWSSBOW] Not enough charge. It didn't get launched.")
       end
