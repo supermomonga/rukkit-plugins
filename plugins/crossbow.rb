@@ -38,7 +38,7 @@ module Crossbow
     when 'Crossbow'
       evt.cancelled = true
       if arrow.critical?
-        change_bow_name(shooter, "Crossbow (charged#{arrow.getKnockbackStrength()})")
+        change_bow_name(shooter, "Crossbow (charged#{arrow.knockback_strength == 0 ? '' : '!'}#{arrow.fire_ticks == 0 ? '' : ' w/ fire'})")
       else
         shooter.send_message("[CROWSSBOW] Not enough charge. It didn't get launched.")
       end
@@ -57,7 +57,8 @@ module Crossbow
     when Action::RIGHT_CLICK_BLOCK, Action::RIGHT_CLICK_AIR
       return unless player.item_in_hand
       return unless player.item_in_hand.item_meta
-      return unless player.item_in_hand.item_meta.display_name == 'Crossbow (charged)'
+      display_name = player.item_in_hand.item_meta.display_name
+      return unless /^Crossbow \(charged/ =~ display_name
       evt.cancelled = true
       arrow = player.launch_projectile(Arrow.java_class)
       arrow.critical = true
@@ -68,6 +69,8 @@ module Crossbow
       original_loc = arrow.location
       play_sound(original_loc, Sound::SHOOT_ARROW, 1.0, 0.0)
       arrow.setMetadata('crossbow', org.bukkit.metadata.FixedMetadataValue.new(Bukkit.plugin_manager.get_plugin("rukkit"), true))
+      arrow.knockback_strength = 1 if /!/ =~ display_name
+      arrow.fire_ticks = 2000 if /fire/ =~ display_name
 
       repeated_task = -> {
         # if rand(1000) == 0
