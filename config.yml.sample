@@ -29,6 +29,7 @@ rukkit:
     - virtual
     - heatstroke
     - crossbow
+    - saddle_recipe
   scripts:
     - lingr
     - material_util
