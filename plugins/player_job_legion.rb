@@ -29,11 +29,9 @@ module PlayerJobLegion
       new_legioning_p = [Material::IRON_CHESTPLATE, Material::IRON_HELMET].to_set.subset?(armor_contents)
       if !@legioning[player.name] && new_legioning_p
         broadcast("[LEGION] #{player.name}さんがただのローマ市民からレギオンになりました")
-        # Lingr.post("[LEGION] #{player.name}さんがただのローマ市民からレギオンになりました")
         @legioning[player.name] = :vanila
       elsif @legioning[player.name] && !new_legioning_p
         broadcast("[LEGION] #{player.name}さんがレギオンからただのローマ市民になりました")
-        # Lingr.post("[LEGION] #{player.name}さんがレギオンからただのローマ市民になりました")
         @legioning.delete(player.name)
       end
     end
@@ -112,8 +110,8 @@ module PlayerJobLegion
     return unless has_job?(damager)
     return unless @legioning[damager.name]
     return unless damager.item_in_hand.type == Material::IRON_SWORD
-    evt.damage += 8
-    play_sound(damager.location, Sound::ANVIL_BREAK, 0.3, 1.0)
+    evt.damage += 6
+    play_sound(damager.location, Sound::ANVIL_BREAK, 0.2, 1.0)
   end
   private :legion_iron_sword_attack
 
@@ -123,7 +121,7 @@ module PlayerJobLegion
     return unless @legioning[damagee.name]
     return unless damagee.item_in_hand.type == Material::IRON_SWORD
     return unless damagee.blocking?
-    evt.damage = [evt.damage - 8, 0].max
+    evt.damage = [evt.damage - 6, 0].max
     play_sound(damagee.location, Sound::ANVIL_USE, 0.3, 1.0)
   end
   private :legion_iron_sword_guard
