@@ -23,7 +23,10 @@ module SkeletonCrossbow
     # return unless rand(10) == 0
     return unless rand(3) == 0
 
-    skeletons = [skeleton, spawn(skeleton.location, EntityType::SKELETON)]
+    skeletons = [
+      skeleton,
+      spawn(skeleton.location, EntityType::SKELETON),
+      spawn(skeleton.location, EntityType::SKELETON)]
     skeletons.each do |s|
       s.custom_name = 'Crossbowman'
       @skeletons.add(s)
@@ -57,7 +60,7 @@ module SkeletonCrossbow
     skeleton = arrow.shooter
     return unless @skeletons.include?(skeleton)
 
-    evt.cancelled = true
+    # evt.cancelled = true
     damage_value = 4 + rand(2)
     # evt.setDamage(EntityDamageEvent::DamageModifier::BASE, damage_value)
     evt.setDamage(damage_value)
@@ -67,7 +70,7 @@ module SkeletonCrossbow
   def on_entity_death(evt)
     entity = evt.entity
     if @skeletons.include?(entity)
-      evt.dropped_exp = (evt.dropped_exp * 1.5).round
+      evt.dropped_exp = (evt.dropped_exp * 1.2).round
     end
   end
 
