@@ -172,7 +172,7 @@ module Notifications
       unless @lava_notified.include?(player.name)
         text = "[NOTIFICATIONS] #{player.name} is swimming in lava"
         # Lingr.post(text)
-        broadcast(text)
+        # broadcast(text)
 
         @lava_notified.add(player.name)
         later sec(2) do
