@@ -9,7 +9,7 @@ module SayHelloAndGoodbye
     player = evt.player
 
     msg = "[LOGIN] #{player.name}さんが現実世界に帰ってきました"
-    Rukkit::Util.broadcast msg
+    broadcast msg
     Lingr.post msg if defined? Lingr
   end
 
@@ -17,11 +17,11 @@ module SayHelloAndGoodbye
     player = evt.player
 
     msg = "[LOGOUT] #{player.name}さんが仮想世界に旅立ちました"
-    Rukkit::Util.broadcast msg
+    broadcast msg
     Lingr.post msg if defined? Lingr
 
     loc = player.location
-    10.times do |i|
+    2.times do |i|
       later sec(i) do
         loc.world.strikeLightningEffect(loc)
       end
