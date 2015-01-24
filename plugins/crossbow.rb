@@ -113,7 +113,7 @@ module Crossbow
   end
 
   def on_command(sender, command, label, args)
-    return unless label == 'rukkit'
+    # return unless label == 'rukkit'
     return unless Player === sender
     return unless args.first == 'crossbow'
     return unless sender.item_in_hand
