@@ -2,6 +2,7 @@
 require 'set'
 import 'org.bukkit.entity.Player'
 import 'org.bukkit.entity.Chicken'
+import 'org.bukkit.entity.Cow'
 import 'org.bukkit.entity.Enderman'
 import 'org.bukkit.entity.Zombie'
 import 'org.bukkit.entity.PigZombie'
@@ -25,7 +26,7 @@ module Notifications
       return if player.location.y >= 180 # TT
 
       case entity
-      when Chicken
+      when Chicken, Cow
         text = "[KILL] ・°°・(((p(≧□≦)q)))・°°・。ｳﾜｰﾝ!! #{player.name} killed a #{readable_name(entity)}."
       when Player
         if player.name == entity.name
