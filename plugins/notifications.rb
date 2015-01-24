@@ -171,7 +171,7 @@ module Notifications
     when EntityDamageEvent::DamageCause::LAVA
       unless @lava_notified.include?(player.name)
         text = "[NOTIFICATIONS] #{player.name} is swimming in lava"
-        Lingr.post(text)
+        # Lingr.post(text)
         broadcast(text)
 
         @lava_notified.add(player.name)
