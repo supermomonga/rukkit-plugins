@@ -169,10 +169,10 @@ module Notifications
 
     case evt.cause
     when EntityDamageEvent::DamageCause::LAVA
-      unless @lava_notified.include?(player.name)
+      if evt.damage > 0 && !@lava_notified.include?(player.name)
         text = "[NOTIFICATIONS] #{player.name} is swimming in lava"
-        # Lingr.post(text)
-        # broadcast(text)
+        Lingr.post(text)
+        broadcast(text)
 
         @lava_notified.add(player.name)
         later sec(2) do
