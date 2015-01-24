@@ -130,6 +130,7 @@ module ChatConvert
     /ぽちおん|portion/ => 'ポーション',
     /ぽいそん/ => 'ポイズン',
     /^まるいし$/ => '丸井氏',
+    /^なにど$/ => '難易度',
   } # }}}
   RANDOM_CONVERSION_TABLE = { # {{{
     /^thx$/ => [
