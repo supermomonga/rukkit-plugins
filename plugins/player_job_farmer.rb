@@ -19,6 +19,14 @@ module PlayerJobFarmer
     CropState::RIPE,
   ]
 
+  SEED_TYPE = {
+    Material::SEEDS         => Material::CROPS,
+    Material::CARROT_ITEM   => Material::CARROT,
+    Material::POTATO_ITEM   => Material::POTATO,
+    Material::MELON_SEEDS   => Material::MELON_STEM,
+    Material::PUMPKIN_SEEDS => Material::PUMPKIN_STEM,
+  }
+
   login_message do |evt|
     "#{evt.player.name}さんが農家になりました(空気中で鍬を振ると周りの作物が成長。範囲耕し、範囲種植が可能)"
   end
@@ -42,7 +50,7 @@ module PlayerJobFarmer
       when Action::RIGHT_CLICK_BLOCK
         boost_cultivation(evt)
       end
-    elsif material == Material::SEEDS
+    elsif seedable?(material)
       case action
       when Action::RIGHT_CLICK_BLOCK
         boost_seeding(evt)
@@ -77,11 +85,12 @@ module PlayerJobFarmer
   end
 
   def boost_seeding(evt)
+    material = evt.material
     player = evt.player
     world = player.world
     clicked_block = evt.clicked_block
 
-    return unless player.item_in_hand.type == Material::SEEDS
+    return unless seedable?(material)
     upper_block = clicked_block.get_relative(BlockFace::UP)
     return unless clicked_block.type == Material::SOIL && upper_block.type == Material::AIR
     evt.cancelled = true
@@ -89,7 +98,7 @@ module PlayerJobFarmer
       block = world.get_block_at(location)
       upper_block = block.get_relative(BlockFace::UP)
       if block.type == Material::SOIL && upper_block.type == Material::AIR
-        upper_block.type = Material::CROPS
+        upper_block.type = SEED_TYPE[material]
 
         # TODO: deris will use consume_item() instead.
         if player.item_in_hand.amount == 1
@@ -98,6 +107,15 @@ module PlayerJobFarmer
         end
         player.item_in_hand.amount -= 1
       end
+    end
+  end
+
+  def seedable?(type)
+    case type
+    when Material::SEEDS, Material::CARROT_ITEM, Material::POTATO_ITEM, Material::MELON_SEEDS, Material::PUMPKIN_SEEDS
+      true
+    else
+      false
     end
   end
 
