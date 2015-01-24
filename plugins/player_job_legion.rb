@@ -142,7 +142,7 @@ module PlayerJobLegion
       unless b.type.occluding?
         b.type = Material::COBBLESTONE
         b.data = 0
-        KillerQueen.consume_item(player) # TODO
+        PlayerUtil.consume_item(player)
       end
     end
   end

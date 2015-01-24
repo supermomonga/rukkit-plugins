@@ -100,12 +100,8 @@ module PlayerJobFarmer
       if block.type == Material::SOIL && upper_block.type == Material::AIR
         upper_block.type = SEED_TYPE[material]
 
-        # TODO: deris will use consume_item() instead.
-        if player.item_in_hand.amount == 1
-          player.item_in_hand = ItemStack.new(Material::AIR)
-          return
-        end
-        player.item_in_hand.amount -= 1
+        PlayerUtil.consume_item(player)
+        return if player.item_in_hand.type == Material::AIR
       end
     end
   end

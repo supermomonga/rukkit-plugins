@@ -2,7 +2,6 @@
 
 import 'org.bukkit.entity.Player'
 import 'org.bukkit.Material'
-import 'org.bukkit.inventory.ItemStack'
 import 'org.bukkit.event.block.Action'
 
 module KillerQueen
@@ -24,14 +23,6 @@ module KillerQueen
     location_list.map {|x, y, z|
       loc.clone.add(x, y, z)
     }
-  end
-
-  def consume_item(player)
-    if player.item_in_hand.amount == 1
-      player.item_in_hand = ItemStack.new(Material::AIR)
-    else
-      player.item_in_hand.amount -= 1
-    end
   end
 
   def killerqueen_explode(evt)
@@ -74,7 +65,7 @@ module KillerQueen
         if target_distance <= explodable_distance
           # target.type = Material::AIR
           stochastically(15) do
-            consume_item(player)
+            PlayerUtil.consume_item(player)
           end
         end
       when Material::TNT
@@ -82,7 +73,7 @@ module KillerQueen
         # target.type = Material::AIR
         explode(target.location, 3, false)
         stochastically(15) do
-          consume_item(player)
+          PlayerUtil.consume_item(player)
         end
       end
     end
