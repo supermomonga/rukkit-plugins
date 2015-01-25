@@ -48,7 +48,7 @@ module Build
         return false
       end
 
-      n = args.shift.to_a || 6
+      n = args.shift.to_i || 6
       if n > 64
         sender.send_message('[BUILD] n is too big. Aborted.')
         return false
@@ -87,7 +87,7 @@ module Build
         return false
       end
 
-      n = args.shift.to_a || 10
+      n = args.shift.to_i || 10
       if n > 64
         sender.send_message('[BUILD] n is too big. Aborted.')
         return false
