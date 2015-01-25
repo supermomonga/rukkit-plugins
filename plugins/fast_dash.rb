@@ -93,6 +93,8 @@ module FastDash
       evt.cancelled = true
     when evt.entity.level > 2 && evt.entity.walk_speed >= 0.4
       evt.cancelled = true
+    else
+      # nop
     end
   end
 
@@ -109,7 +111,7 @@ module FastDash
     if longest
       chunks = 5.times.map {|i| add_loc(player.location, xdiff * 10 * i, 0, zdiff * 10 * i).chunk }.reject(&:loaded?).each(&:load)
       player.teleport(add_loc(player.location, xdiff * longest, 0, zdiff * longest))
-      later(1, method(:monorail_cruise_control))
+      later(1, &method(:monorail_cruise_control))
     end
   end
 
