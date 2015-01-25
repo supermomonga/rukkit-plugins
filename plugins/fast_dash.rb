@@ -114,6 +114,6 @@ module FastDash
   end
 
   def on_monorail?(player)
-    !player.location.y.between?(15, 78)
+    player.on_ground? && !player.location.y.between?(15, 78)
   end
 end
