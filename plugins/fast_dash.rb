@@ -29,7 +29,7 @@ module FastDash
 
           later sec(7) do
             if player.walk_speed >= 0.9 - 0.001 && !player.location.y.between?(15, 78)
-              player.send_message('[MONORAIL] 最高速度に達しました')
+              player.send_message('[MONORAIL] 最高速度に達しました。自動巡回します')
               task = -> {
                 table = {0 => [0, 1], 1 => [-1, 0], 2 => [0, -1], 3 => [1, 0]}
                 xdiff, zdiff = table[(player.location.yaw / 90.0).round]
