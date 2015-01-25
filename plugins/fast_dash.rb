@@ -18,7 +18,7 @@ module FastDash
         evt.cancelled = true
       when Material::COBBLE_WALL
         # monorail ... 0.6 -> 0.9 -> 1.4
-        unless on_monorail?(player)
+        if on_monorail?(player)
           player.walk_speed = 0.6
 
           later sec(3) do
