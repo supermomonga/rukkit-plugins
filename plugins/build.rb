@@ -33,9 +33,8 @@ module Build
   end
 
   def on_command(sender, command, label, args)
-    return unless label == 'rukkit'
+    # return unless label == 'rukkit'
     args = args.to_a
-    p args
     return unless args.shift == 'build'
     return unless Player === sender
 
@@ -49,7 +48,12 @@ module Build
         return false
       end
 
-      n = 6 # TODO
+      n = args.shift.to_a || 6
+      if n > 64
+        sender.send_message('[BUILD] n is too big. Aborted.')
+        return false
+      end
+
       dots = (-n..n).map {|x|
         [sender.location.x.to_i + x, sender.location.y.to_i, sender.location.z - n]
       } + (-n..n).map {|z|
@@ -63,13 +67,17 @@ module Build
       btype = sender.item_in_hand.type
       dots.map {|(x, y, z)| sender.world.get_block_at(x, y, z) }.
         reject {|b| b.type.occluding? }.
-        each do |b|
-          b.type = btype
-          b.data = 0
-          play_sound(b.location, Sound::EXPLODE, 1.0, rand(10) * 0.1)
+        each_slice(10).with_index.each do |blocks, idx|
+          later(idx) do
+            play_sound(blocks[0].location, Sound::EXPLODE, 1.0, rand(10) * 0.1)
+            blocks.each do |b|
+              b.type = btype
+              b.data = 0
+            end
+          end
         end
 
-      sender.send_message "SUCCESS with consuing all your #{btype}s."
+      sender.send_message("SUCCESS with consuing all your #{btype}s.")
       sender.item_in_hand = nil
       sender.health = 1
       true
@@ -79,7 +87,11 @@ module Build
         return false
       end
 
-      n = 10 # TODO
+      n = args.shift.to_a || 10
+      if n > 64
+        sender.send_message('[BUILD] n is too big. Aborted.')
+        return false
+      end
 
       dots = circle(
         [sender.location.x.to_i, sender.location.y.to_i - 1, sender.location.z.to_i],
@@ -89,15 +101,19 @@ module Build
       btype = sender.item_in_hand.type
       dots.map {|(x, y, z)| sender.world.get_block_at(x, y, z) }.
         reject {|b| b.type.occluding? }.
-        each do |b|
-          p [:placing, b.location.x, b.location.y, b.location.z]
-          b.type = btype
-          b.data = 0
+        each_slice(10).with_index.each do |blocks, idx|
+          later(idx) do
+            play_sound(blocks[0].location, Sound::EXPLODE, 1.0, rand(10) * 0.1)
+            blocks.each do |b|
+              p [:placing, b.location.x, b.location.y, b.location.z]
+              b.type = btype
+              b.data = 0
+            end
+          end
         end
       sender.send_message "SUCCESS with consuing all your #{btype}s."
       sender.item_in_hand = nil
       sender.health = 1
-      play_sound(sender.location, Sound::EXPLODE, 1.0, rand(10) * 0.1)
       true
     end
   end
