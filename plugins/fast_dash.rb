@@ -1,3 +1,4 @@
+# encoding: utf-8
 import 'org.bukkit.Bukkit'
 import 'org.bukkit.entity.Squid'
 import 'org.bukkit.Material'
