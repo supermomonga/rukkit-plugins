@@ -100,7 +100,7 @@ module PlayerJobFarmer
       if block.type == Material::SOIL && upper_block.type == Material::AIR
         upper_block.type = SEED_TYPE[material]
 
-        PlayerUtil.consume_item(player)
+        consume_item(player)
         return if player.item_in_hand.type == Material::AIR
       end
     end

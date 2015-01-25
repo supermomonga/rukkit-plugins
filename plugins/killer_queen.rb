@@ -65,7 +65,7 @@ module KillerQueen
         if target_distance <= explodable_distance
           # target.type = Material::AIR
           stochastically(15) do
-            PlayerUtil.consume_item(player)
+            consume_item(player)
           end
         end
       when Material::TNT
@@ -73,7 +73,7 @@ module KillerQueen
         # target.type = Material::AIR
         explode(target.location, 3, false)
         stochastically(15) do
-          PlayerUtil.consume_item(player)
+          consume_item(player)
         end
       end
     end
