@@ -22,13 +22,13 @@ module FastDash
           player.walk_speed = 0.6
 
           later sec(3) do
-            if player.walk_speed == 0.6
+            if player.walk_speed >= 0.6 - 0.001
               player.walk_speed = 0.9
             end
           end
 
           later sec(7) do
-            if player.walk_speed == 0.9 && player.location.y > 78
+            if player.walk_speed >= 0.9 - 0.001 && player.location.y > 78
               player.send_message('[MONORAIL] 最高速度に達しました')
               player.walk_speed = 1.4
             end
