@@ -107,7 +107,7 @@ module FastDash
       btypes == [Material::COBBLE_WALL, Material::AIR, Material::AIR]
     }
     if longest
-      chunks = 5.times.map {|i| add_loc(player.location, xdiff * 10 * i, ydiff, zdiff * 10 * i).chunk }.reject(&:loaded?).each(&:load)
+      chunks = 5.times.map {|i| add_loc(player.location, xdiff * 10 * i, 0, zdiff * 10 * i).chunk }.reject(&:loaded?).each(&:load)
       player.teleport(add_loc(player.location, xdiff * longest, 0, zdiff * longest))
       later(1, method(:monorail_cruise_control))
     end
