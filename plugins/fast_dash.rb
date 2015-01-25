@@ -22,13 +22,15 @@ module FastDash
           player.walk_speed = 0.8
 
           later sec(1) do
-            if player.walk_speed == 0.8
+            if player.walk_speed >= 0.8
+              player.send_message('ksk')
               player.walk_speed == 1.0
             end
           end
 
           later sec(2) do
-            if player.walk_speed == 1.0
+            if player.walk_speed >= 1.0
+              player.send_message('ksk2')
               player.walk_speed == 1.2
             end
           end
