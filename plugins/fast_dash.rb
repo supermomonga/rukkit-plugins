@@ -30,7 +30,20 @@ module FastDash
           later sec(7) do
             if player.walk_speed >= 0.9 - 0.001 && player.location.y > 78
               player.send_message('[MONORAIL] 最高速度に達しました')
-              player.walk_speed = 1.4
+              task = -> {
+                table = {0 => [0, 1], 1 => [-1, 0], 2 => [0, -1], 3 => [1, 0]}
+                [xdiff, zdiff] = table[(player.location.yaw / 90.0).round]
+                btypes = [-1, 0, 1].map {|ydiff|
+                  add_loc(player.location, xdiff, ydiff, zdiff).block.type
+                }
+                if btypes == [Material::COBBLE_WALL, Material::AIR, Material::AIR]
+                  player.teleport(add_loc(player.location, xdiff, 0, zdiff))
+                  later(1) do
+                    task.()
+                  end
+                end
+              }
+              task.()
             end
           end
 
