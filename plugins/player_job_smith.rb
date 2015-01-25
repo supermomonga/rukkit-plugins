@@ -9,6 +9,10 @@ module PlayerJobSmith
     "#{evt.player.name}さんが鍛冶屋になりました(空気中で剣、斧などを振ると耐久力回復)"
   end
 
+  def name
+    '鍛冶屋'
+  end
+
   def detail
     '[鍛冶屋]:空気中で剣、斧などを振ると耐久力回復'
   end

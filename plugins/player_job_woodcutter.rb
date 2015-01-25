@@ -11,6 +11,10 @@ module PlayerJobWoodcutter
     "#{evt.player.name}さんが木こりになりました(斧で木を切るのが早くなります)"
   end
 
+  def name
+    '木こり'
+  end
+
   def detail
     '[木こり]:斧で木を切るのが早くなります'
   end
