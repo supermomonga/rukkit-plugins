@@ -19,7 +19,20 @@ module FastDash
       when Material::COBBLE_WALL
         # monorail
         unless player.location.y.between?(15, 78)
-          player.walk_speed = 1.0
+          player.walk_speed = 0.8
+
+          later sec(1) do
+            if player.walk_speed == 0.8
+              player.walk_speed == 1.0
+            end
+          end
+
+          later sec(2) do
+            if player.walk_speed == 1.0
+              player.walk_speed == 1.2
+            end
+          end
+
           # align yaw if it's close enough
           yaw_mod = player.location.yaw % 90
           new_yaw =
@@ -49,15 +62,15 @@ module FastDash
 
   def on_player_move(evt)
     player = evt.player
-    return unless player.walk_speed == 1.0
+    return unless player.walk_speed >= 0.8
     block_below = add_loc(player.location, 0, -1, 0).block
     return unless block_below.type == Material::COBBLE_WALL
     yaw_mod = evt.to.yaw % 90
     new_yaw =
       case
-      when yaw_mod < 1
+      when yaw_mod < 0.1
         return # !
-      when yaw_mod > 89
+      when yaw_mod > 89.9
         return # !
       when yaw_mod < 10
         (player.location.yaw - yaw_mod) % 360
@@ -75,7 +88,7 @@ module FastDash
 
   def on_food_level_change(evt)
     case
-    when evt.entity.walk_speed >= 1.0
+    when evt.entity.walk_speed >= 0.8
       evt.cancelled = true
     when evt.entity.level > 2 && evt.entity.walk_speed >= 0.4
       evt.cancelled = true
