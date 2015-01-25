@@ -1,6 +1,3 @@
-
-p :debug1
-
 require 'digest/sha1'
 require 'erb'
 require 'open-uri'
@@ -10,9 +7,6 @@ import 'org.bukkit.ChatColor'
 # require 'sinatra/base'
 # require 'sinatra/reloader'
 # require 'mechanize'
-
-p :debug2
-
 
 module Lingr
   extend self
@@ -41,7 +35,7 @@ module Lingr
     }.join "&"
 
     Thread.start do
-      open "http://lingr.com/api/room/say?#{query_string}"
+      open("http://lingr.com/api/room/say?#{query_string}")
     end
   end
 
@@ -64,78 +58,72 @@ module Lingr
 end
 
 if false
-class LingrServer < Sinatra::Base
-  register Sinatra::Reloader
+  class LingrServer < Sinatra::Base
+    register Sinatra::Reloader
 
-  post '/chats/' do
-    JSON.parse(request.body.read)['events'].map{ |e|
-      e['message']
-    }.each do |m|
-      text = m['text']
-      Lingr::command(text)
-      user = Rukkit::Util.colorize(m['nickname'], :gray)
-      message = "<#{user}> #{text}"
-      Rukkit::Util.broadcast message
-    end
-  end
-
-  get '/' do
-    {
-      name: 'rukkit',
-      authors: ['supermomonga', 'ujm'],
-      version: '0.0dev',
-      url: 'https://github.com/supermomonga/akechi.rukkit',
-    }.inspect
-  end
-
-  def self.run
-
-    p :debug4
-
-    begin
-      Rack::Handler::WEBrick.shutdown
-    rescue
+    post '/chats/' do
+      JSON.parse(request.body.read)['events'].map{ |e|
+        e['message']
+      }.each do |m|
+        text = m['text']
+        Lingr::command(text)
+        user = Rukkit::Util.colorize(m['nickname'], :gray)
+        message = "<#{user}> #{text}"
+        Rukkit::Util.broadcast message
+      end
     end
 
-    p :debug5
-
-
-    begin
-      puts "launch server on port #{Rukkit::Util.plugin_config('lingr.server_port')}."
-      Rack::Handler::WEBrick.run(
-        self,
-        Port: Rukkit::Util.plugin_config('lingr.server_port'),
-        AccessLog: [],
-        Logger: WEBrick::Log.new(Rukkit::Util.rukkit_dir + 'lingr_webrick.log')
-      )
-    rescue Exception => e
-      puts e.message
+    get '/' do
+      {
+        name: 'rukkit',
+        authors: ['supermomonga', 'ujm'],
+        version: '0.0dev',
+        url: 'https://github.com/supermomonga/akechi.rukkit',
+      }.inspect
     end
 
-    p :debug6
+    def self.run
+      begin
+        Rack::Handler::WEBrick.shutdown
+      rescue
+      end
 
+      begin
+        puts "launch server on port #{Rukkit::Util.plugin_config('lingr.server_port')}."
+        Rack::Handler::WEBrick.run(
+          self,
+          Port: Rukkit::Util.plugin_config('lingr.server_port'),
+          AccessLog: [],
+          Logger: WEBrick::Log.new(Rukkit::Util.rukkit_dir + 'lingr_webrick.log')
+        )
+      rescue Exception => e
+        p ['exception-in-lingr', e.class, e]
+        puts e.message
+      end
+
+      p :debug6
+
+    end
+
+    # private
+    # def agent
+    #   @@agent ||= Mechanize.new
+    # end
+    # def login
+    #   # TODO
+    # end
+    # def bot_list
+    #   # TODO
+    #   res = agent.get 'http://lingr.com/developer'
+    #   if res.code == '200'
+    #   else
+    #     login
+    #   end
+    # end
+    # def create_bot(id, name)
+    #   # TODO
+    # end
   end
-
-  # private
-  # def agent
-  #   @@agent ||= Mechanize.new
-  # end
-  # def login
-  #   # TODO
-  # end
-  # def bot_list
-  #   # TODO
-  #   res = agent.get 'http://lingr.com/developer'
-  #   if res.code == '200'
-  #   else
-  #     login
-  #   end
-  # end
-  # def create_bot(id, name)
-  #   # TODO
-  # end
-end
-
 end
 
 p :debug3
@@ -146,5 +134,3 @@ Thread.start do
 end
 
 p :debug7
-
-
