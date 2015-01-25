@@ -32,7 +32,7 @@ module FastDash
               player.send_message('[MONORAIL] 最高速度に達しました')
               task = -> {
                 table = {0 => [0, 1], 1 => [-1, 0], 2 => [0, -1], 3 => [1, 0]}
-                [xdiff, zdiff] = table[(player.location.yaw / 90.0).round]
+                xdiff, zdiff = table[(player.location.yaw / 90.0).round]
                 btypes = [-1, 0, 1].map {|ydiff|
                   add_loc(player.location, xdiff, ydiff, zdiff).block.type
                 }
