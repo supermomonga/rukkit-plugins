@@ -17,21 +17,20 @@ module FastDash
       when Material::SAND
         evt.cancelled = true
       when Material::COBBLE_WALL
-        # monorail
+        # monorail ... 0.6 -> 0.9 -> 1.4
         unless player.location.y.between?(15, 78)
-          player.walk_speed = 0.8
+          player.walk_speed = 0.6
 
-          later sec(1) do
-            if player.walk_speed >= 0.8
-              player.send_message('ksk')
-              player.walk_speed == 1.0
+          later sec(2) do
+            if player.walk_speed >= 0.5
+              player.walk_speed == 0.9
             end
           end
 
-          later sec(2) do
-            if player.walk_speed >= 1.0
-              player.send_message('ksk2')
-              player.walk_speed == 1.2
+          later sec(4) do
+            if player.walk_speed >= 0.8
+              player.send_message('[MONORAIL] 最高速度に達しました')
+              player.walk_speed == 1.4
             end
           end
 
