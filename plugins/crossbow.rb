@@ -19,7 +19,7 @@ to crossbow, and vice versa.
 ## Crossbow
 
 * If you fully charge "Crossbow" and attempted to launch, this becomes "Crossbow (charged)" without launching an arrow.
-* If you right-click when you have "Crossbow (charged)", it will immediately launch an arrow, and changes it to "Crossbow"
+* If you right-click or left-click when you have "Crossbow (charged)", it will immediately launch an arrow, and changes it to "Crossbow"
 * Crossbow arrows go faster than normal.
 * Crossbow arrows go more straight than normal.
 * Crossbow arrows stop after certain distance.
@@ -54,7 +54,7 @@ module Crossbow
     player = evt.player
 
     case action
-    when Action::RIGHT_CLICK_BLOCK, Action::RIGHT_CLICK_AIR
+    when Action::RIGHT_CLICK_BLOCK, Action::RIGHT_CLICK_AIR, Action::LEFT_CLICK_BLOCK, Action::LEFT_CLICK_AIR
       return unless player.item_in_hand
       return unless player.item_in_hand.item_meta
       display_name = player.item_in_hand.item_meta.display_name
