@@ -18,7 +18,7 @@ module FastDash
         evt.cancelled = true
       when Material::COBBLE_WALL
         # monorail ... 0.6 -> 0.9 -> 1.4
-        unless player.location.y.between?(15, 78)
+        unless on_monorail?(player)
           player.walk_speed = 0.6
 
           later sec(3) do
@@ -28,25 +28,9 @@ module FastDash
           end
 
           later sec(7) do
-            if player.walk_speed >= 0.9 - 0.001 && !player.location.y.between?(15, 78)
+            if player.walk_speed >= 0.6 - 0.001 && on_monorail?(player)
               player.send_message('[MONORAIL] 最高速度に達しました。自動巡回します')
-              task = -> {
-                table = {0 => [0, 1], 1 => [-1, 0], 2 => [0, -1], 3 => [1, 0]}
-                xdiff, zdiff = table[(player.location.yaw / 90.0).round]
-                longest = [*1..5].reverse.find {|i|
-                  btypes = [-1, 0, 1].map {|ydiff|
-                    add_loc(player.location, xdiff * i, ydiff, zdiff * i).block.type
-                  }
-                  btypes == [Material::COBBLE_WALL, Material::AIR, Material::AIR]
-                }
-                if longest
-                  player.teleport(add_loc(player.location, xdiff * longest, 0, zdiff * longest))
-                  later(1) do
-                    task.()
-                  end
-                end
-              }
-              task.()
+              monorail_cruise_control(player)
             end
           end
 
@@ -110,5 +94,25 @@ module FastDash
     when evt.entity.level > 2 && evt.entity.walk_speed >= 0.4
       evt.cancelled = true
     end
+  end
+
+  private
+  def monorail_cruise_control(player)
+    table = {0 => [0, 1], 1 => [-1, 0], 2 => [0, -1], 3 => [1, 0]}
+    xdiff, zdiff = table[(player.location.yaw / 90.0).round]
+    longest = [*1..5].reverse.find {|i|
+      btypes = [-1, 0, 1].map {|ydiff|
+        add_loc(player.location, xdiff * i, ydiff, zdiff * i).block.type
+      }
+      btypes == [Material::COBBLE_WALL, Material::AIR, Material::AIR]
+    }
+    if longest
+      player.teleport(add_loc(player.location, xdiff * longest, 0, zdiff * longest))
+      later(1, method(:monorail_cruise_control))
+    end
+  end
+
+  def on_monorail?(player)
+    !player.location.y.between?(15, 78)
   end
 end
