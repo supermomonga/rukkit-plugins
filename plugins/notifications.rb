@@ -3,6 +3,7 @@ require 'set'
 import 'org.bukkit.entity.Player'
 import 'org.bukkit.entity.Chicken'
 import 'org.bukkit.entity.Cow'
+import 'org.bukkit.entity.Pig'
 import 'org.bukkit.entity.Enderman'
 import 'org.bukkit.entity.Zombie'
 import 'org.bukkit.entity.PigZombie'
@@ -26,7 +27,9 @@ module Notifications
       return if player.location.y >= 180 # TT
 
       case entity
-      when Chicken, Cow
+      when PigZombie # This has to be earlier than others
+        text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
+      when Chicken, Cow, Pig
         text = "[KILL] ・°°・(((p(≧□≦)q)))・°°・。ｳﾜｰﾝ!! #{player.name} killed a #{readable_name(entity)}."
       when Player
         if player.name == entity.name
@@ -37,8 +40,6 @@ module Notifications
       when Enderman
         text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
         evt.dropped_exp *= 3
-      when PigZombie
-        text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
       when Zombie
         if entity.baby?
           evt.dropped_exp *= 4
