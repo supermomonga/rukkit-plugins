@@ -41,7 +41,7 @@ module Build
     case args.shift
     when 'help'
       sender.message '/rukkit build draw-circle -- By consuming 64 blocks you have in hand, it draws a circle line with 10 radius'
-      sender.message '/rukkit build draw-square -- By consuming 64 blocks you have in hand, it draws a square line with 12 radius'
+      sender.message '/rukkit build draw-square -- By consuming 64 blocks you have in hand, it draws a square line with 6 radius'
     when 'draw-square'
       if !sender.item_in_hand.type.block? || sender.item_in_hand.amount < 64
         sender.send_message 'ERROR You must have 64 blocks.'
@@ -55,13 +55,13 @@ module Build
       end
 
       dots = (-n..n).map {|x|
-        [sender.location.x.to_i + x, sender.location.y.to_i, sender.location.z - n]
+        [sender.location.x.round + x, sender.location.y.round - 1, sender.location.z.round - n]
       } + (-n..n).map {|z|
-        [sender.location.x.to_i - n, sender.location.y.to_i, sender.location.z + z]
+        [sender.location.x.round - n, sender.location.y.round - 1, sender.location.z.round + z]
       } + (-n..n).map {|x|
-        [sender.location.x.to_i + x, sender.location.y.to_i, sender.location.z + n]
+        [sender.location.x.round + x, sender.location.y.round - 1, sender.location.z.round + n]
       } + (-n..n).map {|z|
-        [sender.location.x.to_i + n, sender.location.y.to_i, sender.location.z + z]
+        [sender.location.x.round + n, sender.location.y.round - 1, sender.location.z.round + z]
       }
 
       btype = sender.item_in_hand.type
