@@ -9,6 +9,10 @@ module PlayerJobFighter
     "#{evt.player.name}さんが武闘家になりました(装備なし、手持ちなしで攻撃と防御が強くなります。裸足のときのみノーダメージ着地可能)"
   end
 
+  def name
+    '武闘家'
+  end
+
   def detail
     '[武闘家]:装備なし、手持ちなしで攻撃と防御が強くなります。裸足のときのみノーダメージ着地可能'
   end

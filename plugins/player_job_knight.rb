@@ -9,6 +9,10 @@ module PlayerJobKnight
     "#{evt.player.name}さんが剣士になりました(剣の攻撃と防御が強くなります)"
   end
 
+  def name
+    '剣士'
+  end
+
   def detail
     '[剣士]:剣の攻撃と防御が強くなります'
   end

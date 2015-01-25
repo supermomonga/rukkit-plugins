@@ -14,6 +14,10 @@ module PlayerJobLegion
     "#{evt.player.name}さんが古代ローマ市民になりました (鉄装備で固めるとローマの栄光を得ます)"
   end
 
+  def name
+    '古代ローマ市民'
+  end
+
   def detail
     '[古代ローマ市民]:鉄装備で固めるとローマの栄光を得ます'
   end

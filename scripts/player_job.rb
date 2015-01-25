@@ -14,13 +14,15 @@ module PlayerJob
   @@job_plugins ||= []
 
   def on_player_join(evt)
-    player = evt.player
-
-    # become job with 30% of probability
     @players ||= Set.new
-    @players.add(player.entity_id) if rand(100) < 30
-    message = @message_proc.call(evt) if @message_proc
-    Rukkit::Util.broadcast(message) if message && has_job?(player)
+  end
+
+  def register(player)
+    @players && @players.add(player.entity_id)
+  end
+
+  def unregister(player)
+    @players && @players.delete(player.entity_id)
   end
 
   def on_player_quit(evt)
