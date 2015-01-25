@@ -102,12 +102,12 @@ module FastDash
   def monorail_cruise_control(player)
     table = {0 => [0, 1], 1 => [-1, 0], 2 => [0, -1], 3 => [1, 0]}
     xdiff, zdiff = table[(player.location.yaw / 90.0).round]
-    longest = [*1..5].reverse.find {|i|
+    longest = [*1..5].take_while {|i|
       btypes = [-1, 0, 1].map {|ydiff|
         add_loc(player.location, xdiff * i, ydiff, zdiff * i).block.type
       }
       btypes == [Material::COBBLE_WALL, Material::AIR, Material::AIR]
-    }
+    }.max
     if longest
       chunks = 5.times.map {|i| add_loc(player.location, xdiff * 10 * i, 0, zdiff * 10 * i).chunk }.reject(&:loaded?).each(&:load)
       player.teleport(add_loc(player.location, xdiff * longest, 0, zdiff * longest))
