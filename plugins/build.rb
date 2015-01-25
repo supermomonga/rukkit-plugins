@@ -65,17 +65,18 @@ module Build
       }
 
       btype = sender.item_in_hand.type
-      dots.map {|(x, y, z)| sender.world.get_block_at(x, y, z) }.
+      dots = dots.map {|(x, y, z)| sender.world.get_block_at(x, y, z) }.
         reject {|b| b.type.occluding? }.
-        each_slice(10).with_index.each do |blocks, idx|
-          later(idx) do
-            play_sound(blocks[0].location, Sound::EXPLODE, 1.0, rand(10) * 0.1)
-            blocks.each do |b|
-              b.type = btype
-              b.data = 0
-            end
+        reject {|b| b.type == btype }
+      dots.each_slice(10).with_index.each do |blocks, idx|
+        later(idx) do
+          play_sound(blocks[0].location, Sound::EXPLODE, 1.0, rand(10) * 0.1)
+          blocks.each do |b|
+            b.type = btype
+            b.data = 0
           end
         end
+      end
 
       sender.send_message("SUCCESS with consuing all your #{btype}s.")
       sender.item_in_hand = nil
@@ -99,18 +100,19 @@ module Build
       p [:dots, dots]
 
       btype = sender.item_in_hand.type
-      dots.map {|(x, y, z)| sender.world.get_block_at(x, y, z) }.
+      dots = dots.map {|(x, y, z)| sender.world.get_block_at(x, y, z) }.
         reject {|b| b.type.occluding? }.
-        each_slice(10).with_index.each do |blocks, idx|
-          later(idx) do
-            play_sound(blocks[0].location, Sound::EXPLODE, 1.0, rand(10) * 0.1)
-            blocks.each do |b|
-              p [:placing, b.location.x, b.location.y, b.location.z]
-              b.type = btype
-              b.data = 0
-            end
+        reject {|b| b.type == btype }
+      dots.each_slice(10).with_index.each do |blocks, idx|
+        later(idx) do
+          play_sound(blocks[0].location, Sound::EXPLODE, 1.0, rand(10) * 0.1)
+          blocks.each do |b|
+            p [:placing, b.location.x, b.location.y, b.location.z]
+            b.type = btype
+            b.data = 0
           end
         end
+      end
       sender.send_message "SUCCESS with consuing all your #{btype}s."
       sender.item_in_hand = nil
       sender.health = 1
