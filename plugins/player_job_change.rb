@@ -6,15 +6,18 @@ module PlayerJobChange
   extend self
   extend Rukkit::Util
 
-  JOB_SYMBOL = {
-    Material::ANVIL          => PlayerJobSmith,
-    Material::IRON_SWORD     => PlayerJobKnight,
-    Material::IRON_PLATE     => PlayerJobLegion,
-    Material::IRON_HOE       => PlayerJobFarmer,
-    Material::COOKED_CHICKEN => PlayerJobFighter,
-    Material::IRON_AXE       => PlayerJobWoodcutter,
-    Material::WATER_BUCKET   => PlayerJobSeaman,
-  }
+  def module_exists?(class_name)
+    Module.const_defined?(class_name) && Module === Module.const_get(class_name)
+  end
+
+  JOB_SYMBOL = {}
+  JOB_SYMBOL[Material::ANVIL]          = PlayerJobSmith      if module_exists?('PlayerJobSmith')
+  JOB_SYMBOL[Material::IRON_SWORD]     = PlayerJobKnight     if module_exists?('PlayerJobKnight')
+  JOB_SYMBOL[Material::IRON_PLATE]     = PlayerJobLegion     if module_exists?('PlayerJobLegion')
+  JOB_SYMBOL[Material::IRON_HOE]       = PlayerJobFarmer     if module_exists?('PlayerJobFarmer')
+  JOB_SYMBOL[Material::COOKED_CHICKEN] = PlayerJobFighter    if module_exists?('PlayerJobFighter')
+  JOB_SYMBOL[Material::IRON_AXE]       = PlayerJobWoodcutter if module_exists?('PlayerJobWoodcutter')
+  JOB_SYMBOL[Material::WATER_BUCKET]   = PlayerJobSeaman     if module_exists?('PlayerJobSeaman')
 
   FACE_MAP = {
     BlockFace::EAST  => BlockFace::WEST,
