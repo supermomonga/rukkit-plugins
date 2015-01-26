@@ -28,11 +28,13 @@ Have fun. :-)
 TODO
 * 横/背面移動の時の判定 <- よくわかんない(direction をどうのするみたいな？)
 * 吸い付き <- いらないかも
+* 滑り落ちる角度を固定させる <- よくわからん
 =end
 
 import 'org.bukkit.Bukkit'
 import 'org.bukkit.Material'
 import 'org.bukkit.util.Vector'
+import 'org.bukkit.event.entity.EntityDamageEvent'
 
 module Slider
   extend self
@@ -53,10 +55,23 @@ module Slider
     Material::WOOD_STAIRS,
   ]
 
+  @sliding ||= {}
+
   def on_player_move(evt)
     player = evt.player
-    #loc = evt.to
     loc = player.location
+
+    below_block = loc.clone
+    below_block.set_y below_block.y.round-1
+
+    unless STAIRS.include? below_block.block.type
+      below_block.add(0, -1, 0)
+      unless STAIRS.include? below_block.block.type
+        @sliding[player.name] = false if @sliding[player.name] && !player.sneaking?
+        return
+      end
+    end
+
 
     # quote from `fast_dash`
     # detect the direction
@@ -71,26 +86,37 @@ module Slider
         nil
       end
 
-    return unless desc?(loc, new_yaw)
+    stair_direction = below_block.block.state.data.descending_direction.to_s
+
+    case (new_yaw / 90).to_i
+    when 0
+      player_direction = "SOUTH"
+    when 1
+      player_direction = "WEST"
+    when 2
+      player_direction = "NORTH"
+    when 3
+      player_direction = "EAST"
+    end
+
+    unless stair_direction == player_direction
+      @sliding[player.name] = false if @sliding[player.name] && !player.sneaking?
+    end
 
     if player.sneaking?
+      @sliding[player.name] = true
       later 0 do
-        loc.set_pitch 54.75
-        player.velocity = Vector.new(loc.direction.x, loc.direction.y*0.5, loc.direction.z)
+        # <player name> moved wrongly! という warning でてつらみある. 不正な direction を指定してるのかな…
+        loc.set_pitch 31.64 # いい感じのpitch 固定できてない
+        loc.add(loc.direction)
+        player.velocity = Vector.new(loc.direction.x, loc.direction.y, loc.direction.z)
       end
     end
   end
 
-  def desc?(loc, new_yaw)
-    check_stair = loc.clone
-    # right in front
-    check_stair.set_yaw new_yaw if new_yaw
-    check_stair.set_pitch 0.0
+  def on_entity_damage(evt)
+    return unless @sliding[evt.entity.player.name]
 
-    # diagonally downward
-    check_stair.add(loc.direction)
-    check_stair.set_y (loc.y-2).truncate
-
-    STAIRS.include?(check_stair.block.type)
+    evt.cancelled = true if evt.cause == EntityDamageEvent::DamageCause::FALL
   end
 end
