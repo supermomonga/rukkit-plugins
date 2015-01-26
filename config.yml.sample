@@ -31,6 +31,7 @@ rukkit:
     - heatstroke
     - crossbow
     - saddle_recipe
+    - carpenter
   scripts:
     - lingr
     - material_util
