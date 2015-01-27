@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'digest/sha1'
 require 'erb'
 require 'open-uri'
