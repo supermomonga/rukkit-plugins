@@ -39,10 +39,8 @@ module PlayerJobChange
 
     job_class = JOB_SYMBOL[entity.item.type]
     job = PlayerJob.find(&job_class.method(:===))
-    @attack_count ||= {}
-    @attack_count[damager.entity_id] ||= {}
-    @attack_count[damager.entity_id][entity.item.type.id] ||= 0
-    case @attack_count[damager.entity_id][entity.item.type.id]
+    attack_counter = Counter.instance(damager, entity)
+    case attack_counter.value
     when 0
       if job.has_job?(damager)
         unless @noticed
@@ -57,7 +55,7 @@ module PlayerJobChange
 
       damager.send_message("#{job.name}になりたければ続けよ")
       later sec(10) do
-        @attack_count[damager.entity_id][entity.item.type.id] = 0
+        attack_counter.reset
       end
     when 10
       PlayerJob.each do |j|
@@ -67,8 +65,33 @@ module PlayerJobChange
 
       damager.send_message("今からお前は#{job.name}だ おめでとう！")
 
-      @attack_count[damager.entity_id][entity.item.type.id] = 0
+      attack_counter.reset
     end
-    @attack_count[damager.entity_id][entity.item.type.id] += 1
+    attack_counter.increment
+  end
+
+  class Counter
+    def self.instance(player, entity)
+      @@instance ||= {}
+      @@instance[player.entity_id] ||= {}
+      @@instance[player.entity_id][entity.item.type.id] ||= new
+    end
+
+    private_class_method :new
+    def initialize
+      reset
+    end
+
+    def increment
+      @counter += 1
+    end
+
+    def reset
+      @counter = 0
+    end
+
+    def value
+      @counter
+    end
   end
 end
