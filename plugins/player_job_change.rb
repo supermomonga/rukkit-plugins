@@ -37,10 +37,12 @@ module PlayerJobChange
     facing = FACE_MAP[entity.facing]
     return unless entity.location.block.get_relative(facing).type == Material::QUARTZ_BLOCK
 
-    evt.cancelled = true
-
     job_class = JOB_SYMBOL[entity.item.type]
     job = PlayerJob.find(&job_class.method(:===))
+    return unless job
+
+    evt.cancelled = true
+
     attack_counter = Counter.instance(damager, entity)
     case attack_counter.value
     when 0
