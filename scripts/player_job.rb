@@ -18,11 +18,11 @@ module PlayerJob
   end
 
   def register(player)
-    @players && @players.add(player.entity_id)
+    @players.add(player.entity_id) if @players
   end
 
   def unregister(player)
-    @players && @players.delete(player.entity_id)
+    @players.delete(player.entity_id) if @players
   end
 
   def on_player_quit(evt)
