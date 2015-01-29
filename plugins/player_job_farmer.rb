@@ -130,7 +130,7 @@ module PlayerJobFarmer
   end
 
   def uzumaki_loc(location, num)
-    [*0..num].map do |n|
+    [*0...num].map do |n|
       x, z = uzumaki_base(n)
       location.clone.add(x, 0, z)
     end
