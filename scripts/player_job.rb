@@ -26,8 +26,7 @@ module PlayerJob
   end
 
   def on_player_quit(evt)
-    player = evt.player
-    @players.delete(player.entity_id) if @players
+    unregister(evt.player)
   end
 
   def on_plugin_enable(evt)
