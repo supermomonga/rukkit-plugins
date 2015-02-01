@@ -22,6 +22,6 @@ module Dummy
     text = "[DERIS] #{{command: command, label: label, args: args.to_a}.inspect}"
     Lingr.post(text)
     broadcast(text)
-    true
+    %w[unko moresou]
   end
 end
