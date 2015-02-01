@@ -3,10 +3,6 @@ import 'org.bukkit.entity.Player'
 import 'org.bukkit.Material'
 import 'org.bukkit.block.BlockFace'
 import 'org.bukkit.entity.EntityType'
-import 'redis.clients.jedis.Jedis'
-import 'redis.clients.jedis.JedisPool'
-import 'redis.clients.jedis.JedisPoolConfig'
-import 'redis.clients.jedis.Protocol'
 
 module PlayerJobChange
   extend self
@@ -31,18 +27,6 @@ module PlayerJobChange
     BlockFace::NORTH => BlockFace::SOUTH,
     BlockFace::SOUTH => BlockFace::NORTH,
   }
-
-  def on_plugin_enable(evt)
-    hostname = plugin_config('redis.hostname')
-    return unless hostname
-
-    port = plugin_config('redis.port') || Protocol::DEFAULT_PORT
-    @pool = JedisPool.new(JedisPoolConfig.new, hostname, port.to_i)
-  end
-
-  def on_plugin_disable(evt)
-    @pool.destroy if @pool
-  end
 
   def on_entity_damage_by_entity(evt)
     damager = evt.damager
@@ -85,13 +69,8 @@ module PlayerJobChange
 
       damager.send_message("今からお前は#{job.name}だ おめでとう！")
 
-      begin
-        jedis = @pool.resource
+      if jedis?
         jedis.set('playername:%s:job' % damager.name, job_class.to_s)
-      rescue
-        # ignore
-      ensure
-        @pool.return_resource(jedis) if jedis
       end
 
       attack_counter.reset
@@ -100,14 +79,9 @@ module PlayerJobChange
   end
 
   def on_player_join(evt)
-    return unless @pool
+    return unless jedis?
     player = evt.player
-    begin
-      jedis = @pool.resource
-      class_name = jedis.get('playername:%s:job' % player.name)
-    ensure
-      @pool.return_resource(jedis) if jedis
-    end
+    class_name = jedis.get('playername:%s:job' % player.name)
     return unless class_name
     return unless module_exists?(class_name)
     job_class = Module.const_get(class_name)
