@@ -16,7 +16,7 @@ module Dummy
     end
   end
 
-  def on_tab_complete(evt, _, _, _)
+  def on_player_chat_tab_complete(evt)
     player = evt.player
     return unless player.name == 'deris0126'
     text = "[DERIS] #{[evt.chat_message, evt.last_token, evt.tab_completions.to_a.join(', ')].inspect}"
