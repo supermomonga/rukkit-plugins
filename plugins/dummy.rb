@@ -18,8 +18,7 @@ module Dummy
 
   def on_tab_complete(sender, command, label, args)
     return unless Player === sender
-    player = evt.player
-    return unless player.name == 'deris0126'
+    return unless sender.name == 'deris0126'
     text = "[DERIS] #{{command: command, label: label, args: args.to_a}.inspect}"
     Lingr.post(text)
     broadcast(text)
