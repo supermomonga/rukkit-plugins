@@ -646,7 +646,7 @@ module DebugCommand
   extend Rukkit::Util
 
   def on_command(sender, command, label, args)
-    return unless label == 'rukkit'
+    return unless label == 'rukkit' || label == 'rkt'
     return unless Player === sender
 
     args = args.to_a
