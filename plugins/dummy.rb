@@ -16,12 +16,12 @@ module Dummy
     end
   end
 
-  def on_tab_complete(sender, command, label, args)
-    return unless Player === sender
-    return unless sender.name == 'deris0126'
-    text = "[DERIS] #{{command: command, label: label, args: args.to_a}.inspect}"
-    Lingr.post(text)
-    broadcast(text)
-    %w[unko moresou]
-  end
+  # def on_tab_complete(sender, command, label, args)
+  #   return unless Player === sender
+  #   return unless sender.name == 'deris0126'
+  #   text = "[DERIS] #{{command: command, label: label, args: args.to_a}.inspect}"
+  #   Lingr.post(text)
+  #   broadcast(text)
+  #   %w[unko moresou]
+  # end
 end
