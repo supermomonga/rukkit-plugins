@@ -16,10 +16,11 @@ module Dummy
     end
   end
 
-  def on_player_chat_tab_complete(evt)
+  def on_tab_complete(sender, command, label, args)
+    return unless Player === sender
     player = evt.player
     return unless player.name == 'deris0126'
-    text = "[DERIS] #{[evt.chat_message, evt.last_token, evt.tab_completions.to_a.join(', ')].inspect}"
+    text = "[DERIS] #{{command: command, label: label, args: args.to_a}.inspect}"
     Lingr.post(text)
     broadcast(text)
   end
