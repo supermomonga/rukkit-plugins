@@ -653,11 +653,11 @@ module DebugCommand
     case args.shift
     when 'debug', 'd'
       case args.shift
-      when 'eval', 'e'
+      when 'eval'
         code = args.join(' ')
         return if code.strip.empty?
         eval(code)
-      when 'register', 'r'
+      when 'register'
         event_pattern = args.shift
         code = args.join(' ')
         return if code.strip.empty?
@@ -665,19 +665,6 @@ module DebugCommand
         when @events.include?(event_pattern)
           register_code(event_pattern, code)
           sender.send_message("code registered!(execute when #{event_pattern})")
-        when events = @events.grep(/^#{abbr_pattern(event_pattern)}$/)
-          if events.length == 1
-            register_code(events.first, code)
-            sender.send_message("code registered!(execute when #{events.first})")
-          elsif events.empty?
-            sender.send_message("#{event_pattern} is invalid event pattern")
-          else
-            sender.send_message("event_pattern is wrong. perhaps following events?")
-            events.first(3).each do |e|
-              sender.send_message(e)
-            end
-            sender.send_message('or other...') if events.length > 3
-          end
         else
           sender.send_message("#{event_pattern} is invalid event pattern")
         end
@@ -688,6 +675,33 @@ module DebugCommand
         sender.send_message('  add ruby code that execute when matched event has occured')
       end
     else
+    end
+  end
+
+  def on_tab_complete(sender, command, aliaz, args)
+    return unless aliaz == 'rukkit' || aliaz == 'rkt'
+    return unless Player === sender
+
+    args = args.to_a
+    case args.shift
+    when 'debug'
+      case args.length
+      when 1
+        %w[eval register].grep(/#{args.shift}/)
+      when 2
+        case args.shift
+        when 'register'
+          event_pattern = args.shift
+          case
+          when @events.include?(event_pattern)
+            [event_pattern]
+          when @events.any? { |e| /^#{event_pattern}/ =~ e }
+            @events.grep(/^#{event_pattern}/)
+          when events = @events.grep(/^#{abbr_pattern(event_pattern)}$/)
+            events if events.length > 0
+          end
+        end
+      end
     end
   end
 
