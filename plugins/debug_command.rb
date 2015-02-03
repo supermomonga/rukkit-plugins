@@ -893,13 +893,11 @@ module DebugCommand
     def eval(event_name, evt)
       return if @eval_codes[event_name].nil? || @eval_codes[event_name].empty?
       begin
-        code = nil
-        @eval_codes[event_name].each_with_index do |c|
-          code = c
+        @eval_codes[event_name].each do |c|
           Kernel.eval(c, BindingForEvent._event_binding(evt))
         end
-      rescue
-        puts "[exception] eval #{code}"
+      rescue => evar
+        puts "[exception] eval #{evar}"
       ensure
         # TODO:specify execution count
         @eval_codes[event_name].clear
