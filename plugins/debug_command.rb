@@ -656,7 +656,7 @@ module DebugCommand
       when 'eval'
         code = args.join(' ')
         return if code.strip.empty?
-        eval(code)
+        eval(code, BindingForEvent._command_binding(sender, command, label, args))
       when 'register'
         event_pattern = args.shift
         code = args.join(' ')
@@ -898,7 +898,7 @@ module DebugCommand
         @__eval_codes[__event_name].each_with_index do |__c, __i|
           __code = __c
           __index = __i
-          Kernel.eval(__c)
+          Kernel.eval(__c, BindingForEvent._event_binding(evt))
         end
       rescue
         puts "[exception] eval #{__code}"
@@ -907,5 +907,22 @@ module DebugCommand
         @__eval_codes[__event_name].delete_at(__index)
       end
     end
+  end
+end
+
+module BindingForEvent
+  extend self
+  extend Rukkit::Util
+
+  def _command_binding(sender, command, label, args)
+    binding
+  end
+
+  def _tab_complete_binding(sender, command, aliaz, args)
+    binding
+  end
+
+  def _event_binding(evt)
+    binding
   end
 end
