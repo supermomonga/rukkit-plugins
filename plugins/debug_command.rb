@@ -882,29 +882,29 @@ module DebugCommand
 
   class CodeEvaluator
     def initialize
-      @__eval_codes = {}
+      @eval_codes = {}
     end
 
     def register(event_name, code)
-      @__eval_codes[event_name] ||= []
-      @__eval_codes[event_name] << code
+      @eval_codes[event_name] ||= []
+      @eval_codes[event_name] << code
     end
 
-    def eval(__event_name, evt)
-      return if @__eval_codes[__event_name].nil? || @__eval_codes[__event_name].empty?
+    def eval(event_name, evt)
+      return if @eval_codes[event_name].nil? || @eval_codes[event_name].empty?
       begin
-        __code = nil
-        __index = nil
-        @__eval_codes[__event_name].each_with_index do |__c, __i|
-          __code = __c
-          __index = __i
-          Kernel.eval(__c, BindingForEvent._event_binding(evt))
+        code = nil
+        index = nil
+        @eval_codes[event_name].each_with_index do |c, i|
+          code = c
+          index = i
+          Kernel.eval(c, BindingForEvent._event_binding(evt))
         end
       rescue
-        puts "[exception] eval #{__code}"
+        puts "[exception] eval #{code}"
       ensure
         # TODO:specify execution count
-        @__eval_codes[__event_name].delete_at(__index)
+        @eval_codes[event_name].delete_at(index)
       end
     end
   end
