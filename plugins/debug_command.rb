@@ -894,17 +894,15 @@ module DebugCommand
       return if @eval_codes[event_name].nil? || @eval_codes[event_name].empty?
       begin
         code = nil
-        index = nil
-        @eval_codes[event_name].each_with_index do |c, i|
+        @eval_codes[event_name].each_with_index do |c|
           code = c
-          index = i
           Kernel.eval(c, BindingForEvent._event_binding(evt))
         end
       rescue
         puts "[exception] eval #{code}"
       ensure
         # TODO:specify execution count
-        @eval_codes[event_name].delete_at(index)
+        @eval_codes[event_name].clear
       end
     end
   end
