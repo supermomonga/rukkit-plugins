@@ -69,9 +69,7 @@ module PlayerJobChange
 
       damager.send_message("今からお前は#{job.name}だ おめでとう！")
 
-      if jedis?
-        jedis.set('playername:%s:job' % damager.name, job_class.to_s)
-      end
+      jedis.set('playername:%s:job' % damager.name, job_class.to_s) if jedis
 
       attack_counter.reset
     end
@@ -79,7 +77,7 @@ module PlayerJobChange
   end
 
   def on_player_join(evt)
-    return unless jedis?
+    return unless jedis
     player = evt.player
     class_name = jedis.get('playername:%s:job' % player.name)
     return unless class_name
