@@ -654,9 +654,18 @@ module DebugCommand
     when 'debug', 'd'
       case args.shift
       when 'eval'
-        code = args.join(' ')
-        return if code.strip.empty?
-        eval(code, BindingForEvent._command_binding(sender, command, label, args))
+        @code ||= ''
+        @code.gsub!(/\\$/, '')
+        @code += args.join(' ')
+        return if @code.strip.empty?
+        return if /\\$/ =~ @code
+        begin
+          eval(@code, BindingForEvent._command_binding(sender, command, label, args))
+        rescue => evar
+          puts "[exception] eval #{evar}"
+        ensure
+          @code = nil
+        end
       when 'register'
         event_pattern = args.shift
         code = args.join(' ')
@@ -882,12 +891,19 @@ module DebugCommand
 
   class CodeEvaluator
     def initialize
+      @temp_codes = {}
       @eval_codes = {}
     end
 
     def register(event_name, code)
+      @temp_codes[event_name] ||= ''
+      @temp_codes[event_name].gsub!(/\\$/, '')
+      @temp_codes[event_name] += code
+
+      return if /\\$/ =~ @temp_codes[event_name]
+
       @eval_codes[event_name] ||= []
-      @eval_codes[event_name] << code
+      @eval_codes[event_name] << @temp_codes[event_name]
     end
 
     def eval(event_name, evt)
