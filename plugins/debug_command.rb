@@ -724,8 +724,7 @@ module DebugCommand
   end
 
   def register_code(event_name, code)
-    @code_evaluator ||= CodeEvaluator.new
-    @code_evaluator.register(event_name, code)
+    CodeEvaluator.register(event_name, code)
   end
 
   @events = %w(
@@ -884,16 +883,15 @@ module DebugCommand
   @events.each do |event_name|
     "#{event_name}_event".gsub(/^(.)|_(.)/) { ($1||$2).upcase }
     define_method("on_#{event_name}") do |evt|
-      return unless @code_evaluator
-      @code_evaluator.eval(event_name, evt)
+      CodeEvaluator.eval(event_name, evt)
     end
   end
 
-  class CodeEvaluator
-    def initialize
-      @temp_codes = {}
-      @eval_codes = {}
-    end
+  module CodeEvaluator
+    extend self
+
+    @temp_codes = {}
+    @eval_codes = {}
 
     def register(event_name, code)
       @temp_codes[event_name] ||= ''
