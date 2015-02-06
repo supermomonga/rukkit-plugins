@@ -907,7 +907,8 @@ module DebugCommand
     end
 
     def eval(event_name, evt)
-      return if @eval_codes[event_name].nil? || @eval_codes[event_name].empty?
+      return unless @eval_codes.has_key?(event_name)
+      return if @eval_codes[event_name].empty?
       begin
         @eval_codes[event_name].each do |c|
           Kernel.eval(c, BindingForEvent._event_binding(evt))
