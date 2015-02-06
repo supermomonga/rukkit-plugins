@@ -672,7 +672,7 @@ module DebugCommand
         return if code.strip.empty?
         case
         when @events.include?(event_pattern)
-          register_code(event_pattern, code)
+          CodeEvaluator.register(event_pattern, code)
           sender.send_message("code registered!(execute when #{event_pattern})")
         else
           sender.send_message("#{event_pattern} is invalid event pattern")
@@ -721,10 +721,6 @@ module DebugCommand
     else
       pattern.gsub(/(?<=.)(.)/, '[^_]*_\0') + '[^_]*'
     end
-  end
-
-  def register_code(event_name, code)
-    CodeEvaluator.register(event_name, code)
   end
 
   @events = %w(
