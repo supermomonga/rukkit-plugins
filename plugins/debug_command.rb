@@ -917,7 +917,7 @@ module DebugCommand
         puts "[exception] eval #{evar}"
       ensure
         # TODO:specify execution count
-        @eval_codes[event_name].clear
+        @eval_codes.delete(event_name)
       end
     end
   end
