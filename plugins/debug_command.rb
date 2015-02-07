@@ -647,7 +647,7 @@ module DebugCommand
 
   def on_command(sender, command, label, args)
     return unless label == 'rukkit' || label == 'rkt'
-    return unless Player === sender
+    return unless Player === sender || ConsoleCommandSender === sender
 
     args = args.to_a
     case args.shift
