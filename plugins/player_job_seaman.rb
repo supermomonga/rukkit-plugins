@@ -18,7 +18,9 @@ module PlayerJobSeaman
   end
 
   def on_entity_damage(evt)
-    return unless has_job?(evt.entity)
+    entity = evt.entity
+    return unless Player === entity
+    return unless has_job?(entity)
 
     evt.cancelled = true if evt.cause == EntityDamageEvent::DamageCause::DROWNING
   end
