@@ -48,7 +48,7 @@ module PlayerJobChange
     when 0
       if job.has_job?(damager)
         unless @noticed
-          damager.send_message("すでに#{job.name}だ")
+          damager.send_message("[JC] すでに#{job.name}だ")
           @noticed = true
           later sec(10) do
             @noticed = false
@@ -57,7 +57,7 @@ module PlayerJobChange
         return
       end
 
-      damager.send_message("#{job.name}になりたければ続けよ")
+      damager.send_message("[JC] #{job.name}になりたければ続けよ")
       later sec(10) do
         attack_counter.reset
       end
@@ -67,7 +67,7 @@ module PlayerJobChange
       end
       job.register(damager)
 
-      damager.send_message("今からお前は#{job.name}だ おめでとう！")
+      damager.send_message("[JC] 今からお前は#{job.name}だ おめでとう！")
 
       jedis.set('playername:%s:job' % damager.name, job_class.to_s) if jedis
 
