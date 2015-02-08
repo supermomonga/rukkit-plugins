@@ -929,6 +929,32 @@ module BindingForEvent
   extend Rukkit::Util
 
   def _command_binding(sender, command, label, args)
+    case sender
+    when Player
+      name = sender.name
+      entity_id = sender.entity_id
+      location = sender.location
+      server = sender.server
+      vehicle = sender.vehicle
+      velocity = sender.velocity
+      world = sender.world
+      health = sender.health
+      max_health = sender.max_health
+      custom_name = sender.custom_name
+      equipment = sender.equipment
+      eye_height = sender.eye_height
+      eye_location = sender.eye_location
+      ender_chest = sender.ender_chest
+      exp_to_level = sender.exp_to_level
+      game_mode = sender.game_mode
+      inventory = sender.inventory
+      item_in_hand = sender.item_in_hand
+      item_on_cursor = sender.item_on_cursor
+      open_inventory = sender.get_open_inventory
+    when ConsoleCommandSender
+      name = sender.name
+      server = sender.server
+    end
     binding
   end
 
@@ -937,6 +963,35 @@ module BindingForEvent
   end
 
   def _event_binding(evt)
+    case evt
+    when BlockEvent
+      block = evt.block
+    when EntityEvent
+      entity = evt.entity
+      entity_type = evt.entity_type
+    when HangingEvent
+      entity = evt.entity
+    when InventoryEvent
+      inventory = evt.inventory
+      view = evt.view
+      viewers = evt.viewers
+    when PaintingEvent
+      painting = evt.painting
+    when PlayerEvent
+      player = evt.player
+    when PluginEvent
+      plugin = evt.plugin
+    when ServiceEvent
+      provider = evt.seprovider
+    when VehicleEvent
+      vehicle = evt.vehicle
+    when WeatherEvent
+      world = evt.world
+    when ChunkEvent
+      chunk = evt.chunk
+    when WorldEvent
+      world = evt.world
+    end
     binding
   end
 end
