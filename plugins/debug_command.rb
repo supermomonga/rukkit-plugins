@@ -668,6 +668,7 @@ module DebugCommand
         end
       when 'register'
         event_pattern = args.shift
+        return unless event_pattern
         code = args.join(' ')
         return if code.strip.empty?
         case
