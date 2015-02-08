@@ -899,6 +899,7 @@ module DebugCommand
 
       @eval_codes[event_name] ||= []
       @eval_codes[event_name] << @temp_codes[event_name]
+      @temp_codes[event_name] = ''
     end
 
     def eval(event_name, evt)
