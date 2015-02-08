@@ -645,6 +645,9 @@ module DebugCommand
   extend self
   extend Rukkit::Util
 
+  ParamEvent   = Struct.new(:evt)
+  ParamCommand = Struct.new(:sender, :command, :label, :args)
+
   def on_command(sender, command, label, args)
     return unless label == 'rukkit' || label == 'rkt'
     return unless Player === sender || ConsoleCommandSender === sender
@@ -654,18 +657,10 @@ module DebugCommand
     when 'debug', 'd'
       case args.shift
       when 'eval'
-        @code ||= ''
-        @code.gsub!(/\\$/, '')
-        @code += args.join(' ')
-        return if @code.strip.empty?
-        return if /\\$/ =~ @code
-        begin
-          eval(@code, BindingForEvent._command_binding(sender, command, label, args))
-        rescue => evar
-          puts "[exception] eval #{evar}"
-        ensure
-          @code = nil
-        end
+        code = args.join(' ')
+        return if code.strip.empty?
+        CodeEvaluator.register('#eval', code)
+        CodeEvaluator.eval('#eval', ParamCommand.new(sender, command, label, args))
       when 'register'
         event_pattern = args.shift
         return unless event_pattern
@@ -880,7 +875,7 @@ module DebugCommand
   @events.each do |event_name|
     "#{event_name}_event".gsub(/^(.)|_(.)/) { ($1||$2).upcase }
     define_method("on_#{event_name}") do |evt|
-      CodeEvaluator.eval(event_name, evt)
+      CodeEvaluator.eval(event_name, ParamEvent.new(evt))
     end
   end
 
@@ -902,12 +897,22 @@ module DebugCommand
       @temp_codes[event_name] = ''
     end
 
-    def eval(event_name, evt)
+    def eval(event_name, param)
       return unless @eval_codes.has_key?(event_name)
       return if @eval_codes[event_name].empty?
+
+      case param
+      when ParamEvent
+        binding_obj = BindingForEvent._event_binding(param.evt)
+      when ParamCommand
+        binding_obj = BindingForEvent._command_binding(param.sender, param.command, param.label, param.args)
+      else
+        raise TypeError, "invalid type(#{param.class})"
+      end
+
       begin
         @eval_codes[event_name].each do |c|
-          Kernel.eval(c, BindingForEvent._event_binding(evt))
+          Kernel.eval(c, binding_obj)
         end
       rescue => evar
         puts "[exception] eval #{evar}"
