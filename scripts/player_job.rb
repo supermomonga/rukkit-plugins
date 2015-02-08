@@ -17,6 +17,10 @@ module PlayerJob
     @players ||= Set.new
   end
 
+  def on_plugin_enable(evt)
+    @players ||= Set.new
+  end
+
   def register(player)
     @players.add(player.entity_id) if @players
   end
