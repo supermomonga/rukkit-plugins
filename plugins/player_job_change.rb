@@ -3,6 +3,8 @@ import 'org.bukkit.entity.Player'
 import 'org.bukkit.Material'
 import 'org.bukkit.block.BlockFace'
 import 'org.bukkit.entity.EntityType'
+import 'org.bukkit.Sound'
+import 'org.bukkit.Effect'
 
 module PlayerJobChange
   extend self
@@ -44,6 +46,7 @@ module PlayerJobChange
     evt.cancelled = true
 
     attack_counter = Counter.instance(damager, entity)
+    play_effect(entity.location, Effect::SMOKE, 0)
     case attack_counter.value
     when 0
       if job.has_job?(damager)
@@ -62,11 +65,15 @@ module PlayerJobChange
         attack_counter.reset
       end
     when 10
+      play_effect(entity.location, Effect::MOBSPAWNER_FLAMES, 0)
       PlayerJob.each do |j|
         j.unregister(damager)
       end
       job.register(damager)
 
+      [Sound::EXPLODE, Sound::ANVIL_BREAK, Sound::BAT_DEATH].each do |sound|
+        play_sound(entity.location, sound, 0.9, 0.0) if rand(2) == 0
+      end
       damager.send_message("[JC] 今からお前は#{job.name}だ おめでとう！")
 
       jedis.set('playername:%s:job' % damager.name, job_class.to_s) if jedis
