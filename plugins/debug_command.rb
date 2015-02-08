@@ -146,11 +146,11 @@ class_list = %w(
   org.bukkit.entity.EnderSignal
   org.bukkit.entity.Villager
   org.bukkit.entity.Giant
-  org.bukkit.entity.Skeleton.SkeletonType
+  org.bukkit.entity.Skeleton$SkeletonType
   org.bukkit.entity.Enderman
   org.bukkit.entity.Golem
   org.bukkit.entity.Creature
-  org.bukkit.entity.Horse.Style
+  org.bukkit.entity.Horse$Style
   org.bukkit.entity.Minecart
   org.bukkit.entity.LeashHitch
   org.bukkit.entity.Zombie
@@ -160,7 +160,7 @@ class_list = %w(
   org.bukkit.entity.Vehicle
   org.bukkit.entity.StorageMinecart
   org.bukkit.entity.ComplexEntityPart
-  org.bukkit.entity.Ocelot.Type
+  org.bukkit.entity.Ocelot$Type
   org.bukkit.entity.Silverfish
   org.bukkit.entity.LargeFireball
   org.bukkit.entity.ComplexLivingEntity
@@ -175,7 +175,7 @@ class_list = %w(
   org.bukkit.entity.Pig
   org.bukkit.entity.Weather
   org.bukkit.entity.Item
-  org.bukkit.entity.Horse.Variant
+  org.bukkit.entity.Horse$Variant
   org.bukkit.entity.Horse
   org.bukkit.entity.Boat
   org.bukkit.entity.ExperienceOrb
@@ -183,7 +183,7 @@ class_list = %w(
   org.bukkit.entity.Monster
   org.bukkit.entity.ThrownPotion
   org.bukkit.entity.Ageable
-  org.bukkit.entity.Horse.Color
+  org.bukkit.entity.Horse$Color
   org.bukkit.entity.Painting
   org.bukkit.entity.Fireball
   org.bukkit.entity.ThrownExpBottle
@@ -192,7 +192,7 @@ class_list = %w(
   org.bukkit.entity.NPC
   org.bukkit.entity.HumanEntity
   org.bukkit.entity.Animals
-  org.bukkit.entity.Villager.Profession
+  org.bukkit.entity.Villager$Profession
   org.bukkit.entity.Entity
   org.bukkit.entity.SmallFireball
   org.bukkit.entity.Hanging
@@ -222,7 +222,7 @@ class_list = %w(
   org.bukkit.entity.minecart.SpawnerMinecart
   org.bukkit.entity.minecart.CommandMinecart
   org.bukkit.event.EventHandler
-  org.bukkit.event.Event.Result
+  org.bukkit.event.Event$Result
   org.bukkit.event.HandlerList
   org.bukkit.event.Event
   org.bukkit.event.EventPriority
@@ -243,7 +243,7 @@ class_list = %w(
   org.bukkit.event.block.BlockEvent
   org.bukkit.event.block.BlockFadeEvent
   org.bukkit.event.block.BlockDamageEvent
-  org.bukkit.event.block.BlockIgniteEvent.IgniteCause
+  org.bukkit.event.block.BlockIgniteEvent$IgniteCause
   org.bukkit.event.block.BlockPistonEvent
   org.bukkit.event.block.EntityBlockFormEvent
   org.bukkit.event.block.Action
@@ -257,8 +257,8 @@ class_list = %w(
   org.bukkit.event.block.BlockBreakEvent
   org.bukkit.event.enchantment.EnchantItemEvent
   org.bukkit.event.enchantment.PrepareItemEnchantEvent
-  org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason
-  org.bukkit.event.entity.EntityDamageEvent.DamageCause
+  org.bukkit.event.entity.EntityRegainHealthEvent$RegainReason
+  org.bukkit.event.entity.EntityDamageEvent$DamageCause
   org.bukkit.event.entity.EntityDamageEvent
   org.bukkit.event.entity.EntityEvent
   org.bukkit.event.entity.HorseJumpEvent
@@ -275,7 +275,7 @@ class_list = %w(
   org.bukkit.event.entity.SlimeSplitEvent
   org.bukkit.event.entity.EntityChangeBlockEvent
   org.bukkit.event.entity.EntityPortalEnterEvent
-  org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason
+  org.bukkit.event.entity.CreatureSpawnEvent$SpawnReason
   org.bukkit.event.entity.EntityDamageByBlockEvent
   org.bukkit.event.entity.CreeperPowerEvent
   org.bukkit.event.entity.EntityDeathEvent
@@ -292,9 +292,9 @@ class_list = %w(
   org.bukkit.event.entity.EntityCreatePortalEvent
   org.bukkit.event.entity.SheepRegrowWoolEvent
   org.bukkit.event.entity.EntityPortalEvent
-  org.bukkit.event.entity.EntityTargetEvent.TargetReason
-  org.bukkit.event.entity.CreeperPowerEvent.PowerCause
-  org.bukkit.event.entity.EntityUnleashEvent.UnleashReason
+  org.bukkit.event.entity.EntityTargetEvent$TargetReason
+  org.bukkit.event.entity.CreeperPowerEvent$PowerCause
+  org.bukkit.event.entity.EntityUnleashEvent$UnleashReason
   org.bukkit.event.entity.ExplosionPrimeEvent
   org.bukkit.event.entity.EntityUnleashEvent
   org.bukkit.event.entity.EntityShootBowEvent
@@ -305,7 +305,7 @@ class_list = %w(
   org.bukkit.event.entity.EntityTeleportEvent
   org.bukkit.event.hanging.HangingBreakByEntityEvent
   org.bukkit.event.hanging.HangingPlaceEvent
-  org.bukkit.event.hanging.HangingBreakEvent.RemoveCause
+  org.bukkit.event.hanging.HangingBreakEvent$RemoveCause
   org.bukkit.event.hanging.HangingEvent
   org.bukkit.event.hanging.HangingBreakEvent
   org.bukkit.event.inventory.InventoryAction
@@ -316,7 +316,7 @@ class_list = %w(
   org.bukkit.event.inventory.InventoryOpenEvent
   org.bukkit.event.inventory.InventoryEvent
   org.bukkit.event.inventory.BrewEvent
-  org.bukkit.event.inventory.InventoryType.SlotType
+  org.bukkit.event.inventory.InventoryType$SlotType
   org.bukkit.event.inventory.FurnaceExtractEvent
   org.bukkit.event.inventory.CraftItemEvent
   org.bukkit.event.inventory.FurnaceSmeltEvent
@@ -328,12 +328,12 @@ class_list = %w(
   org.bukkit.event.inventory.InventoryDragEvent
   org.bukkit.event.inventory.InventoryClickEvent
   org.bukkit.event.inventory.InventoryCreativeEvent
-  org.bukkit.event.painting.PaintingBreakEvent.RemoveCause
+  org.bukkit.event.painting.PaintingBreakEvent$RemoveCause
   org.bukkit.event.painting.PaintingBreakEvent
   org.bukkit.event.painting.PaintingEvent
   org.bukkit.event.painting.PaintingBreakByEntityEvent
   org.bukkit.event.painting.PaintingPlaceEvent
-  org.bukkit.event.player.PlayerPreLoginEvent.Result
+  org.bukkit.event.player.PlayerPreLoginEvent$Result
   org.bukkit.event.player.PlayerExpChangeEvent
   org.bukkit.event.player.PlayerRespawnEvent
   org.bukkit.event.player.PlayerCommandPreprocessEvent
@@ -351,14 +351,14 @@ class_list = %w(
   org.bukkit.event.player.PlayerInteractEvent
   org.bukkit.event.player.PlayerPortalEvent
   org.bukkit.event.player.PlayerQuitEvent
-  org.bukkit.event.player.PlayerTeleportEvent.TeleportCause
+  org.bukkit.event.player.PlayerTeleportEvent$TeleportCause
   org.bukkit.event.player.PlayerUnregisterChannelEvent
   org.bukkit.event.player.PlayerChatTabCompleteEvent
   org.bukkit.event.player.PlayerEggThrowEvent
   org.bukkit.event.player.PlayerChatEvent
   org.bukkit.event.player.PlayerAchievementAwardedEvent
-  org.bukkit.event.player.PlayerFishEvent.State
-  org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result
+  org.bukkit.event.player.PlayerFishEvent$State
+  org.bukkit.event.player.AsyncPlayerPreLoginEvent$Result
   org.bukkit.event.player.PlayerBedLeaveEvent
   org.bukkit.event.player.PlayerChannelEvent
   org.bukkit.event.player.PlayerStatisticIncrementEvent
@@ -372,7 +372,7 @@ class_list = %w(
   org.bukkit.event.player.PlayerGameModeChangeEvent
   org.bukkit.event.player.PlayerItemBreakEvent
   org.bukkit.event.player.PlayerPreLoginEvent
-  org.bukkit.event.player.PlayerLoginEvent.Result
+  org.bukkit.event.player.PlayerLoginEvent$Result
   org.bukkit.event.player.PlayerToggleFlightEvent
   org.bukkit.event.player.PlayerAnimationEvent
   org.bukkit.event.player.AsyncPlayerChatEvent
@@ -418,14 +418,14 @@ class_list = %w(
   org.bukkit.event.world.ChunkEvent
   org.bukkit.event.world.WorldUnloadEvent
   org.bukkit.event.world.WorldLoadEvent
-  org.bukkit.event.world.PortalCreateEvent.CreateReason
+  org.bukkit.event.world.PortalCreateEvent$CreateReason
   org.bukkit.event.world.ChunkLoadEvent
   org.bukkit.event.world.ChunkPopulateEvent
   org.bukkit.event.world.PortalCreateEvent
   org.bukkit.event.world.SpawnChangeEvent
   org.bukkit.event.world.ChunkUnloadEvent
   org.bukkit.event.world.WorldInitEvent
-  org.bukkit.generator.ChunkGenerator.BiomeGrid
+  org.bukkit.generator.ChunkGenerator$BiomeGrid
   org.bukkit.generator.BlockPopulator
   org.bukkit.generator.ChunkGenerator
   org.bukkit.help.HelpTopicFactory
@@ -433,11 +433,11 @@ class_list = %w(
   org.bukkit.help.HelpTopicComparator
   org.bukkit.help.GenericCommandHelpTopic
   org.bukkit.help.IndexHelpTopic
-  org.bukkit.help.HelpTopicComparator.TopicNameComparator
+  org.bukkit.help.HelpTopicComparator$TopicNameComparator
   org.bukkit.help.HelpMap
   org.bukkit.inventory.BrewerInventory
   org.bukkit.inventory.AnvilInventory
-  org.bukkit.inventory.InventoryView.Property
+  org.bukkit.inventory.InventoryView$Property
   org.bukkit.inventory.PlayerInventory
   org.bukkit.inventory.Recipe
   org.bukkit.inventory.EntityEquipment
@@ -468,15 +468,15 @@ class_list = %w(
   org.bukkit.inventory.meta.FireworkMeta
   org.bukkit.map.MapRenderer
   org.bukkit.map.MapPalette
-  org.bukkit.map.MapView.Scale
+  org.bukkit.map.MapView$Scale
   org.bukkit.map.MapCursorCollection
   org.bukkit.map.MapCursor
   org.bukkit.map.MapFont
   org.bukkit.map.MapCanvas
-  org.bukkit.map.MapFont.CharacterSprite
+  org.bukkit.map.MapFont$CharacterSprite
   org.bukkit.map.MinecraftFont
   org.bukkit.map.MapView
-  org.bukkit.map.MapCursor.Type
+  org.bukkit.map.MapCursor$Type
   org.bukkit.material.Diode
   org.bukkit.material.Crops
   org.bukkit.material.SmoothBrick
@@ -485,7 +485,7 @@ class_list = %w(
   org.bukkit.material.Mushroom
   org.bukkit.material.Coal
   org.bukkit.material.RedstoneWire
-  org.bukkit.material.CocoaPlant.CocoaPlantSize
+  org.bukkit.material.CocoaPlant$CocoaPlantSize
   org.bukkit.material.Vine
   org.bukkit.material.Skull
   org.bukkit.material.SimpleAttachableMaterialData
@@ -544,7 +544,7 @@ class_list = %w(
   org.bukkit.metadata.MetadataConversionException
   org.bukkit.metadata.Metadatable
   org.bukkit.metadata.MetadataValueAdapter
-  org.bukkit.metadata.LazyMetadataValue.CacheStrategy
+  org.bukkit.metadata.LazyMetadataValue$CacheStrategy
   org.bukkit.metadata.MetadataValue
   org.bukkit.metadata.MetadataStore
   org.bukkit.metadata.FixedMetadataValue
@@ -594,7 +594,7 @@ class_list = %w(
   org.bukkit.potion.Potion
   org.bukkit.potion.PotionEffect
   org.bukkit.potion.PotionBrewer
-  org.bukkit.potion.Potion.Tier
+  org.bukkit.potion.Potion$Tier
   org.bukkit.potion.PotionEffectTypeWrapper
   org.bukkit.potion.PotionType
   org.bukkit.projectiles.BlockProjectileSource
@@ -617,7 +617,7 @@ class_list = %w(
   org.bukkit.util.FileUtil
   org.bukkit.util.ChatPaginator
   org.bukkit.util.StringUtil
-  org.bukkit.util.ChatPaginator.ChatPage
+  org.bukkit.util.ChatPaginator$ChatPage
   org.bukkit.util.NumberConversions
   org.bukkit.util.BlockVector
   org.bukkit.util.io.BukkitObjectOutputStream
