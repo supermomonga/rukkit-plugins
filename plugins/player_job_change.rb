@@ -61,6 +61,8 @@ module PlayerJobChange
       end
 
       damager.send_message("[JC] #{job.name}になりたければ続けよ")
+      attack_counter.increment
+
       later sec(10) do
         attack_counter.reset
       end
@@ -79,8 +81,9 @@ module PlayerJobChange
       jedis.set('playername:%s:job' % damager.name, job_class.to_s) if jedis
 
       attack_counter.reset
+    else
+      attack_counter.increment
     end
-    attack_counter.increment
   end
 
   def on_player_join(evt)
