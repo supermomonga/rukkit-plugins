@@ -4,14 +4,7 @@ import 'org.bukkit.entity.Player'
 import 'org.bukkit.ChatColor'
 
 module ChatRelay
-  class Message
-    attr_reader :name, :message
-
-    def initialize(name, message)
-      @name = name
-      @message = message
-    end
-  end
+  Message = Struct.new(:name, :message)
 
   extend self
   extend Rukkit::Util
