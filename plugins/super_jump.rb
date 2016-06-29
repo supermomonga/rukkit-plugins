@@ -40,7 +40,7 @@ module SuperJump
       end
       if @crouching_counter[name] == 3
         loc = player.location
-        play_sound(add_loc(loc, 0, 5, 0), Sound::BAT_TAKEOFF, 0.9, 0.0)
+        play_sound(add_loc(loc, 0, 5, 0), Sound::ENTITY_BAT_TAKEOFF, 0.9, 0.0)
         iikanji_effect(loc)
 
         player.send_message('[SUPER JUMP] This feature will be removed soon.')
