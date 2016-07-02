@@ -10,7 +10,7 @@ module ChatRelay
   extend Rukkit::Util
 
   def on_async_player_chat(evt)
-    Slack.post evt.player.name, evt.message
+    Slack.post evt.message, evt.player.name
   end
 end
 # vim:foldmethod=marker

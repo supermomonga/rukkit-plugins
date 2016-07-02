@@ -14,7 +14,7 @@ module Slack
     # TODO: say with users' specific bot
   end
 
-  def post(user, message)
+  def post(message, user = nil)
     # curl -X POST --data-urlencode 'payload={
     # "channel": "#minecraft",
     # "username": "webhookbot",
@@ -27,7 +27,11 @@ module Slack
     webhook_url = Rukkit::Util.plugin_config 'slack.url'
     icon_url_base = Rukkit::Util.plugin_config 'slack.icon_url_base'
     # https://shicraft.darui.io/tiles/faces/32x32/supermomonga.png
-    post_name = "%s (minecraft)" % user
+    if user
+      post_name = "%s (minecraft)" % user
+    else
+      post_name "Rukkit"
+    end
 
     params = {
       channel: channel,
@@ -35,7 +39,7 @@ module Slack
       text: remove_colors(message)
     }
 
-    if icon_url_base
+    if icon_url_base && user
       icon_url = icon_url_base % user
       params.merge!(icon_url: icon_url)
     end
@@ -75,81 +79,3 @@ module Slack
     end
   end
 end
-
-if false
-  class LingrServer < Sinatra::Base
-    register Sinatra::Reloader
-
-    post '/chats/' do
-      JSON.parse(request.body.read)['events'].map{ |e|
-        e['message']
-      }.each do |m|
-        text = m['text']
-        Lingr::command(text)
-        user = Rukkit::Util.colorize(m['nickname'], :gray)
-        message = "<#{user}> #{text}"
-        Rukkit::Util.broadcast message
-      end
-    end
-
-    get '/' do
-      {
-        name: 'rukkit',
-        authors: ['supermomonga', 'ujm'],
-        version: '0.0dev',
-        url: 'https://github.com/supermomonga/akechi.rukkit',
-      }.inspect
-    end
-
-    def self.run
-      begin
-        Rack::Handler::WEBrick.shutdown
-      rescue
-      end
-
-      begin
-        puts "launch server on port #{Rukkit::Util.plugin_config('lingr.server_port')}."
-        Rack::Handler::WEBrick.run(
-          self,
-          Port: Rukkit::Util.plugin_config('lingr.server_port'),
-          AccessLog: [],
-          Logger: WEBrick::Log.new(Rukkit::Util.rukkit_dir + 'lingr_webrick.log')
-        )
-      rescue Exception => e
-        p ['exception-in-lingr', e.class, e]
-        puts e.message
-      end
-
-      p :debug6
-
-    end
-
-    # private
-    # def agent
-    #   @@agent ||= Mechanize.new
-    # end
-    # def login
-    #   # TODO
-    # end
-    # def bot_list
-    #   # TODO
-    #   res = agent.get 'http://lingr.com/developer'
-    #   if res.code == '200'
-    #   else
-    #     login
-    #   end
-    # end
-    # def create_bot(id, name)
-    #   # TODO
-    # end
-  end
-end
-
-p :debug3
-
-
-# Thread.start do
-#   LingrServer.run
-# end
-
-p :debug7

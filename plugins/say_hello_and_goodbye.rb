@@ -10,7 +10,7 @@ module SayHelloAndGoodbye
 
     msg = "[LOGIN] #{player.name}さんが現実世界に帰ってきました"
     broadcast msg
-    Lingr.post msg if defined? Lingr
+    Slack.post msg if defined? Slack
   end
 
   def on_player_quit(evt)
@@ -18,7 +18,7 @@ module SayHelloAndGoodbye
 
     msg = "[LOGOUT] #{player.name}さんが仮想世界に旅立ちました"
     broadcast msg
-    Lingr.post msg if defined? Lingr
+    Slack.post msg if defined? Slack
 
     loc = player.location
     2.times do |i|
