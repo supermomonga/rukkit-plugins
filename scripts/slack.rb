@@ -34,16 +34,19 @@ module Slack
 
 
     Thread.start do
-      uri = URI.parse(wehbook_url)
-      http = Net::HTTP.new(uri.host, uri.port)
+      # uri = URI.parse(wehbook_url)
+      # http = Net::HTTP.new(uri.host, uri.port)
 
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      # http.use_ssl = true
+      # http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-      req = Net::HTTP::Post.new(uri.path)
-      req.body = params.to_json
+      # req = Net::HTTP::Post.new(uri.path)
+      # req.body = params.to_json
 
-      http.request(req)
+      # res = http.request(req)
+      request_url = webhook_url
+      uri = URI.parse(request_url)
+      http = Net::HTTP.post_form(uri, { payload: params.to_json})
     end
   end
 
