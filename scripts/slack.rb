@@ -30,7 +30,7 @@ module Slack
     if user
       post_name = "%s (minecraft)" % user
     else
-      post_name "Rukkit"
+      post_name = "Rukkit"
     end
 
     params = {
