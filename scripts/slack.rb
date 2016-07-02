@@ -25,12 +25,20 @@ module Slack
     channel = Rukkit::Util.plugin_config 'slack.channel'
     channel = "##{channel}" unless channel[0] == '#'
     webhook_url = Rukkit::Util.plugin_config 'slack.url'
+    icon_url_base = Rukkit::Util.plugin_config 'slack.icon_url_base'
+    # https://shicraft.darui.io/tiles/faces/32x32/supermomonga.png
+    post_name = "%s (minecraft)" % user
 
     params = {
       channel: channel,
-      username: user,
+      username: post_name,
       text: remove_colors(message)
     }
+
+    if icon_url_base
+      icon_url = icon_url_base % user
+      params.merge!(icon_url: icon_url)
+    end
 
 
     Thread.start do
