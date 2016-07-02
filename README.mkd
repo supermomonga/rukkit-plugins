@@ -1,16 +1,10 @@
 
-## akechi.rukkit
+## rukkit-plugins
 
-This is rukkit plugins repository of akechi.rukkit craftbukkit server.
+This is rukkit plugins repository for for my personal Minecraft server.
 
 See [supermomonga/rukkit](https://github.com/supermomonga/rukkit) for more information of rukkit.
 
-## How to run
+## How to run on local machine
 
-```sh
-git clone git@github.com:supermomonga/akechi.rukkit.git
-cd ./akechi.rukkit
-cp config.yml.sample ./data/rukkit/config.yml
-vim ./data/rukkit/config.yml
-sh ./run
-```
+(TBD)
