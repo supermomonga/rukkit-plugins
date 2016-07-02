@@ -4,14 +4,13 @@ import 'org.bukkit.entity.Player'
 import 'org.bukkit.ChatColor'
 
 module ChatRelay
-  Message = Struct.new(:name, :message)
+  Message = Struct.new(:name, :text)
 
   extend self
   extend Rukkit::Util
 
   def on_async_player_chat(evt)
-    message = Message.new evt.player.name, evt.message
-    Lingr.post "[#{message.name}] #{message.message}"
+    Slack.post evt.player.name, evt.message
   end
 end
 # vim:foldmethod=marker
