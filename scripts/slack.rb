@@ -70,7 +70,7 @@ class SlackServer < Sinatra::Base
 
   post '/gateway/' do
     if params[:token] == Rukkit::Util.plugin_config('slack.outgoing_token')
-      text = params[:text].gsub(params[:trigger_word], '').strip
+      text = params[:text].gsub(params[:trigger_word] || '', '').strip
       user = params[:user_name]
 
       Thread.new do
