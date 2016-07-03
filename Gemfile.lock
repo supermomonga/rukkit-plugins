@@ -1,51 +1,32 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    backports (3.6.4)
-    domain_name (0.5.22)
-      unf (>= 0.0.5, < 1.0.0)
-    http-cookie (1.0.2)
-      domain_name (~> 0.5)
-    mechanize (2.7.3)
-      domain_name (~> 0.5, >= 0.5.1)
-      http-cookie (~> 1.0)
-      mime-types (~> 2.0)
-      net-http-digest_auth (~> 1.1, >= 1.1.1)
-      net-http-persistent (~> 2.5, >= 2.5.2)
-      nokogiri (~> 1.4)
-      ntlm-http (~> 0.1, >= 0.1.1)
-      webrobots (>= 0.0.9, < 0.2)
-    mime-types (2.4.3)
-    multi_json (1.10.1)
-    net-http-digest_auth (1.4)
-    net-http-persistent (2.9.4)
-    nokogiri (1.6.5-java)
-    ntlm-http (0.1.1)
-    rack (1.5.2)
+    backports (3.6.8)
+    multi_json (1.12.1)
+    rack (1.6.4)
     rack-protection (1.5.3)
       rack
-    rack-test (0.6.2)
+    rack-test (0.6.3)
       rack (>= 1.0)
-    sinatra (1.4.5)
-      rack (~> 1.4)
+    sinatra (1.4.7)
+      rack (~> 1.5)
       rack-protection (~> 1.4)
-      tilt (~> 1.3, >= 1.3.4)
-    sinatra-contrib (1.4.2)
+      tilt (>= 1.3, < 3)
+    sinatra-contrib (1.4.7)
       backports (>= 2.0)
       multi_json
       rack-protection
       rack-test
       sinatra (~> 1.4.0)
-      tilt (~> 1.3)
-    tilt (1.4.1)
-    unf (0.1.4-java)
-    webrobots (0.1.1)
+      tilt (>= 1.3, < 3)
+    tilt (2.0.5)
 
 PLATFORMS
   java
-  ruby
 
 DEPENDENCIES
-  mechanize
   sinatra
   sinatra-contrib
+
+BUNDLED WITH
+   1.12.5
