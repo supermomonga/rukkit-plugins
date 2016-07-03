@@ -26,27 +26,13 @@ module Notifications
     when Player
       return if player.location.y >= 180 # TT
 
-      case entity
-      when PigZombie # This has to be earlier than others
-        text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
-      when Chicken, Cow, Pig
-        text = "[KILL] ・°°・(((p(≧□≦)q)))・°°・。ｳﾜｰﾝ!! #{player.name} killed a #{readable_name(entity)}."
+      text = case entity
       when Player
         if player.name == entity.name
           text = "[KILL] #{player.name}さんが#{player.item_in_hand.type}で自害いたしました。というかたぶん事故です。"
         else
           text = "[KILL] 殺人事件発生! #{player.name}容疑者が#{entity.name}さんを#{player.item_in_hand.type}殺害した疑いで書類送検されました"
         end
-      when Enderman
-        text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
-        evt.dropped_exp *= 3
-      when Zombie
-        if entity.baby?
-          evt.dropped_exp *= 4
-        end
-        text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
-      else
-        text = "[KILL] #{player.name} killed a #{readable_name(entity)} (exp #{evt.dropped_exp}.)"
       end
       if text
         Slack.post(text) unless text == @last_kill_notice
