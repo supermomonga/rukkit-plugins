@@ -68,16 +68,21 @@ Onject.send(:remove_const, :SlackServer) if Object.const_defined?(:SlackServer)
 
 class SlackServer < Sinatra::Base
 
-  post '/chats/' do
-    JSON.parse(request.body.read)['events'].map{ |e|
-      e['message']
-    }.each do |m|
-      text = m['text']
-      Slack::command(text)
-      user = Rukkit::Util.colorize(m['nickname'], :gray)
-      message = "<#{user}> #{text}"
-      Rukkit::Util.broadcast message
+  post '/gateway/' do
+    if params[:token] == Rukkit::Util.plugin_config('slack.outgoing_token')
+      text = params[:text].gsub(params[:trigger_word], '').strip
+      user = params[:user_name]
+
+      Thread.new do
+        Slack::command(text)
+        user = Rukkit::Util.colorize(user, :gray)
+        message = "<#{user}> #{text}"
+        Rukkit::Util.broadcast message
+      end
     end
+
+    status 200
+    body ''
   end
 
   get '/' do
