@@ -5,7 +5,6 @@ require 'open-uri'
 require 'json'
 require 'net/https'
 require 'sinatra/base'
-require 'sinatra/reloader'
 
 import 'org.bukkit.ChatColor'
 
@@ -68,7 +67,6 @@ end
 Onject.send(:remove_const, :SlackServer) if Object.const_defined?(:SlackServer)
 
 class SlackServer < Sinatra::Base
-  register Sinatra::Reloader
 
   post '/chats/' do
     JSON.parse(request.body.read)['events'].map{ |e|
@@ -92,22 +90,27 @@ class SlackServer < Sinatra::Base
   end
 
   def self.run
-    begin
+    if Rack::Handler::WEBrick.instance_variable_get('@server')
+      Rukkit::Util.log.info "Server is running. Shutdown."
       Rack::Handler::WEBrick.shutdown
-    rescue
+      sleep 3
+    else
+      Rukkit::Util.log.info "Server is not running."
     end
 
     begin
       puts "launch server on port #{Rukkit::Util.plugin_config('slack.server_port')}."
       Rack::Handler::WEBrick.run(
         self,
+        Host: '0.0.0.0',
         Port: Rukkit::Util.plugin_config('slack.server_port'),
         AccessLog: [],
         Logger: WEBrick::Log.new(Rukkit::Util.rukkit_dir + 'slack_webrick.log')
       )
-    rescue Exception => e
-      p ['exception-in-slack', e.class, e]
-      puts e.message
+    rescue Errno::EADDRINUSE => e
+      Rukkit::Util.log.info "Address in use. retry."
+      sleep 3
+      retry
     end
 
   end
