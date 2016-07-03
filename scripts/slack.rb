@@ -35,6 +35,7 @@ module Slack
 
     if icon_url_base && user
       icon_url = icon_url_base % user
+      icon_url = "#{icon_url}##{Time.now.to_i / 3600}"
       params.merge!(icon_url: icon_url)
     end
 
