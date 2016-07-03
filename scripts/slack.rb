@@ -4,8 +4,8 @@ require 'erb'
 require 'open-uri'
 require 'json'
 require 'net/https'
-# require 'sinatra/base'
-# require 'sinatra/reloader'
+require 'sinatra/base'
+require 'sinatra/reloader'
 
 import 'org.bukkit.ChatColor'
 
