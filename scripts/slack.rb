@@ -1,4 +1,6 @@
 # coding: utf-8
+Rukkit::Util.log.info('===> GEM_HOME')
+Rukkit::Util.log.info(ENV['GEM_HOME'])
 require 'digest/sha1'
 require 'erb'
 require 'open-uri'
