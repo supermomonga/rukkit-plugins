@@ -4,8 +4,8 @@ require 'erb'
 require 'open-uri'
 require 'json'
 require 'net/https'
-require 'sinatra/base'
-require 'sinatra/reloader'
+# require 'sinatra/base'
+# require 'sinatra/reloader'
 
 import 'org.bukkit.ChatColor'
 
@@ -82,54 +82,54 @@ module Slack
   end
 end
 
-Onject.send(:remove_const, :SlackServer) if Object.const_defined?(:SlackServer)
+# Onject.send(:remove_const, :SlackServer) if Object.const_defined?(:SlackServer)
 
-class SlackServer < Sinatra::Base
-  register Sinatra::Reloader
+# class SlackServer < Sinatra::Base
+#   register Sinatra::Reloader
 
-  post '/chats/' do
-    JSON.parse(request.body.read)['events'].map{ |e|
-      e['message']
-    }.each do |m|
-      text = m['text']
-      Slack::command(text)
-      user = Rukkit::Util.colorize(m['nickname'], :gray)
-      message = "<#{user}> #{text}"
-      Rukkit::Util.broadcast message
-    end
-  end
+#   post '/chats/' do
+#     JSON.parse(request.body.read)['events'].map{ |e|
+#       e['message']
+#     }.each do |m|
+#       text = m['text']
+#       Slack::command(text)
+#       user = Rukkit::Util.colorize(m['nickname'], :gray)
+#       message = "<#{user}> #{text}"
+#       Rukkit::Util.broadcast message
+#     end
+#   end
 
-  get '/' do
-    {
-      name: 'rukkit',
-      authors: ['supermomonga', 'ujm'],
-      version: '0.0dev',
-      url: 'https://github.com/supermomonga/rukkit-plugins',
-    }.inspect
-  end
+#   get '/' do
+#     {
+#       name: 'rukkit',
+#       authors: ['supermomonga', 'ujm'],
+#       version: '0.0dev',
+#       url: 'https://github.com/supermomonga/rukkit-plugins',
+#     }.inspect
+#   end
 
-  def self.run
-    begin
-      Rack::Handler::WEBrick.shutdown
-    rescue
-    end
+#   def self.run
+#     begin
+#       Rack::Handler::WEBrick.shutdown
+#     rescue
+#     end
 
-    begin
-      puts "launch server on port #{Rukkit::Util.plugin_config('slack.server_port')}."
-      Rack::Handler::WEBrick.run(
-        self,
-        Port: Rukkit::Util.plugin_config('slack.server_port'),
-        AccessLog: [],
-        Logger: WEBrick::Log.new(Rukkit::Util.rukkit_dir + 'slack_webrick.log')
-      )
-    rescue Exception => e
-      p ['exception-in-slack', e.class, e]
-      puts e.message
-    end
+#     begin
+#       puts "launch server on port #{Rukkit::Util.plugin_config('slack.server_port')}."
+#       Rack::Handler::WEBrick.run(
+#         self,
+#         Port: Rukkit::Util.plugin_config('slack.server_port'),
+#         AccessLog: [],
+#         Logger: WEBrick::Log.new(Rukkit::Util.rukkit_dir + 'slack_webrick.log')
+#       )
+#     rescue Exception => e
+#       p ['exception-in-slack', e.class, e]
+#       puts e.message
+#     end
 
-  end
-end
+#   end
+# end
 
-Thread.start do
-  SlackServer.run
-end
+# Thread.start do
+#   SlackServer.run
+# end
