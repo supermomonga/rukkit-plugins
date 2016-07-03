@@ -1,7 +1,7 @@
 # coding: utf-8
 
 Rukkit::Util.log.info('==> gem dirs')
-Rukkit::Util.log.info(Rukkit::Util.gems_dirs)
+Rukkit::Util.log.info(Dir.glob File.expand_path(Rukkit::Util.gems_dirs))
 Rukkit::Util.log.info('==> load pathes')
 $LOAD_PATH.each do |lp|
   Rukkit::Util.log.info(lp)
