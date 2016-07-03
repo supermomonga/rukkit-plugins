@@ -79,3 +79,57 @@ module Slack
     end
   end
 end
+
+if SlackServer
+  Onject.send(:remove_const, :SlackServer)
+end
+
+class SlackServer < Sinatra::Base
+  register Sinatra::Reloader
+
+  post '/chats/' do
+    JSON.parse(request.body.read)['events'].map{ |e|
+      e['message']
+    }.each do |m|
+      text = m['text']
+      Slack::command(text)
+      user = Rukkit::Util.colorize(m['nickname'], :gray)
+      message = "<#{user}> #{text}"
+      Rukkit::Util.broadcast message
+    end
+  end
+
+  get '/' do
+    {
+      name: 'rukkit',
+      authors: ['supermomonga', 'ujm'],
+      version: '0.0dev',
+      url: 'https://github.com/supermomonga/rukkit-plugins',
+    }.inspect
+  end
+
+  def self.run
+    begin
+      Rack::Handler::WEBrick.shutdown
+    rescue
+    end
+
+    begin
+      puts "launch server on port #{Rukkit::Util.plugin_config('slack.server_port')}."
+      Rack::Handler::WEBrick.run(
+        self,
+        Port: Rukkit::Util.plugin_config('slack.server_port'),
+        AccessLog: [],
+        Logger: WEBrick::Log.new(Rukkit::Util.rukkit_dir + 'slack_webrick.log')
+      )
+    rescue Exception => e
+      p ['exception-in-slack', e.class, e]
+      puts e.message
+    end
+
+  end
+end
+
+Thread.start do
+  SlackServer.run
+end
