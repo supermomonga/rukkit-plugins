@@ -80,9 +80,7 @@ module Slack
   end
 end
 
-if SlackServer
-  Onject.send(:remove_const, :SlackServer)
-end
+Onject.send(:remove_const, :SlackServer) if Object.const_defined?(:SlackServer)
 
 class SlackServer < Sinatra::Base
   register Sinatra::Reloader
