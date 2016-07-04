@@ -69,7 +69,8 @@ Onject.send(:remove_const, :SlackServer) if Object.const_defined?(:SlackServer)
 class SlackServer < Sinatra::Base
 
   post '/gateway/' do
-    if params[:token] == Rukkit::Util.plugin_config('slack.outgoing_token')
+    if params[:token] == Rukkit::Util.plugin_config('slack.outgoing_token') &&
+        params[:user_name] != 'slackbot'
       text = params[:text].gsub(params[:trigger_word] || '', '').strip
       user = params[:user_name]
 
