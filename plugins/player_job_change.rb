@@ -78,6 +78,7 @@ module PlayerJobChange
         play_sound(entity.location, sound, 0.9, 0.0) if rand(2) == 0
       end
       damager.send_message("[JC] 今からお前は#{job.name}だ おめでとう！")
+      broadcast("[JC] #{damager.name}が#{job.name}になった！")
 
       jedis.set('playername:%s:job' % damager.name, job_class.to_s) if jedis
 
