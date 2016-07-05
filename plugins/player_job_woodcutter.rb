@@ -20,6 +20,7 @@ module PlayerJobWoodcutter
   end
 
   def on_player_interact(evt)
+    evt.player.send_message("fast woodcut fired")
     material = evt.material
     action = evt.action
     block = evt.clicked_block
@@ -49,6 +50,7 @@ module PlayerJobWoodcutter
   # If you break a log with an axe with at least 1 enchantment,
   # it will also break logs below/above. If will chain as long as you keep your axe.
   def on_block_break(evt)
+    evt.player.send_message("kickory fired")
     return unless has_job?(evt.player)
 
     return if evt.cancelled
