@@ -49,6 +49,8 @@ module PlayerJobWoodcutter
   # If you break a log with an axe with at least 1 enchantment,
   # it will also break logs below/above. If will chain as long as you keep your axe.
   def on_block_break(evt)
+    return unless has_job?(evt.player)
+
     return if evt.cancelled
     woodlog = evt.block
     return unless [Material::LOG, Material::LOG_2].include?(woodlog.type)
