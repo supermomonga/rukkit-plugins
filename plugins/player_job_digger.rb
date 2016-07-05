@@ -112,6 +112,7 @@ module PlayerJobDigger
   def on_block_damage(evt)
     player = evt.player
     block = evt.block
+    return unless has_job?(player)
     return if @glass_punched.include?(player.name)
     return unless [Material::GLASS, Material::THIN_GLASS].include?(block.type)
     play_effect(block.location, Effect::ZOMBIE_CHEW_IRON_DOOR, 0)

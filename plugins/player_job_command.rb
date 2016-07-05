@@ -37,6 +37,7 @@ module PlayerJobCommand
       when 'help'
         broadcast '/rukkit player-job id [user id] --'
         broadcast '        show current job of user specified by id'
+        broadcast "/rukkit player-job players -- show all players' job"
         broadcast '/rukkit player-job me -- show current job of youself'
         broadcast '/rukkit player-job list -- show all job list'
         broadcast '/rukkit player-job help -- show help'

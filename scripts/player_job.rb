@@ -38,7 +38,14 @@ module PlayerJob
   end
 
   def has_job?(player)
-    players.include?(player.entity_id)
+    Rukkit::Util.log.info("#{self} players: %s" % players.inspect)
+    if players.include?(player.entity_id)
+      Rukkit::Util.log.info "You(#{player.entity_id}) are in the playres."
+      true
+    else
+      Rukkit::Util.log.info "You(#{player.entity_id}) are not in the playres."
+      false
+    end
   end
 
   def login_message(&block)
