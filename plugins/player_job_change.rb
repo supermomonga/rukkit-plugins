@@ -73,7 +73,7 @@ module PlayerJobChange
         j.unregister(damager)
       end
       job.register(damager)
-      log.info("#{job.name} players: " % job.players.join(', '))
+      log.info("#{job.name} players: " % job.players.to_a.join(', '))
 
       [Sound::ENTITY_GENERIC_EXPLODE, Sound::BLOCK_ANVIL_BREAK, Sound::ENTITY_BAT_DEATH].each do |sound|
         play_sound(entity.location, sound, 0.9, 0.0) if rand(2) == 0
