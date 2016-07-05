@@ -13,6 +13,10 @@ module PlayerJob
 
   @@job_plugins ||= []
 
+  def players
+    @players ||= Set.new
+  end
+
   def on_player_join(evt)
     @players ||= Set.new
   end
