@@ -100,6 +100,7 @@ module PlayerJobChange
     job_class = Module.const_get(class_name)
     job = PlayerJob.find(&job_class.method(:===))
     job.register(player)
+    log.info("#{job.name} players: " % job.players.to_a.join(', '))
   end
 
   class Counter
