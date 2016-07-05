@@ -92,6 +92,7 @@ module PlayerJobChange
     class_name = jedis.get('playername:%s:job' % player.name)
     return unless class_name
     return unless module_exists?(class_name)
+    player.send_message("Your job: %s" % class_name)
     job_class = Module.const_get(class_name)
     job = PlayerJob.find(&job_class.method(:===))
     job.register(player)

@@ -50,7 +50,6 @@ module PlayerJobWoodcutter
   # it will also break logs below/above. If will chain as long as you keep your axe.
   def on_block_break(evt)
     return unless has_job?(evt.player)
-    evt.player.send_message("kickory fired")
 
     return if evt.cancelled
     woodlog = evt.block
