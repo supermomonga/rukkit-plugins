@@ -15,6 +15,7 @@ module PlayerJobChange
   end
 
   JOB_SYMBOL = {}
+  JOB_SYMBOL[Material::IRON_SPADE]      = PlayerJobDigger     if module_exists?('PlayerJobDigger')
   JOB_SYMBOL[Material::ANVIL]           = PlayerJobSmith      if module_exists?('PlayerJobSmith')
   JOB_SYMBOL[Material::IRON_SWORD]      = PlayerJobKnight     if module_exists?('PlayerJobKnight')
   JOB_SYMBOL[Material::IRON_CHESTPLATE] = PlayerJobLegion     if module_exists?('PlayerJobLegion')
