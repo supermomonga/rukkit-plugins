@@ -73,7 +73,7 @@ module PlayerJobChange
       end
       job.register(damager)
 
-      [Sound::EXPLODE, Sound::ANVIL_BREAK, Sound::BAT_DEATH].each do |sound|
+      [Sound::ENTITY_GENERIC_EXPLODE, Sound::BLOCK_ANVIL_BREAK, Sound::ENTITY_BAT_DEATH].each do |sound|
         play_sound(entity.location, sound, 0.9, 0.0) if rand(2) == 0
       end
       damager.send_message("[JC] 今からお前は#{job.name}だ おめでとう！")
