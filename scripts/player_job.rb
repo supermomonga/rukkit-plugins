@@ -17,20 +17,12 @@ module PlayerJob
     @players ||= Set.new
   end
 
-  def on_player_join(evt)
-    @players ||= Set.new
-  end
-
-  def on_plugin_enable(evt)
-    @players ||= Set.new
-  end
-
   def register(player)
-    @players.add(player.entity_id) if @players
+    players.add(player.entity_id)
   end
 
   def unregister(player)
-    @players.delete(player.entity_id) if @players
+    players.delete(player.entity_id)
   end
 
   def on_player_quit(evt)
@@ -46,7 +38,7 @@ module PlayerJob
   end
 
   def has_job?(player)
-    @players && @players.include?(player.entity_id)
+    players.include?(player.entity_id)
   end
 
   def login_message(&block)
