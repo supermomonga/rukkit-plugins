@@ -60,7 +60,7 @@ module PlayerJobDigger
       @num_blocks[player.name][block.type] = 0
 
       text = "[HUMAN BULLDOZER] #{player.name} broke #{threshould} #{block.type}s. #{player.name} can dig faster for 1 minute, without consuming pickaxe/spade!"
-      Lingr.post text
+      Slack.post text
       broadcast text
 
       player.add_potion_effect(PotionEffectType::FAST_DIGGING.create_effect(sec(42), 5)) # it's actually 63
@@ -71,7 +71,7 @@ module PlayerJobDigger
 
         play_sound(player.location, Sound::AMBIENT_CAVE  , 1.0, 0.3)
         text = "[HUMAN BULLDOZER] #{player.name}'s bonus time ended."
-        Lingr.post(text)
+        Slack.post(text)
         broadcast(text)
       end
 
