@@ -79,6 +79,7 @@ module PlayerJobChange
       end
       damager.send_message("[JC] 今からお前は#{job.name}だ おめでとう！")
       broadcast("[JC] #{damager.name}が#{job.name}になった！")
+      Slack.post("[JC] #{damager.name}が#{job.name}になった！")
 
       jedis.set('playername:%s:job' % damager.name, job_class.to_s) if jedis
 
