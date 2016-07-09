@@ -1,16 +1,12 @@
 # encoding: utf-8
 require 'set'
+import 'org.bukkit.Material'
 import 'org.bukkit.event.block.Action'
-import 'org.bukkit.material.Crops'
-import 'org.bukkit.CropState'
-import 'org.bukkit.Sound'
-import 'org.bukkit.entity.Player'
-import 'org.bukkit.event.entity.EntityDamageEvent'
-import 'org.bukkit.potion.PotionEffectType'
-import 'org.bukkit.Effect'
+import 'org.bukkit.event.block.BlockBreakEvent'
 
 module PlayerJobDigger
   extend self
+  extend MaterialUtil
   extend Rukkit::Util
   extend PlayerJob
 
@@ -26,103 +22,61 @@ module PlayerJobDigger
     '[採掘師]:範囲採掘が可能'
   end
 
-  @num_blocks ||= {}
-  @bonus_time ||= {}
+  TARGET_BLOCKS = [
+    Material::STONE,
+    Material::GRAVEL,
+    [ Material::DIRT, Material::GRASS, Material::GRASS_PATH ],
+    Material::SAND
+  ]
 
-  @num_lava_removed ||= {}
+  def range_breakable?(block)
+    TARGET_BLOCKS.find { |target|
+      if target.class == Array
+        target.include? block.type
+      else
+        target == block.type
+      end
+    }
+  end
 
-  BONUS_TABLE = {
-    Material::STONE => 500,
-    Material::NETHERRACK => 500,
-    Material::DIRT => 500,
-    Material::GRASS => 450,
-    Material::SAND => 300,
-  }
+  def breakable_together?(a, b)
+    TARGET_BLOCKS.find { |target|
+      if target.class == Array
+        target.include?(a.type) && target.include?(b.type)
+      else
+        target == a.type && a.type == b.type
+      end
+    }
+  end
 
+  # It also breaks around blocks
   def on_block_break(evt)
-    block = evt.block
+    target_block = evt.block
     player = evt.player
+    tool = player.item_in_hand
+    return unless pickaxe?(tool.type) || spade?(tool.type)
     return unless has_job?(player)
+    return unless range_breakable?(target_block)
 
-    threshould = BONUS_TABLE[block.type] || 150
+    around_blocks = cubic_around_blocks(target_block)
+    blocks = around_blocks.reject { |block|
+      block.y < player.location.y
+    }.select { |block|
+      breakable_together?(target_block, block)
+    }
 
-    if @bonus_time[player.name]
-      istack = player.item_in_hand
-      istack.durability -= 1 if istack.durability > 0
-      return
-    end
-
-    @num_blocks[player.name] ||= {}
-    @num_blocks[player.name][block.type] ||= 0
-    @num_blocks[player.name][block.type] += 1
-
-    if @num_blocks[player.name][block.type] > threshould
-      @num_blocks[player.name][block.type] = 0
-
-      text = "[HUMAN BULLDOZER] #{player.name} broke #{threshould} #{block.type}s. #{player.name} can dig faster for 1 minute, without consuming pickaxe/spade!"
-      Slack.post text
-      broadcast text
-
-      player.add_potion_effect(PotionEffectType::FAST_DIGGING.create_effect(sec(42), 5)) # it's actually 63
-
-      @bonus_time[player.name] = true
-      later sec(60) do
-        @bonus_time[player.name] = false
-
-        play_sound(player.location, Sound::AMBIENT_CAVE  , 1.0, 0.3)
-        text = "[HUMAN BULLDOZER] #{player.name}'s bonus time ended."
-        Slack.post(text)
-        broadcast(text)
-      end
-
-      Bukkit.online_players.to_a.each do |p|
-        play_sound(p.location, Sound::ENTITY_DONKEY_DEATH , 1.0, 0.0)
-      end
-      play_sound(player.location, Sound::ENTITY_PLAYER_LEVELUP , 0.8, 1.5)
-
-      if player.health < player.max_health
-        player.send_message '(HPが全回復します)'
-        player.health = player.max_health
+    blocks.each do |block|
+      later(0) do
+        block.break_naturally(tool)
       end
     end
+
   end
 
-  def on_block_place(evt)
-    player = evt.player
-    block = evt.block
-    state = evt.getBlockReplacedState()
-    return unless has_job?(player)
-
-    if state.type == Material::STATIONARY_LAVA && state.raw_data.to_i == 0
-      @num_lava_removed[player.name] ||= 0
-      @num_lava_removed[player.name] += 1
-
-      player.send_message("You have removed #{@num_lava_removed[player.name]} statinary lava.")
-
-      if @num_lava_removed[player.name] >= 20
-        text = 'Congratulations! You filled 20 lava'
-        # Lingr.post(text)
-        broadcast(text)
-        @num_lava_removed[player.name] = 0
-      end
-    end
+  def cubic_around_blocks(target, n = 1)
+    [*(-n..n)].repeated_permutation(3).map { |xdiff, ydiff, zdiff|
+      add_loc(target.location, xdiff, ydiff, zdiff).block
+    }
   end
 
-  @glass_punched ||= Set.new
-  def on_block_damage(evt)
-    player = evt.player
-    block = evt.block
-    return unless has_job?(player)
-    return if @glass_punched.include?(player.name)
-    return unless [Material::GLASS, Material::THIN_GLASS].include?(block.type)
-    play_effect(block.location, Effect::ZOMBIE_CHEW_IRON_DOOR, 0)
-
-    orb = spawn(block.location, EntityType::EXPERIENCE_ORB)
-    orb.experience = 0
-
-    @glass_punched.add(player.name)
-    later sec(1) do
-      @glass_punched.delete(player.name)
-    end
-  end
 end

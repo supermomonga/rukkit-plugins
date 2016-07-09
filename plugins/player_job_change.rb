@@ -69,9 +69,9 @@ module PlayerJobChange
       end
     when 10
       play_effect(entity.location, Effect::MOBSPAWNER_FLAMES, 0)
-      PlayerJob.each do |j|
-        j.unregister(damager)
-      end
+      # PlayerJob.each do |j|
+      #   j.unregister(damager)
+      # end
       job.register(damager)
       log.info("#{job} players: %s" % job.players.inspect)
 
@@ -81,8 +81,6 @@ module PlayerJobChange
       damager.send_message("[JC] 今からお前は#{job.name}だ おめでとう！")
       broadcast("[JC] #{damager.name}が#{job.name}になった！")
       Slack.post("[JC] #{damager.name}が#{job.name}になった！")
-
-      jedis.set('playername:%s:job' % damager.name, job_class.to_s) if jedis
 
       attack_counter.reset
     else
@@ -97,10 +95,10 @@ module PlayerJobChange
     return unless class_name
     return unless module_exists?(class_name)
     player.send_message("Your job: %s" % class_name)
-    job_class = Module.const_get(class_name)
-    job = PlayerJob.find(&job_class.method(:===))
-    job.register(player)
-    log.info("#{job} players: %s" % job.players.inspect)
+    # job_class = Module.const_get(class_name)
+    # job = PlayerJob.find(&job_class.method(:===))
+    # job.register(player)
+    # log.info("#{job} players: %s" % job.players.inspect)
   end
 
   class Counter

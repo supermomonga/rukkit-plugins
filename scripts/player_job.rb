@@ -18,16 +18,12 @@ module PlayerJob
   end
 
   def register(player)
-    players.add(player.entity_id)
+    Rukkit::Util.jedis.set('playername:%s:job' % player.name, self.to_s) if Rukkit::Util.jedis
   end
 
-  def unregister(player)
-    players.delete(player.entity_id)
-  end
-
-  def on_player_quit(evt)
-    unregister(evt.player)
-  end
+  # def unregister(player)
+  #   Rukkit::Util.jedis.del('playername:%s:job' % damager.name) if Rukkit::Util.jedis
+  # end
 
   def on_plugin_enable(evt)
     @@job_plugins << self unless @@job_plugins.include?(self)
@@ -38,13 +34,9 @@ module PlayerJob
   end
 
   def has_job?(player)
-    if players.include?(player.entity_id)
-      Rukkit::Util.log.info("#{self} players: %s" % players.inspect)
-      Rukkit::Util.log.info "You(#{player.entity_id}) are in the playres."
-      true
-    else
-      false
-    end
+    class_name = Rukkit::Util.jedis.get('playername:%s:job' % player.name)
+    return unless class_name
+    class_name == self.to_s
   end
 
   def login_message(&block)
