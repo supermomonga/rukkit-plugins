@@ -1,7 +1,7 @@
 # encoding: utf-8
 import 'org.bukkit.entity.Player'
 
-module PlayerJobDigger
+module PlayerJobNovice
   extend self
   extend Rukkit::Util
   extend PlayerJob
