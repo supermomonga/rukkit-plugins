@@ -54,6 +54,7 @@ module PlayerJobDigger
     target_block = evt.block
     player = evt.player
     tool = player.item_in_hand
+    return if player.sneaking?
     return unless pickaxe?(tool.type) || spade?(tool.type)
     return unless has_job?(player)
     return unless range_breakable?(target_block)
