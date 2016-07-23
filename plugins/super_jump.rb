@@ -30,22 +30,22 @@ module SuperJump
     @crouching_counter ||= {}
     @crouching_counter[name] ||= 0
     @crouching_countingdown ||= false
-    if evt.sneaking?
+    if evt.sneaking? && player.on_ground?
       @time_sneaked[name] = Time.now.to_i
 
       # counting up
       @crouching_counter[name] += 1
       later sec(1.5) do
-        @crouching_counter[name] -= 1
+        @crouching_counter[name] = 0
       end
       if @crouching_counter[name] == 3
+        @crouching_counter[name] = 0
         loc = player.location
         play_sound(add_loc(loc, 0, 5, 0), Sound::ENTITY_BAT_TAKEOFF, 0.9, 0.0)
         iikanji_effect(loc)
 
-        player.send_message('[SUPER JUMP] This feature will be removed soon.')
         player.fall_distance = 0.0
-        player.velocity = player.velocity.tap {|v| v.set_y jfloat(1.3) }
+        player.velocity = player.velocity.tap {|v| v.set_y jfloat(0.75) }
       end
     else
       @time_sneaked.delete(name)
