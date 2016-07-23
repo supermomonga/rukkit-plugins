@@ -67,7 +67,7 @@ module Notifications
     player = evt.entity
     Slack.post "#{player.name} died: #{evt.death_message.sub(/^#{player.name}/, '')} at (#{player.location.x.to_i}, #{player.location.z.to_i}) in #{player.location.world.name}."
 
-    text = "[DESPAWN] It has been 4 minutes after #{player.name}'s death. You have only one minute left to gain all the items dropped if you still didn't get them yet."
+    text = "[DESPAWN] #{player.name}が死亡してから4分が経過しました。あと1分でアイテムが消えます"
     later sec(4 * 60) do
       broadcast(text)
     end
@@ -83,10 +83,6 @@ module Notifications
         players = awake_players.map(&:name).join "さん "
         if awake_players.size > 1
           players += "達"
-        elsif awake_players.size == 1
-          # Bukkit.online_players.to_a.size.times do
-          #  awake_players[0].send_message "[BED] #{awake_players[0].name}: いいから寝ましょう"
-          # end
         end
         text += " (#{players}は今すぐ寝ましょう)"
       end
@@ -144,7 +140,6 @@ module Notifications
     when EntityDamageEvent::DamageCause::LAVA
       if evt.damage > 0 && !@lava_notified.include?(player.name)
         text = "[NOTIFICATIONS] #{player.name} is swimming in lava"
-        Slack.post(text)
         broadcast(text)
 
         @lava_notified.add(player.name)
@@ -167,7 +162,7 @@ module Notifications
   def on_brew(evt)
     contents = evt.contents
     text = "[NOTIFICATIONS] #{contents.ingredient.type.to_s.sub(/^Material::/, '')}(#{contents.ingredient.amount}) -> ?"
-    Slack.post(text)
+    # Slack.post(text)
     broadcast(text)
   end
 
@@ -178,7 +173,6 @@ module Notifications
       cur_weather = world.has_storm
       unless prev_weather == cur_weather
         text = "[NOTIFICATIONS] 天気が#{prev_weather ? '雨' : '晴れ'}から#{cur_weather ? '雨' : '晴れ'}になりました..."
-        Slack.post(text) if Bukkit.online_players.to_a.size == 1
         broadcast(text)
       end
     end
