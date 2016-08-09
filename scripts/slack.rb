@@ -99,12 +99,11 @@ class SlackServer < Sinatra::Base
     if Rack::Handler::WEBrick.instance_variable_get('@server')
       Rukkit::Util.log.info "Server is running. Shutdown."
       Rack::Handler::WEBrick.shutdown
-      sleep 3
+      sleep 10
     else
       Rukkit::Util.log.info "Server is not running."
     end
 
-    retries = 0
     begin
       puts "launch server on port #{Rukkit::Util.plugin_config('slack.server_port')}."
       Rack::Handler::WEBrick.run(
@@ -115,13 +114,8 @@ class SlackServer < Sinatra::Base
         Logger: WEBrick::Log.new(Rukkit::Util.rukkit_dir + 'slack_webrick.log')
       )
     rescue Errno::EADDRINUSE => e
-      if retries > 5
-        return
-      end
       Rukkit::Util.log.info "Address in use. retry."
-      retries += 1
-      sleep 3
-      Rack::Handler::WEBrick.shutdown
+      sleep 10
       retry
     end
 
