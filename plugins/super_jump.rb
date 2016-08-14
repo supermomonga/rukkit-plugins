@@ -30,7 +30,7 @@ module SuperJump
     @crouching_counter ||= {}
     @crouching_counter[name] ||= 0
     @crouching_countingdown ||= false
-    if evt.sneaking? && player.on_ground?
+    if evt.sneaking? && ( player.on_ground? || PlayerUtil.in_water?(player) )
       @time_sneaked[name] = Time.now.to_i
 
       # counting up

@@ -58,7 +58,6 @@ module PlayerJobWoodcutter
     player = evt.player
     axe = player.item_in_hand
     return unless [Material::DIAMOND_AXE, Material::GOLD_AXE, Material::IRON_AXE, Material::STONE_AXE, Material::WOOD_AXE].include?(axe.type)
-    return if axe.enchantments.empty?
 
     [*0..1].each do |ydiff|
       [*-1..1].each do |xdiff|

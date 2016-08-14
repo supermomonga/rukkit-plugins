@@ -7,6 +7,7 @@ require 'net/https'
 require 'sinatra/base'
 
 import 'org.bukkit.ChatColor'
+import 'org.bukkit.Bukkit'
 
 module Slack
   extend self
@@ -79,6 +80,28 @@ class SlackServer < Sinatra::Base
         user = Rukkit::Util.colorize(user, :gray)
         message = "<#{user}> #{text}"
         Rukkit::Util.broadcast message
+      end
+      case text
+      when %r`!(help|commands)`
+        Thread.new do
+          Slack::post(<<-EOS
+:small_blue_diamond: `!players` List online players.
+            EOS
+          )
+        end
+      when %r`!players`
+        Thread.new do
+          players = Bukkit.server.online_players
+          message =
+          if players.size > 0
+            players.map { |player|
+              ":small_blue_diamond: %s" % player.name
+            }.join("\n")
+          else
+            ":innocent: There is no players."
+          end
+          Slack::post(message)
+        end
       end
     end
 

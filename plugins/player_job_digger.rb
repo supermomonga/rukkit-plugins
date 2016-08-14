@@ -23,6 +23,14 @@ module PlayerJobDigger
   end
 
   TARGET_BLOCKS = [
+    Material::COAL_ORE,
+    Material::IRON_ORE,
+    Material::GOLD_ORE,
+    Material::LAPIS_ORE,
+    [ Material::REDSTONE_ORE, Material::GLOWING_REDSTONE_ORE ],
+    Material::EMERALD_ORE,
+    Material::QUARTZ_ORE,
+    Material::NETHERRACK,
     Material::STONE,
     Material::GRAVEL,
     [ Material::DIRT, Material::GRASS, Material::GRASS_PATH ],
@@ -53,7 +61,7 @@ module PlayerJobDigger
   def on_block_break(evt)
     target_block = evt.block
     player = evt.player
-    tool = player.item_in_hand
+    tool = player.inventory.item_in_main_hand
     return if player.sneaking?
     return unless pickaxe?(tool.type) || spade?(tool.type)
     return unless has_job?(player)

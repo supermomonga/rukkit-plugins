@@ -3,6 +3,11 @@ import 'org.bukkit.inventory.ItemStack'
 import 'org.bukkit.Material'
 
 module PlayerUtil
+  def in_water?(player)
+    type = player.location.block.type
+    type == Material::STATIONARY_WATER || type == Material::WATER
+  end
+
   def naked?(player)
     no_armor?(player) && no_hold_item?(player)
   end
@@ -43,6 +48,7 @@ module PlayerUtil
     return nil
   end
 
+  module_function :in_water?
   module_function :naked?
   module_function :no_armor?
   module_function :no_hold_item?

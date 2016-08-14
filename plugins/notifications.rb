@@ -115,7 +115,7 @@ module Notifications
   end
 
   def on_player_achievement_awarded(evt)
-    text = [:achievement, evt.player.name, evt.achievement.to_s].inspect
+    text = "%s さんが実績 `%s` を解除しました" % [ evt.player.name, evt.achievement.to_s ]
     Slack.post(text)
     broadcast(text)
   end
