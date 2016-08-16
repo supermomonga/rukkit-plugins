@@ -12,13 +12,6 @@ module TrapdoorJump
     trapdoor_jump(evt.block, evt.new_current)
   end
 
-  def within_limit(v)
-    x, y, z = [v.get_x, v.get_y, v.get_z].map {|d|
-      [8.0, [d, -8.0].max].min
-    }
-    Vector.new(x, y, z)
-  end
-
   def trapdoor_jump(door, current)
     return if !door.state.data.inverted? && door.state.data.open? or
       door.state.data.inverted? && !door.state.data.open?
@@ -32,7 +25,7 @@ module TrapdoorJump
 
     later(0) do
       entities.each do |entity|
-        entity.velocity = within_limit entity.velocity.tap {|v|
+        entity.velocity = entity.velocity.tap {|v|
           v.add Vector.new(facing.mod_x, y_velocity, facing.mod_z)
         }
       end
