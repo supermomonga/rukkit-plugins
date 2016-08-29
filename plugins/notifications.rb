@@ -124,10 +124,9 @@ module Notifications
     player = evt.player
     from_name = evt.from.world.name
     to_name = evt.to.world.name
-      text = "[PORTAL] #{player.name}: #{from_name} -> #{to_name} (#{evt.cause.name})"
+      text = "[PORTAL] #{player.name} さんが #{from_name} から #{to_name} に移動しました"
 
     later sec(1) do
-      Slack.post(text)
       broadcast(text)
     end
   end
