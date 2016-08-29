@@ -67,7 +67,13 @@ module PlayerJobDigger
     return unless has_job?(player)
     return unless range_breakable?(target_block)
 
-    around_blocks = cubic_around_blocks(target_block)
+    n = case tool.type
+        when Material::IRON_PICKAXE then 1
+        when Material::DIAMOND_PICKAXE then 1
+        else 1
+        end
+
+    around_blocks = cubic_around_blocks(target_block, n)
     blocks = around_blocks.reject { |block|
       block.y < player.location.y
     }.select { |block|

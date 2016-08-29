@@ -56,11 +56,13 @@ module SignTeleport
           teleport_loc.x = loc.x + 0.5
           teleport_loc.y = loc.y + 1
           teleport_loc.z = loc.z + 0.5
-          teleport_loc.yaw = yaw
-          teleport_loc.pitch = pitch
           later(0) do
             play_effect(teleport_loc, Effect::ENDER_SIGNAL, nil)
             player.teleport(teleport_loc)
+            player.location.yaw = yaw + 180
+          end
+          later(sec(0.2)) do
+            play_effect(teleport_loc, Effect::ENDER_SIGNAL, nil)
           end
           break
         end
@@ -79,11 +81,14 @@ module SignTeleport
             teleport_loc.x = loc.x + 0.5
             teleport_loc.y = loc.y + 1
             teleport_loc.z = loc.z + 0.5
-            teleport_loc.yaw = yaw
-            teleport_loc.pitch = pitch
+            teleport_loc.yaw = player.location.yaw
+            teleport_loc.pitch = player.location.pitch
             later(0) do
-              play_effect(teleport_loc, Effect::ENDER_SIGNAL, nil)
               player.teleport(teleport_loc)
+              player.location.yaw = yaw + 180
+            end
+            later(sec(0.2)) do
+              play_effect(teleport_loc, Effect::ENDER_SIGNAL, nil)
             end
             break
           end

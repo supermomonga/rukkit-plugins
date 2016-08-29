@@ -34,6 +34,7 @@ module PlayerJob
   end
 
   def has_job?(player)
+    return unless Rukkit::Util.jedis
     class_name = Rukkit::Util.jedis.get('playername:%s:job' % player.name)
     return unless class_name
     class_name == self.to_s
