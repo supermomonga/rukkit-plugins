@@ -67,7 +67,7 @@ module SuperJump
       @vertical_accelerated ||= {}
       unless @vertical_accelerated[player.name]
         # play_sound(player.location, Sound::BAT_IDLE, 0.5, 0.0)
-        play_sound(player.location, Sound::BURP, 0.5, 0.0)
+        play_sound(player.location, Sound::ENTITY_PLAYER_BURP, 0.5, 0.0)
         iikanji_effect(player.location)
         later 0 do
           phi = (player.location.yaw + 90) % 360
@@ -115,7 +115,7 @@ module SuperJump
 
     time_diff = Time.now.to_i - @time_sneaked[player.name]
     @time_sneaked.delete(player.name)
-    play_sound(player.location, Sound::BURP, 0.5, 0.0)
+    play_sound(player.location, Sound::ENTITY_PLAYER_BURP, 0.5, 0.0)
     iikanji_effect(player.location)
     later 0 do
       f = [time_diff / 3.0 + 1.0, 5.0].min
